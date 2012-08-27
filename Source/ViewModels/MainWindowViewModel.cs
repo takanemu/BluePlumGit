@@ -51,6 +51,60 @@ namespace BluePlumGit.ViewModels
          * 原因となりやすく推奨できません。ViewModelHelperの各静的メソッドの利用を検討してください。
          */
 
+        private Git git;
+        protected internal FileRepository db;
+        private readonly IList<Repository> toClose = new AList<Repository>();
+
+        public MainWindowViewModel()
+        {
+            db = CreateWorkRepository();
+            trash = db.WorkTree;
+            git = new Git(db);
+        }
+
+        /// <summary>Creates a new empty repository within a new empty working directory.</summary>
+        /// <remarks>Creates a new empty repository within a new empty working directory.</remarks>
+        /// <returns>the newly created repository, opened for access</returns>
+        /// <exception cref="System.IO.IOException">the repository could not be created in the temporary area
+        /// 	</exception>
+        protected internal virtual FileRepository CreateWorkRepository()
+        {
+            return CreateRepository(false);
+        }
+
+        /// <summary>Creates a new empty repository.</summary>
+        /// <remarks>Creates a new empty repository.</remarks>
+        /// <param name="bare">
+        /// true to create a bare repository; false to make a repository
+        /// within its working directory
+        /// </param>
+        /// <returns>the newly created repository, opened for access</returns>
+        /// <exception cref="System.IO.IOException">the repository could not be created in the temporary area
+        /// 	</exception>
+        private FileRepository CreateRepository(bool bare)
+        {
+            FilePath gitdir = CreateUniqueTestGitDir(bare);
+            FileRepository db = new FileRepository(gitdir);
+            //NUnit.Framework.Assert.IsFalse(gitdir.Exists());
+            db.Create();
+            //toClose.AddItem(db);
+
+            return db;
+        }
+
+        protected internal virtual FilePath CreateUniqueTestGitDir(bool bare)
+        {
+            string gitdirName = CreateUniqueTestFolderPrefix();
+            if (!bare)
+            {
+                gitdirName += "/";
+            }
+            gitdirName += Constants.DOT_GIT;
+            FilePath gitdir = new FilePath(trash, gitdirName);
+            return gitdir.GetCanonicalFile();
+        }
+
+
 
         #region CommitCommand
         private ViewModelCommand _CommitCommand;
@@ -101,12 +155,29 @@ namespace BluePlumGit.ViewModels
 
         public void Clone()
         {
-            //FilePath directory = CreateTempDirectory("testCloneRepository");
+            FilePath directory = CreateTempDirectory("testCloneRepository");
             CloneCommand command = Git.CloneRepository();
-
+            command.SetDirectory(directory);
+            command.SetURI("file://" + git.GetRepository().WorkTree.GetPath());
         }
         #endregion
 
+        private readonly FilePath trash = new FilePath(new FilePath("target"), "trash");
+
+        protected internal virtual FilePath CreateTempDirectory(string name)
+        {
+            string gitdirName = CreateUniqueTestFolderPrefix();
+            FilePath parent = new FilePath(trash, gitdirName);
+            FilePath directory = new FilePath(parent, name);
+            FileUtils.Mkdirs(directory);
+
+            return directory.GetCanonicalFile();
+        }
+
+        private string CreateUniqueTestFolderPrefix()
+        {
+            return System.Guid.NewGuid().ToString();
+        }
 
     }
 }

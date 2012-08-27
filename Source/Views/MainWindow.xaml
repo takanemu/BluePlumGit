@@ -1,4 +1,4 @@
-﻿<Window x:Class="BluePlumGit.Views.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -6,6 +6,7 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="BluePlumGit.Views.MainWindow"
         Title="MainWindow" Height="350" Width="525">
     
     <Window.DataContext>
@@ -13,7 +14,9 @@
     </Window.DataContext>
     
     <Grid>
-        <Button Content="Commit" Height="23" HorizontalAlignment="Left" Margin="152,84,0,0" Name="button1" VerticalAlignment="Top" Width="75" Command="{Binding Path=CommitCommand}" />
-        <Button Content="Clone" Height="23" HorizontalAlignment="Left" Margin="188,165,0,0" Name="button2" VerticalAlignment="Top" Width="75" Command="{Binding Path=CloneCommand}" />
+        <StackPanel HorizontalAlignment="Left" Width="100">
+        	<Button Content="Commit" Height="23" x:Name="button1" Command="{Binding CommitCommand}" Margin="0,0,0,5" />
+        	<Button Content="Clone" Height="23" x:Name="button2" Command="{Binding CloneCommand}" Margin="0,0,0,5" />
+        </StackPanel>
     </Grid>
 </Window>
