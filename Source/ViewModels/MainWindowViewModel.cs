@@ -108,7 +108,6 @@ namespace BluePlumGit.ViewModels
             return gitdir.GetCanonicalFile();
         }
 
-
         #region InitCommand
         private ViewModelCommand _InitCommand;
 
@@ -163,7 +162,68 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
+        #region MakeCranchCommand
+        private ViewModelCommand _MakeCranchCommand;
 
+        public ViewModelCommand MakeCranchCommand
+        {
+            get
+            {
+                if (_MakeCranchCommand == null)
+                {
+                    _MakeCranchCommand = new ViewModelCommand(MakeCranch, CanMakeCranch);
+                }
+                return _MakeCranchCommand;
+            }
+        }
+
+        public bool CanMakeCranch()
+        {
+            return true;
+        }
+
+        public void MakeCranch()
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (System.Windows.Forms.DialogResult.OK == result)
+            {
+                string gitdirName = dialog.SelectedPath + "/" + Constants.DOT_GIT;
+
+                FilePath gitdir = new FilePath(gitdirName);
+
+                if (gitdir.Exists())
+                {
+                    gitdir = gitdir.GetCanonicalFile();
+                    FileRepository db = new FileRepository(gitdir);
+                    Git git = new Git(db);
+
+                    int localBefore = git.BranchList().Call().Count;
+
+                    git.BranchCreate().SetName("TestBranch2").Call();
+
+                    //Ref newBranch = this.CreateBranch(git, "testbranch", false, "master", null);
+                }
+                else
+                {
+                    MessageBox.Show(".gitディレクトリが、存在しません。");
+                }
+            }
+        }
+        #endregion
+
+        private Ref CreateBranch(Git actGit, string name, bool force, string startPoint, CreateBranchCommand.SetupUpstreamMode? mode)
+        {
+            CreateBranchCommand cmd = actGit.BranchCreate();
+            cmd.SetName(name);
+            cmd.SetForce(force);
+            cmd.SetStartPoint(startPoint);
+            cmd.SetUpstreamMode(mode != null ? mode.Value : CreateBranchCommand.SetupUpstreamMode.NOT_SET);
+
+            return cmd.Call();
+        }
 
 
         #region CommitCommand
@@ -215,10 +275,31 @@ namespace BluePlumGit.ViewModels
 
         public void Clone()
         {
-            FilePath directory = CreateTempDirectory("testCloneRepository");
-            CloneCommand command = Git.CloneRepository();
-            command.SetDirectory(directory);
-            command.SetURI("file://" + git.GetRepository().WorkTree.GetPath());
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (System.Windows.Forms.DialogResult.OK == result)
+            {
+                string gitdirName = dialog.SelectedPath + "/" + Constants.DOT_GIT;
+
+                FilePath gitdir = new FilePath(gitdirName);
+
+                if (!gitdir.Exists())
+                {
+                    FilePath directory = gitdir.GetCanonicalFile();
+
+                    CloneCommand command = Git.CloneRepository();
+
+                    command.SetDirectory(directory);
+                    command.SetURI("https://github.com/takanemu/BluePlumGit.git");
+                    command.Call();
+                }
+                else
+                {
+                    MessageBox.Show(".gitディレクトリが、既に存在します。");
+                }
+            }
         }
         #endregion
 

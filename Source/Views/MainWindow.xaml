@@ -1,23 +1,44 @@
-﻿<Window
+﻿<Window x:Class="BluePlumGit.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="BluePlumGit.Views.MainWindow"
-        Title="MainWindow" Height="350" Width="525">
-    
+        Title="MainWindow"
+        Width="525"
+        Height="350"
+        mc:Ignorable="d">
+
     <Window.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Window.DataContext>
-    
+
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Width="100">
-        	<Button Content="初期化" Height="23" Command="{Binding InitCommand, Mode=OneWay}" Margin="0,0,0,5" ToolTip="リポジトリの初期化" />
-        	<Button Content="Commit" Height="23" Command="{Binding CommitCommand}" Margin="0,0,0,5" />
-        	<Button Content="Clone" Height="23" Command="{Binding CloneCommand}" Margin="0,0,0,5" />
+        <StackPanel Width="100" HorizontalAlignment="Left">
+            <Button Height="23"
+                    Margin="0,0,0,5"
+                    Command="{Binding InitCommand,
+                                      Mode=OneWay}"
+                    Content="初期化"
+                    ToolTip="リポジトリの初期化" />
+            <Button Height="23"
+                    Margin="0,0,0,5"
+                    Command="{Binding MakeCranchCommand,
+                                      Mode=OneWay}"
+                    Content="ブランチ作成"
+                    ToolTip="ブランチの作成" />
+            <Button Height="23"
+                    Margin="0,0,0,5"
+                    Command="{Binding CommitCommand}"
+                    Content="Commit" />
+            <Button Height="23"
+                    Margin="0,0,0,5"
+                    Command="{Binding CloneCommand}"
+                    Content="Clone" />
         </StackPanel>
     </Grid>
 </Window>
