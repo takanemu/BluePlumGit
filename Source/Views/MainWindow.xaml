@@ -15,8 +15,9 @@
     
     <Grid>
         <StackPanel HorizontalAlignment="Left" Width="100">
-        	<Button Content="Commit" Height="23" x:Name="button1" Command="{Binding CommitCommand}" Margin="0,0,0,5" />
-        	<Button Content="Clone" Height="23" x:Name="button2" Command="{Binding CloneCommand}" Margin="0,0,0,5" />
+        	<Button Content="初期化" Height="23" Command="{Binding InitCommand, Mode=OneWay}" Margin="0,0,0,5" ToolTip="リポジトリの初期化" />
+        	<Button Content="Commit" Height="23" Command="{Binding CommitCommand}" Margin="0,0,0,5" />
+        	<Button Content="Clone" Height="23" Command="{Binding CloneCommand}" Margin="0,0,0,5" />
         </StackPanel>
     </Grid>
 </Window>

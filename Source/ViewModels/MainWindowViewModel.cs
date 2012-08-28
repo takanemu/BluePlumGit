@@ -20,6 +20,8 @@ using NGit.Storage.File;
 using NGit.Submodule;
 using NGit.Util;
 using Sharpen;
+using System.IO;
+using System.Windows;
 
 
 namespace BluePlumGit.ViewModels
@@ -57,9 +59,11 @@ namespace BluePlumGit.ViewModels
 
         public MainWindowViewModel()
         {
+            /*
             db = CreateWorkRepository();
             trash = db.WorkTree;
             git = new Git(db);
+            */
         }
 
         /// <summary>Creates a new empty repository within a new empty working directory.</summary>
@@ -103,6 +107,62 @@ namespace BluePlumGit.ViewModels
             FilePath gitdir = new FilePath(trash, gitdirName);
             return gitdir.GetCanonicalFile();
         }
+
+
+        #region InitCommand
+        private ViewModelCommand _InitCommand;
+
+        public ViewModelCommand InitCommand
+        {
+            get
+            {
+                if (_InitCommand == null)
+                {
+                    _InitCommand = new ViewModelCommand(Init, CanInit);
+                }
+                return _InitCommand;
+            }
+        }
+
+        public bool CanInit()
+        {
+            // TODO:.gitディレクトリがあればボタンを押させない。
+            return true;
+        }
+
+        /// <summary>
+        /// リポジトリの初期化
+        /// </summary>
+        public void Init()
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            if (System.Windows.Forms.DialogResult.OK == result)
+            {
+                string gitdirName = dialog.SelectedPath + "/" + Constants.DOT_GIT;
+
+                FilePath gitdir = new FilePath(gitdirName);
+
+                if (!gitdir.Exists())
+                {
+                    gitdir = gitdir.GetCanonicalFile();
+
+                    FileRepository db = new FileRepository(gitdir);
+
+                    db.Create();
+
+                    // TODO:dbの登録
+                }
+                else
+                {
+                    MessageBox.Show(".gitディレクトリが、既に存在します。");
+                }
+            }
+        }
+        #endregion
+
 
 
 

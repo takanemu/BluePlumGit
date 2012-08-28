@@ -61,6 +61,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Local Settings\Application Data\Temporary Projects\BluePlumGit\InfrastructureAssemblies\System.Windows.Interactivity.dll</HintPath>
