@@ -5,6 +5,7 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:livetBehaviors="clr-namespace:Livet.Behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
@@ -16,6 +17,10 @@
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
+
+    <i:Interaction.Behaviors>
+        <livetBehaviors:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
+    </i:Interaction.Behaviors>
 
     <Grid>
         <StackPanel Width="100" HorizontalAlignment="Left">

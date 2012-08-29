@@ -23,6 +23,8 @@ using Sharpen;
 using System.IO;
 using System.Windows;
 
+using System.Data.SQLite;
+
 
 namespace BluePlumGit.ViewModels
 {
@@ -52,6 +54,8 @@ namespace BluePlumGit.ViewModels
          * Modelからの変更通知などの各種イベントをそのままViewModelで購読する事はメモリリークの
          * 原因となりやすく推奨できません。ViewModelHelperの各静的メソッドの利用を検討してください。
          */
+
+        private MainWindowModel _model;
 
         private Git git;
         protected internal FileRepository db;
@@ -319,6 +323,33 @@ namespace BluePlumGit.ViewModels
         {
             return System.Guid.NewGuid().ToString();
         }
+
+
+        #region WindowCloseCancelCommand
+        private ViewModelCommand _WindowCloseCancelCommand;
+
+        public ViewModelCommand WindowCloseCancelCommand
+        {
+            get
+            {
+                if (_WindowCloseCancelCommand == null)
+                {
+                    _WindowCloseCancelCommand = new ViewModelCommand(WindowCloseCancel, CanWindowCloseCancel);
+                }
+                return _WindowCloseCancelCommand;
+            }
+        }
+
+        public bool CanWindowCloseCancel()
+        {
+            return true;
+        }
+
+        public void WindowCloseCancel()
+        {
+            Application.Current.Shutdown();
+        }
+        #endregion
 
     }
 }
