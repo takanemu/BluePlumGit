@@ -97,8 +97,6 @@
     </Compile>
     <Compile Include="Entitys\RepositoryEntity.cs" />
     <Compile Include="LinqList.cs" />
-    <Compile Include="Livet\Behaviors\LambdaCreator.cs" />
-    <Compile Include="Livet\Behaviors\WindowCloseCancelBehavior.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="RepositorysDataSet.Designer.cs">
