@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Livet;
-
+﻿
 namespace BluePlumGit.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using BluePlumGit.Entitys;
+    using BluePlumGit.RepositorysDataSetTableAdapters;
+    using Livet;
+
     public class MainWindowModel : NotificationObject
     {
         /*
@@ -25,6 +28,60 @@ namespace BluePlumGit.Models
 
         ~MainWindowModel()
         {
+        }
+
+        public List<RepositoryEntity> OpenDataBase()
+        {
+            List<RepositoryEntity> result = new List<RepositoryEntity>();
+
+            //var appData = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //var dataPath = appData + @"\OmeSystemPlan\BluePlumGit";
+
+            //if (!Directory.Exists(dataPath))
+            //{
+            //    // ディレクトリの作成
+            //    Directory.CreateDirectory(dataPath);
+            //}
+
+            //using (var conn = new SQLiteConnection("Data Source=Configuration.db"))
+            //{
+            //    conn.Open();
+            //    conn.Close();
+            //} 
+
+            var ta = new RepositorysTableAdapter();
+            var repositorys = ta.GetData();
+
+            foreach (RepositorysDataSet.RepositorysRow row in repositorys.Rows)
+            {
+                Console.WriteLine("{0}, {1}", row.name, row.path);
+            }
+
+            LinqList<RepositorysDataSet.RepositorysRow> rows = new LinqList<RepositorysDataSet.RepositorysRow>(repositorys.Rows);
+
+            result = rows.Select(
+                (row) =>
+                {
+                    RepositoryEntity ret = new RepositoryEntity
+                    {
+                        Nmae = row.name,
+                        Path = row.path,
+                    };
+                    return ret;
+                }
+                ).ToList<RepositoryEntity>();
+
+            return result;
+        }
+
+        public void AddRepository(string name, string path)
+        {
+            var ta = new RepositorysTableAdapter();
+            var repositorys = ta.GetData();
+
+            repositorys.AddRepositorysRow(name, path);
+
+            ta.Update(repositorys);  
         }
     }
 }

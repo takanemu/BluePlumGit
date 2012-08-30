@@ -23,9 +23,6 @@ using Sharpen;
 using System.IO;
 using System.Windows;
 
-using System.Data.SQLite;
-
-
 namespace BluePlumGit.ViewModels
 {
     public class MainWindowViewModel : ViewModel
@@ -63,6 +60,7 @@ namespace BluePlumGit.ViewModels
 
         public MainWindowViewModel()
         {
+            _model = new MainWindowModel();
             /*
             db = CreateWorkRepository();
             trash = db.WorkTree;
@@ -112,6 +110,31 @@ namespace BluePlumGit.ViewModels
             return gitdir.GetCanonicalFile();
         }
 
+
+        #region LoadedCommand
+        private ViewModelCommand _LoadedCommand;
+
+        public ViewModelCommand LoadedCommand
+        {
+            get
+            {
+                if (_LoadedCommand == null)
+                {
+                    _LoadedCommand = new ViewModelCommand(Loaded);
+                }
+                return _LoadedCommand;
+            }
+        }
+
+        /// <summary>
+        /// Loadedコマンド
+        /// </summary>
+        public void Loaded()
+        {
+            _model.OpenDataBase();
+        }
+        #endregion
+
         #region InitCommand
         private ViewModelCommand _InitCommand;
 
@@ -157,6 +180,8 @@ namespace BluePlumGit.ViewModels
                     db.Create();
 
                     // TODO:dbの登録
+
+                    this._model.AddRepository("名無し", gitdir);
                 }
                 else
                 {

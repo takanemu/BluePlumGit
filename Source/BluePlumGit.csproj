@@ -61,7 +61,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
+    <Reference Include="System.Data.SQLite, Version=1.0.81.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>InfrastructureAssemblies\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
@@ -94,10 +95,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entitys\RepositoryEntity.cs" />
+    <Compile Include="LinqList.cs" />
     <Compile Include="Livet\Behaviors\LambdaCreator.cs" />
     <Compile Include="Livet\Behaviors\WindowCloseCancelBehavior.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="RepositorysDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositorysDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -123,11 +131,25 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Configuration.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="RepositorysDataSet.xsc">
+      <DependentUpon>RepositorysDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RepositorysDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RepositorysDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="RepositorysDataSet.xss">
+      <DependentUpon>RepositorysDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="InfrastructureAssemblies\Design\Livet.Design.dll" />

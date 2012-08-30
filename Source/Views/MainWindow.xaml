@@ -18,6 +18,12 @@
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand, Mode=OneWay}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <i:Interaction.Behaviors>
         <livetBehaviors:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
     </i:Interaction.Behaviors>
