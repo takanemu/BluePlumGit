@@ -3,6 +3,7 @@ namespace BluePlumGit.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data;
     using System.Linq;
     using BluePlumGit.Entitys;
@@ -22,6 +23,8 @@ namespace BluePlumGit.Models
          *
          * ViewModelへNotificatorを使用した通知を行う場合はViewModel側でViewModelHelperを使用して受信側の登録をしてください。
          */
+
+
         public MainWindowModel()
         {
         }
@@ -29,6 +32,7 @@ namespace BluePlumGit.Models
         ~MainWindowModel()
         {
         }
+
 
         public List<RepositoryEntity> OpenDataBase()
         {
@@ -64,7 +68,8 @@ namespace BluePlumGit.Models
                 {
                     RepositoryEntity ret = new RepositoryEntity
                     {
-                        Nmae = row.name,
+                        ID = row.id,
+                        Name = row.name,
                         Path = row.path,
                     };
                     return ret;
@@ -74,12 +79,12 @@ namespace BluePlumGit.Models
             return result;
         }
 
-        public void AddRepository(string name, string path)
+        public void AddRepository(long id, string name, string path)
         {
             var ta = new RepositorysTableAdapter();
             var repositorys = ta.GetData();
 
-            repositorys.AddRepositorysRow(name, path);
+            repositorys.AddRepositorysRow(id, name, path);
 
             ta.Update(repositorys);  
         }

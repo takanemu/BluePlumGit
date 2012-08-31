@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:entity="clr-namespace:BluePlumGit.Entitys"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:livet="clr-namespace:Livet.Behaviors;assembly=Livet"
@@ -29,27 +30,81 @@
     </i:Interaction.Behaviors>
 
     <Grid>
-        <StackPanel Width="100" HorizontalAlignment="Left">
-            <Button Height="23"
-                    Margin="0,0,0,5"
-                    Command="{Binding InitCommand,
-                                      Mode=OneWay}"
-                    Content="初期化"
-                    ToolTip="リポジトリの初期化" />
-            <Button Height="23"
-                    Margin="0,0,0,5"
-                    Command="{Binding MakeCranchCommand,
-                                      Mode=OneWay}"
-                    Content="ブランチ作成"
-                    ToolTip="ブランチの作成" />
-            <Button Height="23"
-                    Margin="0,0,0,5"
-                    Command="{Binding CommitCommand}"
-                    Content="Commit" />
-            <Button Height="23"
-                    Margin="0,0,0,5"
-                    Command="{Binding CloneCommand}"
-                    Content="Clone" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5"
+                    Orientation="Horizontal"
+                    d:LayoutOverrides="Height">
+            <TextBlock Height="18"
+                       Margin="0,0,5,0"
+                       VerticalAlignment="Center"
+                       Text="リポジトリ："
+                       TextWrapping="Wrap" />
+            <ComboBox Width="150"
+                      Height="20"
+                      Margin="0,0,5,0"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding RepositorysCollection}"
+                      SelectedItem="{Binding SelectedRepository,
+                                             Mode=TwoWay}"
+                      SelectedValuePath="ID" />
+            <TextBlock Margin="0,0,5,0"
+                       VerticalAlignment="Center"
+                       Text="ブランチ："
+                       TextWrapping="Wrap" />
+            <ComboBox Width="150"
+                      Height="20"
+                      Margin="0,0,5,0"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Margin="5,0,5,5"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    d:LayoutOverrides="Height">
+            <StackPanel Width="150"
+                        Margin="0,0,5,0"
+                        Orientation="Vertical">
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Command="{Binding InitCommand,
+                                          Mode=OneWay}"
+                        Content="初期化"
+                        ToolTip="リポジトリの初期化" />
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Command="{Binding CloneCommand}"
+                        Content="複製" />
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Content="リモート同期" />
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Content="ローカル取得" />
+            </StackPanel>
+            <StackPanel Width="150" Height="272">
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Command="{Binding MakeCranchCommand,
+                                          Mode=OneWay}"
+                        Content="ブランチ作成"
+                        ToolTip="ブランチの作成" />
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Content="ブランチ削除" />
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Command="{Binding CommitCommand}"
+                        Content="コミット" />
+                <Button Height="23"
+                        Margin="0,0,0,5"
+                        Content="マージ" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

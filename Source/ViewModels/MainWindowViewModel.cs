@@ -22,6 +22,8 @@ using NGit.Util;
 using Sharpen;
 using System.IO;
 using System.Windows;
+using System.Collections.ObjectModel;
+using BluePlumGit.Entitys;
 
 namespace BluePlumGit.ViewModels
 {
@@ -52,6 +54,7 @@ namespace BluePlumGit.ViewModels
          * 原因となりやすく推奨できません。ViewModelHelperの各静的メソッドの利用を検討してください。
          */
 
+
         private MainWindowModel _model;
 
         private Git git;
@@ -60,13 +63,62 @@ namespace BluePlumGit.ViewModels
 
         public MainWindowViewModel()
         {
-            _model = new MainWindowModel();
+            this._model = new MainWindowModel();
+            this.RepositorysCollection = new ObservableCollection<RepositoryEntity>();
             /*
             db = CreateWorkRepository();
             trash = db.WorkTree;
             git = new Git(db);
             */
         }
+
+
+
+        #region RepositorysCollection変更通知プロパティ
+        private ObservableCollection<RepositoryEntity> _RepositorysCollection;
+
+        public ObservableCollection<RepositoryEntity> RepositorysCollection
+        {
+            get
+            {
+                return _RepositorysCollection;
+            }
+            
+            set
+            {
+                if (EqualityComparer<ObservableCollection<RepositoryEntity>>.Default.Equals(_RepositorysCollection, value))
+                {
+                    return;
+                }
+                _RepositorysCollection = value;
+                RaisePropertyChanged("RepositorysCollection");
+            }
+        }
+        #endregion
+
+        #region SelectedRepository変更通知プロパティ
+        private RepositoryEntity _SelectedRepository;
+
+        public RepositoryEntity SelectedRepository
+        {
+            get
+            {
+                return _SelectedRepository;
+            }
+            
+            set
+            {
+                if (EqualityComparer<RepositoryEntity>.Default.Equals(_SelectedRepository, value))
+                {
+                    return;
+                }
+                _SelectedRepository = value;
+                RaisePropertyChanged("SelectedRepository");
+            }
+        }
+        #endregion
+
+
 
         /// <summary>Creates a new empty repository within a new empty working directory.</summary>
         /// <remarks>Creates a new empty repository within a new empty working directory.</remarks>
@@ -131,7 +183,16 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public void Loaded()
         {
-            _model.OpenDataBase();
+            var result = _model.OpenDataBase();
+
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    this.RepositorysCollection.Add(item);
+                }
+                this.SelectedRepository = this.RepositorysCollection.ElementAt(0);
+            }
         }
         #endregion
 
@@ -180,8 +241,7 @@ namespace BluePlumGit.ViewModels
                     db.Create();
 
                     // TODO:dbの登録
-
-                    this._model.AddRepository("名無し", gitdir);
+                    this._model.AddRepository(3, "名無し", gitdir);
                 }
                 else
                 {
@@ -372,7 +432,7 @@ namespace BluePlumGit.ViewModels
 
         public void WindowCloseCancel()
         {
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
         #endregion
 

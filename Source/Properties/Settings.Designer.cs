@@ -26,11 +26,21 @@ namespace BluePlumGit.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("data source=C:\\Users\\shibuya.2NDFACTORY\\Documents\\GitHub\\BluePlumGit\\Source\\Confi" +
-            "guration.db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source=Configuration.db")]
         public string ConfigurationConnectionString {
             get {
                 return ((string)(this["ConfigurationConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source=C:\\Users\\shibuya.2NDFACTORY\\Documents\\GitHub\\BluePlumGit\\Source\\Confi" +
+            "guration.db")]
+        public string ConfigurationConnectionString1 {
+            get {
+                return ((string)(this["ConfigurationConnectionString1"]));
             }
         }
     }
