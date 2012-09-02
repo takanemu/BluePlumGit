@@ -24,6 +24,7 @@ using System.IO;
 using System.Windows;
 using System.Collections.ObjectModel;
 using BluePlumGit.Entitys;
+using BluePlumGit.Messaging.Windows;
 
 namespace BluePlumGit.ViewModels
 {
@@ -222,6 +223,12 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public void Init()
         {
+            this.Messenger.Raise(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+            });
+
+            /*
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
 
             System.Windows.Forms.DialogResult result = dialog.ShowDialog();
@@ -248,6 +255,7 @@ namespace BluePlumGit.ViewModels
                     MessageBox.Show(".gitディレクトリが、既に存在します。");
                 }
             }
+            */
         }
         #endregion
 

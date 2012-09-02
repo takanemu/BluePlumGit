@@ -23,5 +23,17 @@ namespace BluePlumGit.Views
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window w = new Window();
+            w.Title = "ShowDialog";
+            w.Owner = this;
+            w.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            w.ShowInTaskbar = false;
+            w.Height = 200;
+            w.Width = 300;
+            w.ShowDialog();
+        }
     }
 }

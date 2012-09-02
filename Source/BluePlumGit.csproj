@@ -95,8 +95,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behaviors\Messaging\Windows\WindowOpenInteractionMessageAction.cs" />
     <Compile Include="Entitys\RepositoryEntity.cs" />
     <Compile Include="LinqList.cs" />
+    <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="RepositorysDataSet.Designer.cs">
@@ -157,9 +159,7 @@
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behaviors\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
+        xmlns:action="clr-namespace:Livet.Behaviors.Messaging.Windows;assembly=Livet"
         Title="MainWindow"
         Width="525"
         Height="350"
@@ -23,6 +24,9 @@
         <i:EventTrigger>
             <i:InvokeCommandAction Command="{Binding LoadedCommand, Mode=OneWay}" />
         </i:EventTrigger>
+        <l:InteractionMessageTrigger Messenger="{Binding Messenger}" MessageKey="OpenWindow">
+            <action:WindowInteractionMessageAction/>
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>
@@ -103,7 +107,7 @@
                         Content="コミット" />
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Content="マージ" />
+                        Content="マージ" Click="Button_Click" />
             </StackPanel>
         </StackPanel>
     </Grid>
