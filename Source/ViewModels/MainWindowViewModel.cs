@@ -25,6 +25,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using BluePlumGit.Entitys;
 using BluePlumGit.Messaging.Windows;
+using BluePlumGit.Views;
 
 namespace BluePlumGit.ViewModels
 {
@@ -223,10 +224,16 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public void Init()
         {
-            this.Messenger.Raise(new WindowOpenMessage
+            WindowOpenMessage result = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
+                WindowType = typeof(InitializeRepositoryWindow),
             });
+
+            if (result.Response != null)
+            {
+            }
+
 
             /*
             var dialog = new System.Windows.Forms.FolderBrowserDialog();

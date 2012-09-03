@@ -1,16 +1,15 @@
 ﻿<Window x:Class="BluePlumGit.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:action="clr-namespace:BluePlumGit.Behaviors.Messaging.Windows"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:entity="clr-namespace:BluePlumGit.Entitys"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
-        xmlns:livet="clr-namespace:Livet.Behaviors;assembly=Livet"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
-        xmlns:action="clr-namespace:Livet.Behaviors.Messaging.Windows;assembly=Livet"
         Title="MainWindow"
         Width="525"
         Height="350"
@@ -24,13 +23,13 @@
         <i:EventTrigger>
             <i:InvokeCommandAction Command="{Binding LoadedCommand, Mode=OneWay}" />
         </i:EventTrigger>
-        <l:InteractionMessageTrigger Messenger="{Binding Messenger}" MessageKey="OpenWindow">
-            <action:WindowInteractionMessageAction/>
+        <l:InteractionMessageTrigger MessageKey="OpenWindow" Messenger="{Binding Messenger, Mode=OneWay}">
+            <action:WindowOpenInteractionMessageAction />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>
-        <livet:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
+        <l:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
     </i:Interaction.Behaviors>
 
     <Grid>
@@ -107,7 +106,8 @@
                         Content="コミット" />
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Content="マージ" Click="Button_Click" />
+                        Click="Button_Click"
+                        Content="マージ" />
             </StackPanel>
         </StackPanel>
     </Grid>

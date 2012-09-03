@@ -1,0 +1,106 @@
+﻿<Window x:Class="BluePlumGit.Views.InitializeRepositoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Custom="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:Livet_Behaviors_Messaging_IO="clr-namespace:Livet.Behaviors.Messaging.IO"
+        xmlns:Livet_Messaging_IO="clr-namespace:Livet.Messaging.IO"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
+        Title="リポジトリの初期化"
+        Width="450"
+        Height="200"
+        mc:Ignorable="d">
+    <Window.DataContext>
+        <vm:InitializeRepositoryWindowViewModel />
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <i:Interaction.Behaviors>
+        <l:WindowCloseCancelBehavior CanClose="{Binding CanClose}" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <StackPanel Margin="5">
+            <StackPanel Height="30"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <TextBlock Width="84"
+                           Height="20"
+                           Margin="0,0,5,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right"
+                           TextWrapping="Wrap"><Run Text="リポジトリ名：" />
+                </TextBlock>
+                <TextBox Width="330"
+                         Height="20"
+                         Margin="0,0,0,4"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         TextWrapping="Wrap" />
+            </StackPanel>
+            <StackPanel Height="30"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <TextBlock Width="84"
+                           Height="20"
+                           Margin="0,0,5,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Text="作成場所："
+                           TextAlignment="Right"
+                           TextWrapping="Wrap" />
+                <TextBox Width="305"
+                         Height="20"
+                         Margin="0,0,5,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         TextWrapping="Wrap" />
+                <Button Width="20"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        Content="...">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Livet_Behaviors_Messaging_IO:FolderBrowserDialogInteractionMessageAction>
+                                <Custom:DirectInteractionMessage CallbackMethodName="FolderSelected" CallbackMethodTarget="{Binding}">
+                                    <Livet_Messaging_IO:FolderSelectionMessage Description="フォルダーの選択" />
+                                </Custom:DirectInteractionMessage>
+                            </Livet_Behaviors_Messaging_IO:FolderBrowserDialogInteractionMessageAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+            <StackPanel Height="30"
+                        VerticalAlignment="Top"
+                        FlowDirection="RightToLeft"
+                        Orientation="Horizontal"
+                        d:LayoutOverrides="Width">
+                <Button Width="80"
+                        Height="26"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="{Binding CancelButtonCommand,
+                                          Mode=OneWay}"
+                        Content="キャンセル" />
+                <Button Width="80"
+                        Height="26"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="{Binding OkButtonCommand,
+                                          Mode=OneWay}"
+                        Content="実行" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
