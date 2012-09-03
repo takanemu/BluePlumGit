@@ -5,12 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
-        xmlns:Livet_Behaviors_Messaging_IO="clr-namespace:Livet.Behaviors.Messaging.IO"
-        xmlns:Livet_Messaging_IO="clr-namespace:Livet.Messaging.IO"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
         Title="リポジトリの初期化"
-        Width="450"
+        Width="450" WindowStartupLocation="CenterOwner"
         Height="200"
         mc:Ignorable="d">
     <Window.DataContext>
@@ -70,11 +68,11 @@
                         Content="...">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <Livet_Behaviors_Messaging_IO:FolderBrowserDialogInteractionMessageAction>
+                            <l:FolderBrowserDialogInteractionMessageAction>
                                 <Custom:DirectInteractionMessage CallbackMethodName="FolderSelected" CallbackMethodTarget="{Binding}">
-                                    <Livet_Messaging_IO:FolderSelectionMessage Description="フォルダーの選択" />
+                                    <l:FolderSelectionMessage Description="フォルダーの選択" />
                                 </Custom:DirectInteractionMessage>
-                            </Livet_Behaviors_Messaging_IO:FolderBrowserDialogInteractionMessageAction>
+                            </l:FolderBrowserDialogInteractionMessageAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
