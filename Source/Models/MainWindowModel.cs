@@ -88,5 +88,13 @@ namespace BluePlumGit.Models
 
             ta.Update(repositorys);  
         }
+
+        public int GetRepositoryCount()
+        {
+            var ta = new RepositorysTableAdapter();
+            var repositorys = ta.GetData();
+
+            return repositorys.Rows.Count;
+        }
     }
 }

@@ -1,11 +1,7 @@
 ﻿
 namespace BluePlumGit.ViewModels
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Windows;
     using Livet;
     using Livet.Commands;
     using Livet.Messaging.IO;
@@ -13,11 +9,55 @@ namespace BluePlumGit.ViewModels
 
     public class InitializeRepositoryWindowViewModel : ViewModel
     {
+        /// <summary>
+        /// フォルダーの選択
+        /// </summary>
+        /// <param name="message">フォルダー選択メッセージ</param>
         public void FolderSelected(FolderSelectionMessage message)
         {
-            string path = message.Response;
+            this.FolderPath = message.Response;
         }
 
+        #region RepositoyName変更通知プロパティ
+        private string _RepositoyName;
+
+        public string RepositoyName
+        {
+            get
+            { return _RepositoyName; }
+            set
+            {
+                if (EqualityComparer<string>.Default.Equals(_RepositoyName, value))
+                {
+                    return;
+                }
+                _RepositoyName = value;
+                RaisePropertyChanged("RepositoyName");
+            }
+        }
+        #endregion
+
+        #region FolderPath変更通知プロパティ
+        private string _FolderPath;
+
+        public string FolderPath
+        {
+            get
+            {
+                return _FolderPath;
+            }
+            
+            set
+            {
+                if (EqualityComparer<string>.Default.Equals(_FolderPath, value))
+                {
+                    return;
+                }
+                _FolderPath = value;
+                RaisePropertyChanged("FolderPath");
+            }
+        }
+        #endregion
 
         #region OkButtonCommand
         private Livet.Commands.ViewModelCommand _OkButtonCommand;
@@ -42,6 +82,7 @@ namespace BluePlumGit.ViewModels
         public void OkButton()
         {
             this.CanClose = true;
+            this.Result = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -69,6 +110,7 @@ namespace BluePlumGit.ViewModels
         public void CancelButton()
         {
             this.CanClose = true;
+            this.Result = false;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -106,18 +148,17 @@ namespace BluePlumGit.ViewModels
             get
             { return _CanClose; }
             set
-            { 
+            {
                 if (EqualityComparer<bool>.Default.Equals(_CanClose, value))
+                {
                     return;
+                }
                 _CanClose = value;
                 RaisePropertyChanged("CanClose");
             }
         }
         #endregion
 
-
-
-
-        
+        public bool Result { get; set; }
     }
 }

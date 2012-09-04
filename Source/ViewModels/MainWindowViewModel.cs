@@ -232,17 +232,8 @@ namespace BluePlumGit.ViewModels
 
             if (result.Response != null)
             {
-            }
-
-
-            /*
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
-
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-
-            if (System.Windows.Forms.DialogResult.OK == result)
-            {
-                string gitdirName = dialog.SelectedPath + "/" + Constants.DOT_GIT;
+                RepositoryEntity entity = result.Response;
+                string gitdirName = entity.Path + "/" + Constants.DOT_GIT;
 
                 FilePath gitdir = new FilePath(gitdirName);
 
@@ -254,15 +245,20 @@ namespace BluePlumGit.ViewModels
 
                     db.Create();
 
-                    // TODO:dbの登録
-                    this._model.AddRepository(3, "名無し", gitdir);
+                    entity.ID = this._model.GetRepositoryCount() + 1;
+
+                    // dbの登録
+                    this._model.AddRepository(entity.ID, entity.Name, gitdir);
+
+                    // リスト追加
+                    this.RepositorysCollection.Add(entity);
+                    this.SelectedRepository = entity;
                 }
                 else
                 {
                     MessageBox.Show(".gitディレクトリが、既に存在します。");
                 }
             }
-            */
         }
         #endregion
 

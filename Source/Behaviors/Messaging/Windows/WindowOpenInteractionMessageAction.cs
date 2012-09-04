@@ -9,6 +9,8 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
     using System.Windows;
     using Livet.Messaging;
     using BluePlumGit.Messaging.Windows;
+    using BluePlumGit.ViewModels;
+    using BluePlumGit.Entitys;
 
     public class WindowOpenInteractionMessageAction : InteractionMessageAction<DependencyObject>
     {
@@ -22,11 +24,26 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
 
             Window window = (Window)Activator.CreateInstance(windowOpenMessage.WindowType);   
 
+            // モーダルウィンドウ設定
             window.Owner = (Window)this.AssociatedObject;
 
-            bool? result = window.ShowDialog();
+            Nullable<bool> dialogResult = window.ShowDialog();
 
-            windowOpenMessage.Response = null;
+            InitializeRepositoryWindowViewModel vm = (InitializeRepositoryWindowViewModel)window.DataContext;
+
+            if (vm.Result)
+            {
+                RepositoryEntity entity = new RepositoryEntity
+                {
+                    Name = vm.RepositoyName,
+                    Path = vm.FolderPath,
+                };
+                windowOpenMessage.Response = entity;
+            }
+            else
+            {
+                windowOpenMessage.Response = null;
+            }
         }
     }
 }

@@ -6,9 +6,10 @@ namespace BluePlumGit.Messaging.Windows
     using System.Linq;
     using System.Text;
     using System.Windows;
+    using BluePlumGit.Entitys;
     using Livet.Messaging;
 
-    public class WindowOpenMessage : ResponsiveInteractionMessage<string>
+    public class WindowOpenMessage : ResponsiveInteractionMessage<RepositoryEntity>
     {
         public WindowOpenMessage()
         {
