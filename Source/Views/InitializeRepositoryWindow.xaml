@@ -7,6 +7,7 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels"
+        xmlns:behavior="clr-namespace:BluePlumGit.Behaviors"
         Title="リポジトリの初期化"
         Width="450" WindowStartupLocation="CenterOwner"
         Height="200"
@@ -23,6 +24,7 @@
 
     <i:Interaction.Behaviors>
         <l:WindowCloseCancelBehavior CanClose="{Binding CanClose}" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
+        <behavior:WindowStyleFlagBehavior MinimizeBox="False" MaximizeBox="False" ControlBox="False" />
     </i:Interaction.Behaviors>
 
     <Grid>
