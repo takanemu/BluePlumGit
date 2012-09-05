@@ -89,6 +89,9 @@
                 <Button Height="23"
                         Margin="0,0,0,5"
                         Content="ローカル取得" />
+                <Button Height="23"
+                	Margin="0,0,0,5"
+                	Content="設定" Command="{Binding ConfigCommand, Mode=OneWay}" />
             </StackPanel>
             <StackPanel Width="150" Height="272">
                 <Button Height="23"

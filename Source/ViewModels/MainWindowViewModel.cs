@@ -233,6 +233,7 @@ namespace BluePlumGit.ViewModels
             if (result.Response != null)
             {
                 RepositoryEntity entity = result.Response;
+
                 string gitdirName = entity.Path + "/" + Constants.DOT_GIT;
 
                 FilePath gitdir = new FilePath(gitdirName);
@@ -261,6 +262,59 @@ namespace BluePlumGit.ViewModels
             }
         }
         #endregion
+
+
+
+        #region ConfigCommand
+        private ViewModelCommand _ConfigCommand;
+
+        public ViewModelCommand ConfigCommand
+        {
+            get
+            {
+                if (_ConfigCommand == null)
+                {
+                    _ConfigCommand = new ViewModelCommand(Config, CanConfig);
+                }
+                return _ConfigCommand;
+            }
+        }
+
+        public bool CanConfig()
+        {
+            return true;
+        }
+
+        public void Config()
+        {
+            RepositoryEntity entity = this.SelectedRepository;
+
+            FilePath dir = new FilePath(entity.Path);
+            FilePath dotGit = new FilePath(dir, Constants.DOT_GIT);
+
+            FileRepositoryBuilder builder = new FileRepositoryBuilder();
+
+            builder.SetWorkTree(dir);
+            builder.FindGitDir(dir);
+            builder.SetMustExist(true);
+
+            FileRepository repository = builder.Build();
+
+            StoredConfig config = repository.GetConfig();
+
+            string name = config.GetString("user", null, "name");
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
 
         #region MakeCranchCommand
         private ViewModelCommand _MakeCranchCommand;
