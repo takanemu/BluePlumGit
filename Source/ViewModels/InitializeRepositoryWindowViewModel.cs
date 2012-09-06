@@ -137,6 +137,7 @@ namespace BluePlumGit.ViewModels
 
         public void WindowCloseCancel()
         {
+            // TODO:自分で閉じる方法が無い？
         }
         #endregion
 
