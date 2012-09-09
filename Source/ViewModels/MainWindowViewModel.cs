@@ -194,6 +194,12 @@ namespace BluePlumGit.ViewModels
                     this.RepositorysCollection.Add(item);
                 }
                 this.SelectedRepository = this.RepositorysCollection.ElementAt(0);
+
+                FileRepository db = new FileRepository(this.SelectedRepository.Path);
+
+                git = new Git(db);
+
+                var list = git.BranchList().Call();
             }
         }
         #endregion
