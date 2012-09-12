@@ -199,7 +199,11 @@ namespace BluePlumGit.ViewModels
 
                 git = new Git(db);
 
-                var list = git.BranchList().Call();
+                foreach (Ref branch in git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call())
+                {
+                    Console.WriteLine("name = " + branch.GetName());
+                }
+
             }
         }
         #endregion
