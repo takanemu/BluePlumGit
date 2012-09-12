@@ -67,6 +67,7 @@ namespace BluePlumGit.ViewModels
         {
             this._model = new MainWindowModel();
             this.RepositorysCollection = new ObservableCollection<RepositoryEntity>();
+            this.BranchCollection = new ObservableCollection<BranchEntity>();
             /*
             db = CreateWorkRepository();
             trash = db.WorkTree;
@@ -119,6 +120,54 @@ namespace BluePlumGit.ViewModels
             }
         }
         #endregion
+
+        #region BranchCollection変更通知プロパティ
+        private ObservableCollection<BranchEntity> _BranchCollection;
+
+        public ObservableCollection<BranchEntity> BranchCollection
+        {
+            get
+            {
+                return _BranchCollection;
+            }
+            
+            set
+            {
+                if (_BranchCollection == value)
+                {
+                    return;
+                }
+                _BranchCollection = value;
+                RaisePropertyChanged("BranchCollection");
+            }
+        }
+        #endregion
+
+        #region SelectedBranch変更通知プロパティ
+        private BranchEntity _SelectedBranch;
+
+        public BranchEntity SelectedBranch
+        {
+            get
+            {
+                return _SelectedBranch;
+            }
+            
+            set
+            {
+                if (EqualityComparer<BranchEntity>.Default.Equals(_SelectedBranch, value))
+                {
+                    return;
+                }
+                _SelectedBranch = value;
+                RaisePropertyChanged("SelectedBranch");
+            }
+        }
+        #endregion
+
+
+        
+
 
 
 
@@ -199,11 +248,19 @@ namespace BluePlumGit.ViewModels
 
                 git = new Git(db);
 
-                foreach (Ref branch in git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call())
-                {
-                    Console.WriteLine("name = " + branch.GetName());
-                }
+                IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
 
+                foreach (Ref branch in list)
+                {
+                    BranchEntity be = new BranchEntity
+                    {
+                        ID = 0,
+                        Name = Path.GetFileName(branch.GetName()),
+                        Path = branch.GetName(),
+                    };
+                    this.BranchCollection.Add(be);
+                }
+                this.SelectedBranch = this.BranchCollection.ElementAt(0);
             }
         }
         #endregion

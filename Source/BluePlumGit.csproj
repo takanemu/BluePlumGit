@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Behaviors\Messaging\Windows\WindowOpenInteractionMessageAction.cs" />
     <Compile Include="Behaviors\WindowStyleFlagBehavior.cs" />
+    <Compile Include="Entitys\BranchEntity.cs" />
     <Compile Include="Entitys\RepositoryEntity.cs" />
     <Compile Include="LinqList.cs" />
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
