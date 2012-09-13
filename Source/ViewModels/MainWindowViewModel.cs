@@ -26,6 +26,8 @@ using System.Collections.ObjectModel;
 using BluePlumGit.Entitys;
 using BluePlumGit.Messaging.Windows;
 using BluePlumGit.Views;
+using System.Windows.Data;
+using BluePlumGit.Collections;
 
 namespace BluePlumGit.ViewModels
 {
@@ -63,85 +65,23 @@ namespace BluePlumGit.ViewModels
         protected internal FileRepository db;
         private readonly IList<Repository> toClose = new AList<Repository>();
 
+        private CleanupObservableCollection<RepositoryEntity> RepositorysCollection;
+        private CleanupObservableCollection<BranchEntity> BranchCollection;
+
+
         public MainWindowViewModel()
         {
             this._model = new MainWindowModel();
-            this.RepositorysCollection = new ObservableCollection<RepositoryEntity>();
-            this.BranchCollection = new ObservableCollection<BranchEntity>();
+
+            this.RepositorysCollection = new CleanupObservableCollection<RepositoryEntity>();
+            this.BranchCollection = new CleanupObservableCollection<BranchEntity>();
+
             /*
             db = CreateWorkRepository();
             trash = db.WorkTree;
             git = new Git(db);
             */
         }
-
-
-
-        #region RepositorysCollection変更通知プロパティ
-        private ObservableCollection<RepositoryEntity> _RepositorysCollection;
-
-        public ObservableCollection<RepositoryEntity> RepositorysCollection
-        {
-            get
-            {
-                return _RepositorysCollection;
-            }
-            
-            set
-            {
-                if (EqualityComparer<ObservableCollection<RepositoryEntity>>.Default.Equals(_RepositorysCollection, value))
-                {
-                    return;
-                }
-                _RepositorysCollection = value;
-                RaisePropertyChanged("RepositorysCollection");
-            }
-        }
-        #endregion
-
-        #region SelectedRepository変更通知プロパティ
-        private RepositoryEntity _SelectedRepository;
-
-        public RepositoryEntity SelectedRepository
-        {
-            get
-            {
-                return _SelectedRepository;
-            }
-            
-            set
-            {
-                if (EqualityComparer<RepositoryEntity>.Default.Equals(_SelectedRepository, value))
-                {
-                    return;
-                }
-                _SelectedRepository = value;
-                RaisePropertyChanged("SelectedRepository");
-            }
-        }
-        #endregion
-
-        #region BranchCollection変更通知プロパティ
-        private ObservableCollection<BranchEntity> _BranchCollection;
-
-        public ObservableCollection<BranchEntity> BranchCollection
-        {
-            get
-            {
-                return _BranchCollection;
-            }
-            
-            set
-            {
-                if (_BranchCollection == value)
-                {
-                    return;
-                }
-                _BranchCollection = value;
-                RaisePropertyChanged("BranchCollection");
-            }
-        }
-        #endregion
 
         #region SelectedBranch変更通知プロパティ
         private BranchEntity _SelectedBranch;
@@ -165,9 +105,21 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
+        public ICollectionView RepositoryCollectionView
+        {
+            get
+            {
+                return this.RepositorysCollection.View;
+            }
+        }
 
-        
-
+        public ICollectionView BranchCollectionView
+        {
+            get
+            {
+                return this.BranchCollection.View;
+            }
+        }
 
 
 
@@ -242,9 +194,11 @@ namespace BluePlumGit.ViewModels
                 {
                     this.RepositorysCollection.Add(item);
                 }
-                this.SelectedRepository = this.RepositorysCollection.ElementAt(0);
+                this.RepositoryCollectionView.MoveCurrentToPosition(0);
 
-                FileRepository db = new FileRepository(this.SelectedRepository.Path);
+                RepositoryEntity selectedRepository = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
+
+                FileRepository db = new FileRepository(selectedRepository.Path);
 
                 git = new Git(db);
 
@@ -260,7 +214,7 @@ namespace BluePlumGit.ViewModels
                     };
                     this.BranchCollection.Add(be);
                 }
-                this.SelectedBranch = this.BranchCollection.ElementAt(0);
+                this.BranchCollectionView.MoveCurrentToPosition(0);
             }
         }
         #endregion
@@ -320,7 +274,7 @@ namespace BluePlumGit.ViewModels
 
                     // リスト追加
                     this.RepositorysCollection.Add(entity);
-                    this.SelectedRepository = entity;
+                    this.RepositoryCollectionView.MoveCurrentTo(entity);
                 }
                 else
                 {
@@ -354,7 +308,7 @@ namespace BluePlumGit.ViewModels
 
         public void Config()
         {
-            RepositoryEntity entity = this.SelectedRepository;
+            RepositoryEntity entity = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
 
             FilePath dir = new FilePath(entity.Path);
             FilePath dotGit = new FilePath(dir, Constants.DOT_GIT);
