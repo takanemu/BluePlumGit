@@ -58,66 +58,55 @@ namespace BluePlumGit.ViewModels
          * 原因となりやすく推奨できません。ViewModelHelperの各静的メソッドの利用を検討してください。
          */
 
-
+        /// <summary>
+        /// モデル
+        /// </summary>
         private MainWindowModel _model;
+
+        /// <summary>
+        /// 登録リポジトリリスト
+        /// </summary>
+        private CleanupObservableCollection<RepositoryEntity> repositorysCollection;
+
+        /// <summary>
+        /// カレントブランチリスト
+        /// </summary>
+        private CleanupObservableCollection<BranchEntity> branchCollection;
 
         private Git git;
         protected internal FileRepository db;
         private readonly IList<Repository> toClose = new AList<Repository>();
 
-        private CleanupObservableCollection<RepositoryEntity> RepositorysCollection;
-        private CleanupObservableCollection<BranchEntity> BranchCollection;
-
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public MainWindowViewModel()
         {
             this._model = new MainWindowModel();
 
-            this.RepositorysCollection = new CleanupObservableCollection<RepositoryEntity>();
-            this.BranchCollection = new CleanupObservableCollection<BranchEntity>();
-
-            /*
-            db = CreateWorkRepository();
-            trash = db.WorkTree;
-            git = new Git(db);
-            */
+            this.repositorysCollection = new CleanupObservableCollection<RepositoryEntity>();
+            this.branchCollection = new CleanupObservableCollection<BranchEntity>();
         }
 
-        #region SelectedBranch変更通知プロパティ
-        private BranchEntity _SelectedBranch;
-
-        public BranchEntity SelectedBranch
-        {
-            get
-            {
-                return _SelectedBranch;
-            }
-            
-            set
-            {
-                if (EqualityComparer<BranchEntity>.Default.Equals(_SelectedBranch, value))
-                {
-                    return;
-                }
-                _SelectedBranch = value;
-                RaisePropertyChanged("SelectedBranch");
-            }
-        }
-        #endregion
-
+        /// <summary>
+        /// リポジトリコレクションビューのプロパティ
+        /// </summary>
         public ICollectionView RepositoryCollectionView
         {
             get
             {
-                return this.RepositorysCollection.View;
+                return this.repositorysCollection.View;
             }
         }
 
+        /// <summary>
+        /// ブランチコレクションのプロパティ
+        /// </summary>
         public ICollectionView BranchCollectionView
         {
             get
             {
-                return this.BranchCollection.View;
+                return this.branchCollection.View;
             }
         }
 
@@ -167,17 +156,17 @@ namespace BluePlumGit.ViewModels
 
 
         #region LoadedCommand
-        private ViewModelCommand _LoadedCommand;
+        private ViewModelCommand loadedCommand;
 
         public ViewModelCommand LoadedCommand
         {
             get
             {
-                if (_LoadedCommand == null)
+                if (this.loadedCommand == null)
                 {
-                    _LoadedCommand = new ViewModelCommand(Loaded);
+                    this.loadedCommand = new ViewModelCommand(Loaded);
                 }
-                return _LoadedCommand;
+                return this.loadedCommand;
             }
         }
 
@@ -192,7 +181,7 @@ namespace BluePlumGit.ViewModels
             {
                 foreach (var item in result)
                 {
-                    this.RepositorysCollection.Add(item);
+                    this.repositorysCollection.Add(item);
                 }
                 this.RepositoryCollectionView.MoveCurrentToPosition(0);
 
@@ -212,7 +201,7 @@ namespace BluePlumGit.ViewModels
                         Name = Path.GetFileName(branch.GetName()),
                         Path = branch.GetName(),
                     };
-                    this.BranchCollection.Add(be);
+                    this.branchCollection.Add(be);
                 }
                 this.BranchCollectionView.MoveCurrentToPosition(0);
             }
@@ -273,7 +262,7 @@ namespace BluePlumGit.ViewModels
                     this._model.AddRepository(entity.ID, entity.Name, gitdir);
 
                     // リスト追加
-                    this.RepositorysCollection.Add(entity);
+                    this.repositorysCollection.Add(entity);
                     this.RepositoryCollectionView.MoveCurrentTo(entity);
                 }
                 else
@@ -284,20 +273,18 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-
-
         #region ConfigCommand
-        private ViewModelCommand _ConfigCommand;
+        private ViewModelCommand configCommand;
 
         public ViewModelCommand ConfigCommand
         {
             get
             {
-                if (_ConfigCommand == null)
+                if (this.configCommand == null)
                 {
-                    _ConfigCommand = new ViewModelCommand(Config, CanConfig);
+                    this.configCommand = new ViewModelCommand(Config, CanConfig);
                 }
-                return _ConfigCommand;
+                return this.configCommand;
             }
         }
 
@@ -306,6 +293,9 @@ namespace BluePlumGit.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// 設定値コマンド
+        /// </summary>
         public void Config()
         {
             RepositoryEntity entity = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
@@ -327,28 +317,18 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-
-
-
-
-
-
-
-
-
-
         #region MakeCranchCommand
-        private ViewModelCommand _MakeCranchCommand;
+        private ViewModelCommand makeCranchCommand;
 
         public ViewModelCommand MakeCranchCommand
         {
             get
             {
-                if (_MakeCranchCommand == null)
+                if (this.makeCranchCommand == null)
                 {
-                    _MakeCranchCommand = new ViewModelCommand(MakeCranch, CanMakeCranch);
+                    this.makeCranchCommand = new ViewModelCommand(MakeCranch, CanMakeCranch);
                 }
-                return _MakeCranchCommand;
+                return this.makeCranchCommand;
             }
         }
 
@@ -357,6 +337,9 @@ namespace BluePlumGit.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// ブランチの作成
+        /// </summary>
         public void MakeCranch()
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -402,17 +385,17 @@ namespace BluePlumGit.ViewModels
 
 
         #region CommitCommand
-        private ViewModelCommand _CommitCommand;
+        private ViewModelCommand commitCommand;
 
         public ViewModelCommand CommitCommand
         {
             get
             {
-                if (_CommitCommand == null)
+                if (this.commitCommand == null)
                 {
-                    _CommitCommand = new ViewModelCommand(Commit, CanCommit);
+                    this.commitCommand = new ViewModelCommand(Commit, CanCommit);
                 }
-                return _CommitCommand;
+                return this.commitCommand;
             }
         }
 
@@ -421,6 +404,9 @@ namespace BluePlumGit.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// コミットコマンド
+        /// </summary>
         public void Commit()
         {
             
@@ -429,17 +415,17 @@ namespace BluePlumGit.ViewModels
 
 
         #region CloneCommand
-        private ViewModelCommand _CloneCommand;
+        private ViewModelCommand cloneCommand;
 
         public ViewModelCommand CloneCommand
         {
             get
             {
-                if (_CloneCommand == null)
+                if (this.cloneCommand == null)
                 {
-                    _CloneCommand = new ViewModelCommand(Clone, CanClone);
+                    this.cloneCommand = new ViewModelCommand(Clone, CanClone);
                 }
-                return _CloneCommand;
+                return this.cloneCommand;
             }
         }
 
@@ -448,6 +434,9 @@ namespace BluePlumGit.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// 複製コマンド
+        /// </summary>
         public void Clone()
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -497,17 +486,17 @@ namespace BluePlumGit.ViewModels
 
 
         #region WindowCloseCancelCommand
-        private ViewModelCommand _WindowCloseCancelCommand;
+        private ViewModelCommand windowCloseCancelCommand;
 
         public ViewModelCommand WindowCloseCancelCommand
         {
             get
             {
-                if (_WindowCloseCancelCommand == null)
+                if (this.windowCloseCancelCommand == null)
                 {
-                    _WindowCloseCancelCommand = new ViewModelCommand(WindowCloseCancel, CanWindowCloseCancel);
+                    this.windowCloseCancelCommand = new ViewModelCommand(WindowCloseCancel, CanWindowCloseCancel);
                 }
-                return _WindowCloseCancelCommand;
+                return this.windowCloseCancelCommand;
             }
         }
 
@@ -516,8 +505,12 @@ namespace BluePlumGit.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// ウインドウクローズキャンセル処理
+        /// </summary>
         public void WindowCloseCancel()
         {
+            // TODO:終了時保存保護処理
             Environment.Exit(0);
         }
         #endregion
