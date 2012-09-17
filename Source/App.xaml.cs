@@ -14,10 +14,15 @@ namespace BluePlumGit
     /// </summary>
     public partial class App : Application
     {
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             DispatcherHelper.UIDispatcher = Dispatcher;
             //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+            BluePlumGit.Views.MainWindow window = new BluePlumGit.Views.MainWindow();
+
+            window.Show();
         }
 
         //集約エラーハンドラ
