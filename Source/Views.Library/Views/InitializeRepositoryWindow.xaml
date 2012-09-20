@@ -27,7 +27,7 @@
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>
-        <l:WindowCloseCancelBehavior CanClose="{Binding CanClose}" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
+        <l:WindowCloseCancelBehavior CanClose="{Binding Propertys.CanClose}" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
         <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
     </i:Interaction.Behaviors>
 
@@ -50,7 +50,7 @@
                          Height="20"
                          Margin="0"
                          VerticalAlignment="Center"
-                         Text="{Binding RepositoyName,
+                         Text="{Binding Propertys.RepositoyName,
                                         Mode=OneWayToSource}"
                          TextWrapping="Wrap" />
             </Grid>
@@ -72,7 +72,7 @@
                          Height="20"
                          Margin="0"
                          VerticalAlignment="Center"
-                         Text="{Binding FolderPath,
+                         Text="{Binding Propertys.FolderPath,
                                         Mode=TwoWay}"
                          TextWrapping="Wrap" />
                 <Button Grid.Column="2"
@@ -103,7 +103,7 @@
                         Margin="0,0,10,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Command="{Binding CancelButtonCommand,
+                        Command="{Binding Commands.CancelButton,
                                           Mode=OneWay}"
                         Content="キャンセル" />
                 <Button Width="80"
@@ -111,7 +111,7 @@
                         Margin="0,0,10,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Command="{Binding OkButtonCommand,
+                        Command="{Binding Commands.OkButton,
                                           Mode=OneWay}"
                         Content="実行" />
             </StackPanel>

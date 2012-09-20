@@ -516,28 +516,10 @@ namespace BluePlumGit.ViewModels
 
 
         #region WindowCloseCancelCommand
-        private ViewModelCommand windowCloseCancelCommand;
-
-        public ViewModelCommand WindowCloseCancelCommand
-        {
-            get
-            {
-                if (this.windowCloseCancelCommand == null)
-                {
-                    this.windowCloseCancelCommand = new ViewModelCommand(WindowCloseCancel, CanWindowCloseCancel);
-                }
-                return this.windowCloseCancelCommand;
-            }
-        }
-
-        public bool CanWindowCloseCancel()
-        {
-            return true;
-        }
-
         /// <summary>
         /// ウインドウクローズキャンセル処理
         /// </summary>
+        [Command]
         public void WindowCloseCancel()
         {
             // TODO:終了時保存保護処理
@@ -572,5 +554,10 @@ namespace BluePlumGit.ViewModels
         /// Initコマンド
         /// </summary>
         public TacticsCommand Init { get; set; }
+
+        /// <summary>
+        /// ウインドウクローズキャンセルコマンド
+        /// </summary>
+        public TacticsCommand WindowCloseCancel { get; set; }
     }
 }

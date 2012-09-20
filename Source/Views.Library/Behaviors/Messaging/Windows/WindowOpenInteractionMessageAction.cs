@@ -54,8 +54,8 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
             {
                 RepositoryEntity entity = new RepositoryEntity
                 {
-                    Name = vm.RepositoyName,
-                    Path = vm.FolderPath,
+                    Name = vm.Propertys.RepositoyName,
+                    Path = vm.Propertys.FolderPath,
                 };
                 windowOpenMessage.Response = entity;
             }

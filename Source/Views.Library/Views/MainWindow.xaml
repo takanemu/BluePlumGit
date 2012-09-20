@@ -29,7 +29,7 @@
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>
-        <l:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding WindowCloseCancelCommand, Mode=OneWay}" />
+        <l:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
     </i:Interaction.Behaviors>
 
     <Grid>

@@ -139,9 +139,21 @@
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Common.Library\Common.Library.csproj">
+      <Project>{7B57D093-FD6C-4E70-8478-A4E9EAD316B6}</Project>
+      <Name>Common.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="GordiasClassLibrary\GordiasClassLibrary.csproj">
       <Project>{9D70FD2B-1A65-4C9F-9E5B-4F0EF33B2338}</Project>
       <Name>GordiasClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="Models.Library\Models.Library.csproj">
+      <Project>{0D43AFC5-70B6-4553-98B7-42ED6F0C2AAB}</Project>
+      <Name>Models.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="ViewModels.Library\ViewModels.Library.csproj">
+      <Project>{FB6ACE27-7598-4351-AC4F-3BFC912E19D7}</Project>
+      <Name>ViewModels.Library</Name>
     </ProjectReference>
     <ProjectReference Include="Views.Library\Views.Library.csproj">
       <Project>{A05F7AF6-727A-4D9A-829C-C6B52E3ADA66}</Project>
