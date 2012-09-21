@@ -1,0 +1,19 @@
+﻿<Window x:Class="Views.Library.Views.RemoveRepositoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:behavior="clr-namespace:BluePlumGit.Behaviors"
+        xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
+        WindowStartupLocation="CenterOwner"
+        Title="リポジトリの削除"
+        Width="525"
+        Height="350">
+
+    <Window.DataContext>
+        <vm:RemoveRepositoryWindowViewModel />
+    </Window.DataContext>
+
+    <Grid />
+</Window>

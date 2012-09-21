@@ -40,6 +40,17 @@ namespace BluePlumGit.ViewModels
             this.Propertys.FolderPath = message.Response;
         }
 
+        #region Loaded
+        /// <summary>
+        /// Loadedコマンド
+        /// </summary>
+        [Command]
+        public void Loaded()
+        {
+            this.Propertys.IsEntryOnly = true;
+        }
+        #endregion
+
         #region OkButtonCommand
         /// <summary>
         /// OKボタン処理
@@ -102,6 +113,16 @@ namespace BluePlumGit.ViewModels
         /// CanClose
         /// </summary>
         public virtual bool CanClose { get; set; }
+
+        /// <summary>
+        /// 登録のみ
+        /// </summary>
+        public virtual bool IsEntryOnly { get; set; }
+
+        /// <summary>
+        /// 初期化後に登録
+        /// </summary>
+        public virtual bool IsInitializeAndEntry { get; set; }
     }
 
     /// <summary>
@@ -109,6 +130,11 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class InitializeRepositoryWindowViewModelCommand
     {
+        /// <summary>
+        /// Loadedコマンド
+        /// </summary>
+        public TacticsCommand Loaded { get; set; }
+
         /// <summary>
         /// OkButtonコマンド
         /// </summary>

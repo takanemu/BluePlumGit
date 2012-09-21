@@ -68,6 +68,7 @@
     <Compile Include="ViewModels\InitializeRepositoryWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\RemoveRepositoryWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Library\Common.Library.csproj">

@@ -27,7 +27,7 @@ namespace BluePlumGit.Messaging.Windows
     /// <summary>
     /// ウインドウオープンメッセージ
     /// </summary>
-    public class WindowOpenMessage : ResponsiveInteractionMessage<RepositoryEntity>
+    public class WindowOpenMessage : ResponsiveInteractionMessage<object>
     {
         /// <summary>
         /// ウインドウ種別

@@ -29,8 +29,15 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
     using Livet.Behaviors.Messaging;
     using Livet.Messaging;
 
+    /// <summary>
+    /// ウインドウオープンメッセージアクションクラス
+    /// </summary>
     public class WindowOpenInteractionMessageAction : InteractionMessageAction<DependencyObject>
     {
+        /// <summary>
+        /// メッセージアクション
+        /// </summary>
+        /// <param name="message">メッセージ</param>
         protected override void InvokeAction(InteractionMessage message)
         {
             if (!(message is WindowOpenMessage))
@@ -57,7 +64,14 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
                     Name = vm.Propertys.RepositoyName,
                     Path = vm.Propertys.FolderPath,
                 };
-                windowOpenMessage.Response = entity;
+
+                InitializeRepositoryEntity responce = new InitializeRepositoryEntity
+                {
+                    Mode = vm.Propertys.IsEntryOnly == true ? InitializeRepositoryEnum.EntryOnly : InitializeRepositoryEnum.InitializeAndEntry,
+                    Entity = entity,
+                };
+
+                windowOpenMessage.Response = responce;
             }
             else
             {
@@ -65,6 +79,11 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
             }
         }
 
+        /// <summary>
+        /// ウインドウクラスの生成
+        /// </summary>
+        /// <param name="type">ウインドウ種別</param>
+        /// <returns>ウインドウインスタンス</returns>
         private Window CreateWindow(WindowTypeEnum type)
         {
             Window result = null;

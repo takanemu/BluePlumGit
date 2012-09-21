@@ -158,8 +158,7 @@ namespace BluePlumGit.ViewModels
             return gitdir.GetCanonicalFile();
         }
 
-
-        #region LoadedCommand
+        #region Loaded
         /// <summary>
         /// Loadedコマンド
         /// </summary>
@@ -199,12 +198,12 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-        #region InitCommand
+        #region リポジトリの登録
         /// <summary>
-        /// リポジトリの初期化
+        /// リポジトリの登録
         /// </summary>
         [Command]
-        public void Init()
+        public void RepositoryRegistration()
         {
             WindowOpenMessage result = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
@@ -214,20 +213,16 @@ namespace BluePlumGit.ViewModels
 
             if (result.Response != null)
             {
-                RepositoryEntity entity = result.Response;
+                InitializeRepositoryEntity responce = (InitializeRepositoryEntity)result.Response;
+                RepositoryEntity entity = responce.Entity;
 
                 string gitdirName = entity.Path + "/" + Constants.DOT_GIT;
 
                 FilePath gitdir = new FilePath(gitdirName);
 
-                if (!gitdir.Exists())
+                if (responce.Mode == InitializeRepositoryEnum.EntryOnly)
                 {
-                    gitdir = gitdir.GetCanonicalFile();
-
-                    FileRepository db = new FileRepository(gitdir);
-
-                    db.Create();
-
+                    // リポジトリの登録のみ
                     entity.ID = this._model.GetRepositoryCount() + 1;
 
                     // dbの登録
@@ -239,67 +234,40 @@ namespace BluePlumGit.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show(".gitディレクトリが、既に存在します。");
+                    // リポジトリの初期化と登録
+                    if (!gitdir.Exists())
+                    {
+                        gitdir = gitdir.GetCanonicalFile();
+
+                        FileRepository db = new FileRepository(gitdir);
+
+                        db.Create();
+
+                        entity.ID = this._model.GetRepositoryCount() + 1;
+
+                        // dbの登録
+                        this._model.AddRepository(entity.ID, entity.Name, gitdir);
+
+                        // リスト追加
+                        this.repositorysCollection.Add(entity);
+                        this.RepositoryCollectionView.MoveCurrentTo(entity);
+                    }
+                    else
+                    {
+                        MessageBox.Show(".gitディレクトリが、既に存在します。");
+                    }
                 }
             }
         }
         #endregion
 
-        #region RepositoryEntoryCommand
-        private ViewModelCommand repositoryEntoryCommand;
-
-        public ViewModelCommand RepositoryEntoryCommand
-        {
-            get
-            {
-                if (this.repositoryEntoryCommand == null)
-                {
-                    this.repositoryEntoryCommand = new ViewModelCommand(RepositoryEntory, CanRepositoryEntory);
-                }
-                return this.repositoryEntoryCommand;
-            }
-        }
-
-        public bool CanRepositoryEntory()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// リポジトリの登録
-        /// </summary>
-        public void RepositoryEntory()
-        {
-            
-        }
-        #endregion
-
-        #region RepositoryRemoveCommand
-        private ViewModelCommand repositoryRemoveCommand;
-
-        public ViewModelCommand RepositoryRemoveCommand
-        {
-            get
-            {
-                if (this.repositoryRemoveCommand == null)
-                {
-                    this.repositoryRemoveCommand = new ViewModelCommand(RepositoryRemove, CanRepositoryRemove);
-                }
-                return this.repositoryRemoveCommand;
-            }
-        }
-
-        public bool CanRepositoryRemove()
-        {
-            return true;
-        }
-
+        #region リポジトリの削除
         /// <summary>
         /// リポジトリの削除
         /// </summary>
+        [Command]
         public void RepositoryRemove()
         {
-            
         }
         #endregion
 
@@ -551,9 +519,14 @@ namespace BluePlumGit.ViewModels
         public TacticsCommand Loaded { get; set; }
 
         /// <summary>
-        /// Initコマンド
+        /// リポジトリの登録
         /// </summary>
-        public TacticsCommand Init { get; set; }
+        public TacticsCommand RepositoryRegistration { get; set; }
+
+        /// <summary>
+        /// リポジトリの削除
+        /// </summary>
+        public TacticsCommand RepositoryRemove { get; set; }
 
         /// <summary>
         /// ウインドウクローズキャンセルコマンド
