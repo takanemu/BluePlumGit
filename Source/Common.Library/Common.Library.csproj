@@ -53,6 +53,12 @@
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GordiasClassLibrary\GordiasClassLibrary.csproj">
+      <Project>{9D70FD2B-1A65-4C9F-9E5B-4F0EF33B2338}</Project>
+      <Name>GordiasClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

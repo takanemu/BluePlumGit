@@ -17,19 +17,18 @@
 //
 #endregion
 
-namespace BluePlumGit.Enums
+namespace GordiasClassLibrary.Interface
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using GordiasClassLibrary.Entitys;
 
     /// <summary>
-    /// ウインドウ種別列挙型クラス
+    /// ウインドウ戻り値インターフェース
     /// </summary>
-    public enum WindowTypeEnum
+    public interface IWindowResult
     {
-        INITIALIZE,
-        CREATE_BRANCH,
+        /// <summary>
+        /// 戻り値
+        /// </summary>
+        WindowResultEntity Responce { get; set; }
     }
 }

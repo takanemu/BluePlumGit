@@ -19,8 +19,12 @@
 
 namespace BluePlumGit.ViewModels
 {
+    using System;
     using System.Collections.Generic;
+    using BluePlumGit.Entitys;
+    using GordiasClassLibrary.Entitys;
     using GordiasClassLibrary.Headquarters;
+    using GordiasClassLibrary.Interface;
     using Livet;
     using Livet.Commands;
     using Livet.Messaging.IO;
@@ -29,7 +33,7 @@ namespace BluePlumGit.ViewModels
     /// <summary>
     /// リポジトリ初期化ビューモデル
     /// </summary>
-    public class InitializeRepositoryWindowViewModel : TacticsViewModel<InitializeRepositoryWindowViewModelProperty, InitializeRepositoryWindowViewModelCommand>
+    public class InitializeRepositoryWindowViewModel : TacticsViewModel<InitializeRepositoryWindowViewModelProperty, InitializeRepositoryWindowViewModelCommand>, IWindowResult
     {
         /// <summary>
         /// フォルダーの選択
@@ -59,8 +63,25 @@ namespace BluePlumGit.ViewModels
         public void OkButton()
         {
             this.Propertys.CanClose = true;
-            this.Result = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+
+            RepositoryEntity repositoryEntity = new RepositoryEntity
+            {
+                Name = this.Propertys.RepositoyName,
+                Path = this.Propertys.FolderPath,
+            };
+
+            InitializeRepositoryEntity initializeRepositoryEntity = new InitializeRepositoryEntity
+            {
+                Mode = this.Propertys.IsEntryOnly == true ? InitializeRepositoryEnum.EntryOnly : InitializeRepositoryEnum.InitializeAndEntry,
+                Entity = repositoryEntity,
+            };
+
+            WindowResultEntity windowResultEntity = new WindowResultEntity
+            {
+                Result = initializeRepositoryEntity,
+            };
+            this.Responce = windowResultEntity;
         }
         #endregion
 
@@ -72,8 +93,8 @@ namespace BluePlumGit.ViewModels
         public void CancelButton()
         {
             this.Propertys.CanClose = true;
-            this.Result = false;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+            this.Responce = null;
         }
         #endregion
 
@@ -89,9 +110,9 @@ namespace BluePlumGit.ViewModels
         #endregion
 
         /// <summary>
-        /// 結果プロパティ(falseならキャンセルボタンが押された)
+        /// 戻り値
         /// </summary>
-        public bool Result { get; set; }
+        public WindowResultEntity Responce { get; set; }
     }
 
     /// <summary>

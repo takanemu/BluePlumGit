@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Collections\CleanupObservableCollection.cs" />
     <Compile Include="Collections\LinqList.cs" />
+    <Compile Include="Entitys\WindowResultEntity.cs" />
     <Compile Include="Events\CompleteEventcs.cs" />
     <Compile Include="Executors\CommandExecutor.cs" />
     <Compile Include="Executors\CommandExecutorArchetype.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interface\ICleanup.cs" />
     <Compile Include="Interface\IRaisePropertyChanged.cs" />
     <Compile Include="Interface\ITacticsCommand.cs" />
+    <Compile Include="Interface\IWindowResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\EventAggregator.cs" />
     <Compile Include="Utility\NotifyPropertyChangedHelper.cs" />

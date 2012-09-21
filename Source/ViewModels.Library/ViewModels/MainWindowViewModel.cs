@@ -205,22 +205,22 @@ namespace BluePlumGit.ViewModels
         [Command]
         public void RepositoryRegistration()
         {
-            WindowOpenMessage result = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.INITIALIZE,
             });
 
-            if (result.Response != null)
+            if (message.Response != null)
             {
-                InitializeRepositoryEntity responce = (InitializeRepositoryEntity)result.Response;
-                RepositoryEntity entity = responce.Entity;
+                InitializeRepositoryEntity initializeRepositoryEntity = (InitializeRepositoryEntity)message.Response.Result;
+                RepositoryEntity entity = initializeRepositoryEntity.Entity;
 
                 string gitdirName = entity.Path + "/" + Constants.DOT_GIT;
 
                 FilePath gitdir = new FilePath(gitdirName);
 
-                if (responce.Mode == InitializeRepositoryEnum.EntryOnly)
+                if (initializeRepositoryEntity.Mode == InitializeRepositoryEnum.EntryOnly)
                 {
                     // リポジトリの登録のみ
                     entity.ID = this._model.GetRepositoryCount() + 1;
@@ -315,31 +315,20 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-        #region MakeCranchCommand
-        private ViewModelCommand makeCranchCommand;
-
-        public ViewModelCommand MakeCranchCommand
-        {
-            get
-            {
-                if (this.makeCranchCommand == null)
-                {
-                    this.makeCranchCommand = new ViewModelCommand(MakeCranch, CanMakeCranch);
-                }
-                return this.makeCranchCommand;
-            }
-        }
-
-        public bool CanMakeCranch()
-        {
-            return true;
-        }
-
+        #region ブランチの作成
         /// <summary>
         /// ブランチの作成
         /// </summary>
-        public void MakeCranch()
+        [Command]
+        public void CreateBranch()
         {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.CREATE_BRANCH,
+            });
+
+/*
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
 
             System.Windows.Forms.DialogResult result = dialog.ShowDialog();
@@ -367,6 +356,7 @@ namespace BluePlumGit.ViewModels
                     MessageBox.Show(".gitディレクトリが、存在しません。");
                 }
             }
+ */
         }
         #endregion
 
@@ -527,6 +517,11 @@ namespace BluePlumGit.ViewModels
         /// リポジトリの削除
         /// </summary>
         public TacticsCommand RepositoryRemove { get; set; }
+
+        /// <summary>
+        /// ブランチの作成
+        /// </summary>
+        public TacticsCommand CreateBranch { get; set; }
 
         /// <summary>
         /// ウインドウクローズキャンセルコマンド

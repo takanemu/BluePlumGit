@@ -1,5 +1,5 @@
 ﻿
-namespace Views.Library.Views
+namespace BluePlumGit.Views
 {
     using System;
     using System.Collections.Generic;

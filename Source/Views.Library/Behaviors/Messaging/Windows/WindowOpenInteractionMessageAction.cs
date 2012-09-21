@@ -28,6 +28,7 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
     using BluePlumGit.Views;
     using Livet.Behaviors.Messaging;
     using Livet.Messaging;
+    using GordiasClassLibrary.Interface;
 
     /// <summary>
     /// ウインドウオープンメッセージアクションクラス
@@ -55,23 +56,11 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
 
             Nullable<bool> dialogResult = window.ShowDialog();
 
-            InitializeRepositoryWindowViewModel vm = (InitializeRepositoryWindowViewModel)window.DataContext;
+            IWindowResult viewModel = window.DataContext as IWindowResult;
 
-            if (vm.Result)
+            if (viewModel != null)
             {
-                RepositoryEntity entity = new RepositoryEntity
-                {
-                    Name = vm.Propertys.RepositoyName,
-                    Path = vm.Propertys.FolderPath,
-                };
-
-                InitializeRepositoryEntity responce = new InitializeRepositoryEntity
-                {
-                    Mode = vm.Propertys.IsEntryOnly == true ? InitializeRepositoryEnum.EntryOnly : InitializeRepositoryEnum.InitializeAndEntry,
-                    Entity = entity,
-                };
-
-                windowOpenMessage.Response = responce;
+                windowOpenMessage.Response = viewModel.Responce;
             }
             else
             {
@@ -92,6 +81,9 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
             {
                 case WindowTypeEnum.INITIALIZE:
                     result = new InitializeRepositoryWindow();
+                    break;
+                case WindowTypeEnum.CREATE_BRANCH:
+                    result = new CreateBranchWindow();
                     break;
             }
             return result;

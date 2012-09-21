@@ -17,19 +17,43 @@
 //
 #endregion
 
-namespace BluePlumGit.Enums
+namespace BluePlumGit.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using GordiasClassLibrary.Entitys;
+    using GordiasClassLibrary.Headquarters;
+    using GordiasClassLibrary.Interface;
+
+    public class CreateBranchWindowViewModel : TacticsViewModel<CreateBranchWindowViewModelProperty, CreateBranchWindowViewModelCommand>, IWindowResult
+    {
+        public void Initialize()
+        {
+        }
+
+        public void Loaded()
+        {
+        }
+
+        /// <summary>
+        /// 戻り値
+        /// </summary>
+        public WindowResultEntity Responce { get; set; }
+    }
 
     /// <summary>
-    /// ウインドウ種別列挙型クラス
+    /// プロパティクラス
     /// </summary>
-    public enum WindowTypeEnum
+    public class CreateBranchWindowViewModelProperty : TacticsProperty
     {
-        INITIALIZE,
-        CREATE_BRANCH,
+    }
+
+    /// <summary>
+    /// コマンドクラス
+    /// </summary>
+    public class CreateBranchWindowViewModelCommand
+    {
     }
 }

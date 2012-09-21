@@ -22,12 +22,13 @@ namespace BluePlumGit.Messaging.Windows
     using System.Windows;
     using BluePlumGit.Entitys;
     using BluePlumGit.Enums;
+    using GordiasClassLibrary.Entitys;
     using Livet.Messaging;
 
     /// <summary>
     /// ウインドウオープンメッセージ
     /// </summary>
-    public class WindowOpenMessage : ResponsiveInteractionMessage<object>
+    public class WindowOpenMessage : ResponsiveInteractionMessage<WindowResultEntity>
     {
         /// <summary>
         /// ウインドウ種別

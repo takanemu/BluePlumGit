@@ -24,12 +24,18 @@ namespace BluePlumGit.ViewModels
     using System.Linq;
     using System.Text;
     using GordiasClassLibrary.Headquarters;
+    using GordiasClassLibrary.Interface;
+    using GordiasClassLibrary.Entitys;
 
     /// <summary>
     /// リポジトリ削除ビューモデル
     /// </summary>
-    public class RemoveRepositoryWindowViewModel : TacticsViewModel<RemoveRepositoryWindowViewModelProperty, RemoveRepositoryWindowViewModelCommand>
+    public class RemoveRepositoryWindowViewModel : TacticsViewModel<RemoveRepositoryWindowViewModelProperty, RemoveRepositoryWindowViewModelCommand>, IWindowResult
     {
+        /// <summary>
+        /// 戻り値
+        /// </summary>
+        public WindowResultEntity Responce { get; set; }
     }
 
     /// <summary>

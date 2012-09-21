@@ -106,7 +106,7 @@
             <StackPanel Width="150" Height="272">
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Command="{Binding MakeCranchCommand,
+                        Command="{Binding Commands.CreateBranch,
                                           Mode=OneWay}"
                         Content="ブランチ作成"
                         ToolTip="ブランチの作成" />

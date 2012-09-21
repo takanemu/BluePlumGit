@@ -1,0 +1,47 @@
+﻿<Window x:Class="BluePlumGit.Views.CreateBranchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:behavior="clr-namespace:BluePlumGit.Behaviors"
+        xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
+        WindowStartupLocation="CenterOwner"
+        Title="ブランチの作成" Height="350" Width="525">
+    
+    <Window.DataContext>
+        <vm:CreateBranchWindowViewModel/>
+    </Window.DataContext>
+    
+     <i:Interaction.Triggers>
+        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i:EventTrigger>
+
+        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction/>
+        </i:EventTrigger>
+
+        <!--WindowのLoadedイベントのタイミングでViewModelのLoadedメソッドが呼ばれます-->
+        <i:EventTrigger>
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Loaded" />
+        </i:EventTrigger>
+
+        <!--WindowのCloseキャンセル処理-->
+        <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <i:Interaction.Behaviors>
+        <l:WindowCloseCancelBehavior CanClose="{Binding Propertys.CanClose}" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
+        <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
+    </i:Interaction.Behaviors>
+
+
+    <Grid>
+        
+    </Grid>
+</Window>

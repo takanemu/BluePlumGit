@@ -17,7 +17,7 @@
 //
 #endregion
 
-namespace BluePlumGit.Enums
+namespace GordiasClassLibrary.Entitys
 {
     using System;
     using System.Collections.Generic;
@@ -25,11 +25,18 @@ namespace BluePlumGit.Enums
     using System.Text;
 
     /// <summary>
-    /// ウインドウ種別列挙型クラス
+    /// ウインドウ戻り値エンティティ
     /// </summary>
-    public enum WindowTypeEnum
+    public class WindowResultEntity
     {
-        INITIALIZE,
-        CREATE_BRANCH,
+        /// <summary>
+        /// 戻り値
+        /// </summary>
+        public object Result { get; set; }
+
+        /// <summary>
+        /// 選択ボタン
+        /// </summary>
+        public Enum Button { get; set; }
     }
 }
