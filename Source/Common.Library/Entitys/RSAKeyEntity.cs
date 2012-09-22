@@ -17,7 +17,7 @@
 //
 #endregion
 
-namespace BluePlumGit.Enums
+namespace BluePlumGit.Entitys
 {
     using System;
     using System.Collections.Generic;
@@ -25,12 +25,13 @@ namespace BluePlumGit.Enums
     using System.Text;
 
     /// <summary>
-    /// ウインドウ種別列挙型クラス
+    /// RSA鍵エンティティ
     /// </summary>
-    public enum WindowTypeEnum
+    public class RSAKeyEntity
     {
-        INITIALIZE,
-        CREATE_BRANCH,
-        KEYDISP,
+        /// <summary>
+        /// テキスト
+        /// </summary>
+        public string Text { get; set; }
     }
 }

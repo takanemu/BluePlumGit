@@ -71,6 +71,7 @@
     <Compile Include="Interface\ICleanup.cs" />
     <Compile Include="Interface\IRaisePropertyChanged.cs" />
     <Compile Include="Interface\ITacticsCommand.cs" />
+    <Compile Include="Interface\IWindowParameter.cs" />
     <Compile Include="Interface\IWindowResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\EventAggregator.cs" />

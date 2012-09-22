@@ -512,9 +512,58 @@ namespace BluePlumGit.ViewModels
             return System.Guid.NewGuid().ToString();
         }
 
+        #region 公開鍵の作成
+        /// <summary>
+        /// 公開鍵の作成
+        /// </summary>
+        [Command]
+        public void KeypairGeneration()
+        {
+            FilePath keyfile = new FilePath("RSAKey");
 
+            if (keyfile.Exists())
+            {
+                this.OpenKeyDispWindow(keyfile);
+                return;
+            }
 
-        #region WindowCloseCancelCommand
+            int type = Tamir.SharpSsh.jsch.KeyPair.RSA;
+
+            // Output file name
+            String filename = "RSAKey";
+            // Signature comment
+            String comment = "";
+
+            try
+            {
+                // Create a new JSch instance
+                Tamir.SharpSsh.jsch.JSch jsch = new Tamir.SharpSsh.jsch.JSch();
+
+                // Prompt the user for a passphrase for the private key file
+                String passphrase = "";
+
+                // Generate the new key pair
+                Tamir.SharpSsh.jsch.KeyPair kpair = Tamir.SharpSsh.jsch.KeyPair.genKeyPair(jsch, type);
+                // Set a passphrase
+                kpair.setPassphrase(passphrase);
+                // Write the private key to "filename"
+                kpair.writePrivateKey(filename);
+                // Write the public key to "filename.pub"
+                kpair.writePublicKey(filename + ".pub", comment);
+                // Print the key fingerprint
+                // Console.WriteLine("Finger print: " + kpair.getFingerPrint());
+                // Free resources
+                kpair.dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            this.OpenKeyDispWindow(keyfile);
+        }
+        #endregion
+
+        #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
         /// </summary>
@@ -526,14 +575,26 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-
+        private void OpenKeyDispWindow(FilePath keyfile)
+        {
+            RSAKeyEntity key = new RSAKeyEntity
+            {
+                Text = "aaaaaaaaaaaaaaaaaa",
+            };
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.KEYDISP,
+                Parameter = key,
+            });
+        }
 
         /// <summary>
         /// リポジトリコンボボックスのカレントアイテムが変更された時の処理
         /// </summary>
         /// <param name="sender">イベント送信元</param>
         /// <param name="e">イベントパラメーター</param>
-        void RepositoryCollectionViewCurrentChangedHandler(object sender, EventArgs e)
+        private void RepositoryCollectionViewCurrentChangedHandler(object sender, EventArgs e)
         {
         }
 
@@ -542,7 +603,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         /// <param name="sender">イベント送信元</param>
         /// <param name="e">イベントパラメーター</param>
-        void BranchCollectionViewCurrentChangedHandler(object sender, EventArgs e)
+        private void BranchCollectionViewCurrentChangedHandler(object sender, EventArgs e)
         {
             BranchEntity entity = (BranchEntity)this.BranchCollectionView.CurrentItem;
 
@@ -586,5 +647,10 @@ namespace BluePlumGit.ViewModels
         /// ウインドウクローズキャンセルコマンド
         /// </summary>
         public TacticsCommand WindowCloseCancel { get; set; }
+
+        /// <summary>
+        /// 公開鍵作成コマンド
+        /// </summary>
+        public TacticsCommand KeypairGeneration { get; set; }
     }
 }

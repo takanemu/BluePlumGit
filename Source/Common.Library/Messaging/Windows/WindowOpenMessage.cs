@@ -37,6 +37,12 @@ namespace BluePlumGit.Messaging.Windows
             DependencyProperty.Register("WindowType", typeof(WindowTypeEnum), typeof(WindowOpenMessage), new UIPropertyMetadata(null));
 
         /// <summary>
+        /// パラメーター
+        /// </summary>
+        public static readonly DependencyProperty ParameterProperty =
+            DependencyProperty.Register("Parameter", typeof(object), typeof(WindowOpenMessage), new UIPropertyMetadata(null));
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public WindowOpenMessage()
@@ -65,6 +71,22 @@ namespace BluePlumGit.Messaging.Windows
             set
             {
                 SetValue(WindowTypeProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// パラメーター
+        /// </summary>
+        public object Parameter
+        {
+            get
+            {
+                return (object)GetValue(ParameterProperty);
+            }
+
+            set
+            {
+                SetValue(ParameterProperty, value);
             }
         }
 

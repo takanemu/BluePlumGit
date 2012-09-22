@@ -47,12 +47,17 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
             }
             WindowOpenMessage windowOpenMessage = (WindowOpenMessage)message;
 
-            //Window window = (Window)Activator.CreateInstance(windowOpenMessage.WindowType);
-
             Window window = CreateWindow(windowOpenMessage.WindowType);
 
             // モーダルウィンドウ設定
             window.Owner = (Window)this.AssociatedObject;
+
+            IWindowParameter context = window.DataContext as IWindowParameter;
+
+            if (context != null)
+            {
+                context.Parameter = windowOpenMessage.Parameter;
+            }
 
             Nullable<bool> dialogResult = window.ShowDialog();
 
@@ -84,6 +89,9 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
                     break;
                 case WindowTypeEnum.CREATE_BRANCH:
                     result = new CreateBranchWindow();
+                    break;
+                case WindowTypeEnum.KEYDISP:
+                    result = new KeyDispWindow();
                     break;
             }
             return result;

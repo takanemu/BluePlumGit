@@ -68,6 +68,9 @@
     <Compile Include="Views\InitializeRepositoryWindow.xaml.cs">
       <DependentUpon>InitializeRepositoryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\KeyDispWindow.xaml.cs">
+      <DependentUpon>KeyDispWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
     <Page Include="Views\InitializeRepositoryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\KeyDispWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
