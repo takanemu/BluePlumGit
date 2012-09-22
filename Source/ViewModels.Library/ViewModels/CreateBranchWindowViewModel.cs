@@ -26,6 +26,9 @@ namespace BluePlumGit.ViewModels
     using GordiasClassLibrary.Entitys;
     using GordiasClassLibrary.Headquarters;
     using GordiasClassLibrary.Interface;
+    using Livet.Messaging.Windows;
+    using Common.Library.Enums;
+    using BluePlumGit.Entitys;
 
     public class CreateBranchWindowViewModel : TacticsViewModel<CreateBranchWindowViewModelProperty, CreateBranchWindowViewModelCommand>, IWindowResult
     {
@@ -36,6 +39,42 @@ namespace BluePlumGit.ViewModels
         public void Loaded()
         {
         }
+
+        #region OKボタン処理
+        /// <summary>
+        /// OKボタン処理
+        /// </summary>
+        [Command]
+        public void OkButton()
+        {
+            BranchEntity branch = new BranchEntity
+            {
+                Name = this.Propertys.BranceName,
+            };
+
+            WindowResultEntity windowResultEntity = new WindowResultEntity
+            {
+                Button = WindowButtonEnum.OK,
+                Result = branch,
+            };
+            this.Responce = windowResultEntity;
+
+            this.Propertys.CanClose = true;
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+        }
+        #endregion
+
+        #region Cancelボタン処理
+        /// <summary>
+        /// Cancelボタン処理
+        /// </summary>
+        [Command]
+        public void CancelButton()
+        {
+            this.Propertys.CanClose = true;
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+        }
+        #endregion
 
         /// <summary>
         /// 戻り値
@@ -48,6 +87,15 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class CreateBranchWindowViewModelProperty : TacticsProperty
     {
+        /// <summary>
+        /// CanClose
+        /// </summary>
+        public virtual bool CanClose { get; set; }
+
+        /// <summary>
+        /// ブランチ名
+        /// </summary>
+        public virtual string BranceName { get; set; }
     }
 
     /// <summary>
@@ -55,5 +103,14 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class CreateBranchWindowViewModelCommand
     {
+        /// <summary>
+        /// OkButtonコマンド
+        /// </summary>
+        public TacticsCommand OkButton { get; set; }
+
+        /// <summary>
+        /// CancelButtonコマンド
+        /// </summary>
+        public TacticsCommand CancelButton { get; set; }
     }
 }

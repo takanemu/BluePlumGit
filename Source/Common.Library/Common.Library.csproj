@@ -49,6 +49,7 @@
     <Compile Include="Entitys\BranchEntity.cs" />
     <Compile Include="Entitys\InitializeRepositoryEntity.cs" />
     <Compile Include="Entitys\RepositoryEntity.cs" />
+    <Compile Include="Enums\WindowButtonEnum.cs" />
     <Compile Include="Enums\WindowTypeEnum.cs" />
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

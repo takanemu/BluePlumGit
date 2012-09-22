@@ -7,7 +7,7 @@
         xmlns:behavior="clr-namespace:BluePlumGit.Behaviors"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
         WindowStartupLocation="CenterOwner"
-        Title="ブランチの作成" Height="350" Width="525">
+        Title="ブランチの作成" Height="150" Width="300">
     
     <Window.DataContext>
         <vm:CreateBranchWindowViewModel/>
@@ -42,6 +42,8 @@
 
 
     <Grid>
-        
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,23,0,0" Name="textBox1" VerticalAlignment="Top" Width="241" Text="{Binding Path=Propertys.BranceName, Mode=TwoWay}" />
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="21,71,0,0" Name="button1" VerticalAlignment="Top" Width="75" Command="{Binding Path=Commands.OkButton}" />
+        <Button Content="Cansel" Height="23" HorizontalAlignment="Left" Margin="115,71,0,0" Name="button2" VerticalAlignment="Top" Width="75" Command="{Binding Path=Commands.CancelButton}" />
     </Grid>
 </Window>

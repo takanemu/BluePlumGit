@@ -36,6 +36,7 @@ namespace BluePlumGit.ViewModels
     using NGit.Storage.File;
     using NGit.Util;
     using Sharpen;
+    using Common.Library.Enums;
 
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
     {
@@ -79,9 +80,13 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         private CleanupObservableCollection<BranchEntity> branchCollection;
 
+        /// <summary>
+        /// カレントリポジトリ
+        /// </summary>
         private Git git;
-        protected internal FileRepository db;
-        private readonly IList<Repository> toClose = new AList<Repository>();
+
+        //protected internal FileRepository db;
+        //private readonly IList<Repository> toClose = new AList<Repository>();
 
         /// <summary>
         /// コンストラクタ
@@ -121,10 +126,10 @@ namespace BluePlumGit.ViewModels
         /// <returns>the newly created repository, opened for access</returns>
         /// <exception cref="System.IO.IOException">the repository could not be created in the temporary area
         /// 	</exception>
-        protected internal virtual FileRepository CreateWorkRepository()
-        {
-            return CreateRepository(false);
-        }
+        //protected internal virtual FileRepository CreateWorkRepository()
+        //{
+        //    return CreateRepository(false);
+        //}
 
         /// <summary>Creates a new empty repository.</summary>
         /// <remarks>Creates a new empty repository.</remarks>
@@ -135,34 +140,45 @@ namespace BluePlumGit.ViewModels
         /// <returns>the newly created repository, opened for access</returns>
         /// <exception cref="System.IO.IOException">the repository could not be created in the temporary area
         /// 	</exception>
-        private FileRepository CreateRepository(bool bare)
-        {
-            FilePath gitdir = CreateUniqueTestGitDir(bare);
-            FileRepository db = new FileRepository(gitdir);
-            //NUnit.Framework.Assert.IsFalse(gitdir.Exists());
-            db.Create();
-            //toClose.AddItem(db);
+        //private FileRepository CreateRepository(bool bare)
+        //{
+        //    FilePath gitdir = CreateUniqueTestGitDir(bare);
+        //    FileRepository db = new FileRepository(gitdir);
+        //    //NUnit.Framework.Assert.IsFalse(gitdir.Exists());
+        //    db.Create();
+        //    //toClose.AddItem(db);
 
-            return db;
+        //    return db;
+        //}
+
+        //protected internal virtual FilePath CreateUniqueTestGitDir(bool bare)
+        //{
+        //    string gitdirName = CreateUniqueTestFolderPrefix();
+        //    if (!bare)
+        //    {
+        //        gitdirName += "/";
+        //    }
+        //    gitdirName += Constants.DOT_GIT;
+        //    FilePath gitdir = new FilePath(trash, gitdirName);
+        //    return gitdir.GetCanonicalFile();
+        //}
+
+        #region Initialize
+        /// <summary>
+        /// Initializeコマンド
+        /// </summary>
+        public void Initialize()
+        {
+            this.RepositoryCollectionView.CurrentChanged += new EventHandler(RepositoryCollectionViewCurrentChangedHandler);
+            this.BranchCollectionView.CurrentChanged += new EventHandler(BranchCollectionViewCurrentChangedHandler);
         }
 
-        protected internal virtual FilePath CreateUniqueTestGitDir(bool bare)
-        {
-            string gitdirName = CreateUniqueTestFolderPrefix();
-            if (!bare)
-            {
-                gitdirName += "/";
-            }
-            gitdirName += Constants.DOT_GIT;
-            FilePath gitdir = new FilePath(trash, gitdirName);
-            return gitdir.GetCanonicalFile();
-        }
+        #endregion
 
         #region Loaded
         /// <summary>
         /// Loadedコマンド
         /// </summary>
-        [Command]
         public void Loaded()
         {
             var result = _model.OpenDataBase();
@@ -179,7 +195,7 @@ namespace BluePlumGit.ViewModels
 
                 FileRepository db = new FileRepository(selectedRepository.Path);
 
-                git = new Git(db);
+                this.git = new Git(db);
 
                 IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
 
@@ -193,7 +209,7 @@ namespace BluePlumGit.ViewModels
                     };
                     this.branchCollection.Add(be);
                 }
-                this.BranchCollectionView.MoveCurrentToPosition(0);
+                this.SyncCurrentBranch2Combobox();
             }
         }
         #endregion
@@ -315,6 +331,60 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
+        /// <summary>
+        /// ブランチコンボボックをリポジトリと同期する
+        /// </summary>
+        private void SyncCurrentBranch2Combobox()
+        {
+            string name = this.git.GetRepository().GetBranch();
+
+            foreach (BranchEntity entity in this.branchCollection)
+            {
+                if (name == entity.Name)
+                {
+                    this.BranchCollectionView.MoveCurrentTo(entity);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// カレントGitリポジトリの取得
+        /// </summary>
+        /// <returns>Gitクラス</returns>
+        private Git GetCurrentRepository()
+        {
+            RepositoryEntity selectedRepository = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
+
+            FileRepository db = new FileRepository(selectedRepository.Path);
+
+            Git git = new Git(db);
+
+            return git;
+        }
+
+        /// <summary>
+        /// ブランチリストの更新
+        /// </summary>
+        private void UpdateBranchList()
+        {
+            IList<Ref> list = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+
+            this.branchCollection.Clear();
+
+            foreach (Ref branch in list)
+            {
+                BranchEntity be = new BranchEntity
+                {
+                    ID = 0,
+                    Name = Path.GetFileName(branch.GetName()),
+                    Path = branch.GetName(),
+                };
+                this.branchCollection.Add(be);
+            }
+            this.SyncCurrentBranch2Combobox();
+        }
+
         #region ブランチの作成
         /// <summary>
         /// ブランチの作成
@@ -328,49 +398,19 @@ namespace BluePlumGit.ViewModels
                 WindowType = WindowTypeEnum.CREATE_BRANCH,
             });
 
-/*
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
-
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-
-            if (System.Windows.Forms.DialogResult.OK == result)
+            if (message.Response != null)
             {
-                string gitdirName = dialog.SelectedPath + "/" + Constants.DOT_GIT;
-
-                FilePath gitdir = new FilePath(gitdirName);
-
-                if (gitdir.Exists())
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
                 {
-                    gitdir = gitdir.GetCanonicalFile();
-                    FileRepository db = new FileRepository(gitdir);
-                    Git git = new Git(db);
+                    BranchEntity entity = (BranchEntity)message.Response.Result;
 
-                    int localBefore = git.BranchList().Call().Count;
+                    this.git.BranchCreate().SetName(entity.Name).Call();
 
-                    git.BranchCreate().SetName("TestBranch2").Call();
-
-                    //Ref newBranch = this.CreateBranch(git, "testbranch", false, "master", null);
-                }
-                else
-                {
-                    MessageBox.Show(".gitディレクトリが、存在しません。");
+                    this.UpdateBranchList();
                 }
             }
- */
         }
         #endregion
-
-        private Ref CreateBranch(Git actGit, string name, bool force, string startPoint, CreateBranchCommand.SetupUpstreamMode? mode)
-        {
-            CreateBranchCommand cmd = actGit.BranchCreate();
-            cmd.SetName(name);
-            cmd.SetForce(force);
-            cmd.SetStartPoint(startPoint);
-            cmd.SetUpstreamMode(mode != null ? mode.Value : CreateBranchCommand.SetupUpstreamMode.NOT_SET);
-
-            return cmd.Call();
-        }
-
 
         #region CommitCommand
         private ViewModelCommand commitCommand;
@@ -473,6 +513,7 @@ namespace BluePlumGit.ViewModels
         }
 
 
+
         #region WindowCloseCancelCommand
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -484,6 +525,29 @@ namespace BluePlumGit.ViewModels
             Environment.Exit(0);
         }
         #endregion
+
+
+
+        /// <summary>
+        /// リポジトリコンボボックスのカレントアイテムが変更された時の処理
+        /// </summary>
+        /// <param name="sender">イベント送信元</param>
+        /// <param name="e">イベントパラメーター</param>
+        void RepositoryCollectionViewCurrentChangedHandler(object sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// ブランチコンボボックスのカレントアイテムが変更された時の処理
+        /// </summary>
+        /// <param name="sender">イベント送信元</param>
+        /// <param name="e">イベントパラメーター</param>
+        void BranchCollectionViewCurrentChangedHandler(object sender, EventArgs e)
+        {
+            BranchEntity entity = (BranchEntity)this.BranchCollectionView.CurrentItem;
+
+            this.git.Checkout().SetName(entity.Name).Call();
+        }
 
     }
 
@@ -503,11 +567,6 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class MainWindowViewModelCommand
     {
-        /// <summary>
-        /// Loadedコマンド
-        /// </summary>
-        public TacticsCommand Loaded { get; set; }
-
         /// <summary>
         /// リポジトリの登録
         /// </summary>

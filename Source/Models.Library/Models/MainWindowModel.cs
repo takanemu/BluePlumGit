@@ -27,6 +27,9 @@ namespace BluePlumGit.Models
     using GordiasClassLibrary.Collections;
     using Livet;
 
+    /// <summary>
+    /// メインウインドウモデル
+    /// </summary>
     public class MainWindowModel : NotificationObject
     {
         /*

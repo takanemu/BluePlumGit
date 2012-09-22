@@ -29,6 +29,7 @@ namespace BluePlumGit.ViewModels
     using Livet.Commands;
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
+    using Common.Library.Enums;
 
     /// <summary>
     /// リポジトリ初期化ビューモデル
@@ -55,16 +56,13 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-        #region OkButtonCommand
+        #region OKボタン処理
         /// <summary>
         /// OKボタン処理
         /// </summary>
         [Command]
         public void OkButton()
         {
-            this.Propertys.CanClose = true;
-            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
-
             RepositoryEntity repositoryEntity = new RepositoryEntity
             {
                 Name = this.Propertys.RepositoyName,
@@ -79,13 +77,16 @@ namespace BluePlumGit.ViewModels
 
             WindowResultEntity windowResultEntity = new WindowResultEntity
             {
+                Button = WindowButtonEnum.OK,
                 Result = initializeRepositoryEntity,
             };
             this.Responce = windowResultEntity;
+            this.Propertys.CanClose = true;
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
 
-        #region CancelButtonCommand
+        #region Cancelボタン処理
         /// <summary>
         /// Cancelボタン処理
         /// </summary>
