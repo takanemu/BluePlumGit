@@ -73,6 +73,7 @@
     <Compile Include="ViewModels\KeyDispWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\RemoveBranchWindowViewModel.cs" />
     <Compile Include="ViewModels\RemoveRepositoryWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
