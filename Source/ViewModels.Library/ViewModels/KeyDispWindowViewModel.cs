@@ -17,17 +17,22 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class KeyDispWindowViewModel : TacticsViewModel<KeyDispWindowViewModelProperty, KeyDispWindowViewModelCommand>, IWindowParameter
     {
+        #region Initializeメソッド
+        /// <summary>
+        /// Initializeメソッド
+        /// </summary>
         public void Initialize()
         {
             this.Propertys.Text = ((RSAKeyEntity)this.Parameter).Text;
         }
+        #endregion
 
         #region Cancelボタン処理
         /// <summary>
         /// Cancelボタン処理
         /// </summary>
         [Command]
-        public void CopyButton()
+        private void CopyButton()
         {
             Clipboard.SetText(this.Propertys.Text);
         }
@@ -39,6 +44,7 @@ namespace BluePlumGit.ViewModels
         public object Parameter { get; set; }
     }
 
+    #region プロパティクラス
     /// <summary>
     /// プロパティクラス
     /// </summary>
@@ -49,7 +55,9 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public virtual string Text { get; set; }
     }
+    #endregion
 
+    #region コマンドクラス
     /// <summary>
     /// コマンドクラス
     /// </summary>
@@ -60,4 +68,5 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public TacticsCommand CopyButton { get; set; }
     }
+    #endregion
 }

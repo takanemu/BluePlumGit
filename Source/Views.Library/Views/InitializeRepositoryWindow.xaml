@@ -20,9 +20,23 @@
     </Window.DataContext>
 
     <i:Interaction.Triggers>
-        <i:EventTrigger>
-            <i:InvokeCommandAction Command="{Binding Commands.Loaded, Mode=OneWay}" />
+        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
         </i:EventTrigger>
+
+        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction/>
+        </i:EventTrigger>
+
+        <!--WindowのLoadedイベントのタイミングでViewModelのLoadedメソッドが呼ばれます-->
+        <i:EventTrigger>
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Loaded" />
+        </i:EventTrigger>
+        <!--<i:EventTrigger>
+            <i:InvokeCommandAction Command="{Binding Commands.Loaded, Mode=OneWay}" />
+        </i:EventTrigger>-->
         <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
             <l:WindowInteractionMessageAction />
         </l:InteractionMessageTrigger>

@@ -38,18 +38,21 @@ namespace BluePlumGit.ViewModels
         public WindowResultEntity Responce { get; set; }
     }
 
+    #region プロパティクラス
     /// <summary>
     /// プロパティクラス
     /// </summary>
     public class RemoveRepositoryWindowViewModelProperty : TacticsProperty
     {
     }
+    #endregion
 
+    #region コマンドクラス
     /// <summary>
     /// コマンドクラス
     /// </summary>
     public class RemoveRepositoryWindowViewModelCommand
     {
     }
-
+    #endregion
 }

@@ -86,9 +86,6 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         private Git git;
 
-        //protected internal FileRepository db;
-        //private readonly IList<Repository> toClose = new AList<Repository>();
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -122,63 +119,20 @@ namespace BluePlumGit.ViewModels
             }
         }
 
-        /// <summary>Creates a new empty repository within a new empty working directory.</summary>
-        /// <remarks>Creates a new empty repository within a new empty working directory.</remarks>
-        /// <returns>the newly created repository, opened for access</returns>
-        /// <exception cref="System.IO.IOException">the repository could not be created in the temporary area
-        /// 	</exception>
-        //protected internal virtual FileRepository CreateWorkRepository()
-        //{
-        //    return CreateRepository(false);
-        //}
-
-        /// <summary>Creates a new empty repository.</summary>
-        /// <remarks>Creates a new empty repository.</remarks>
-        /// <param name="bare">
-        /// true to create a bare repository; false to make a repository
-        /// within its working directory
-        /// </param>
-        /// <returns>the newly created repository, opened for access</returns>
-        /// <exception cref="System.IO.IOException">the repository could not be created in the temporary area
-        /// 	</exception>
-        //private FileRepository CreateRepository(bool bare)
-        //{
-        //    FilePath gitdir = CreateUniqueTestGitDir(bare);
-        //    FileRepository db = new FileRepository(gitdir);
-        //    //NUnit.Framework.Assert.IsFalse(gitdir.Exists());
-        //    db.Create();
-        //    //toClose.AddItem(db);
-
-        //    return db;
-        //}
-
-        //protected internal virtual FilePath CreateUniqueTestGitDir(bool bare)
-        //{
-        //    string gitdirName = CreateUniqueTestFolderPrefix();
-        //    if (!bare)
-        //    {
-        //        gitdirName += "/";
-        //    }
-        //    gitdirName += Constants.DOT_GIT;
-        //    FilePath gitdir = new FilePath(trash, gitdirName);
-        //    return gitdir.GetCanonicalFile();
-        //}
-
-        #region Initialize
+        #region Initializeメソッド
         /// <summary>
-        /// Initializeコマンド
+        /// Initializeメソッド
         /// </summary>
         public void Initialize()
         {
             this.RepositoryCollectionView.CurrentChanged += new EventHandler(RepositoryCollectionViewCurrentChangedHandler);
             this.BranchCollectionView.CurrentChanged += new EventHandler(BranchCollectionViewCurrentChangedHandler);
         }
-
         #endregion
 
-        #region Loaded
+        #region Loadedメソッド
         /// <summary>
-        /// Loadedコマンド
+        /// Loadedメソッド
         /// </summary>
         public void Loaded()
         {
@@ -220,7 +174,7 @@ namespace BluePlumGit.ViewModels
         /// リポジトリの登録
         /// </summary>
         [Command]
-        public void RepositoryRegistration()
+        private void RepositoryRegistration()
         {
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
@@ -283,35 +237,17 @@ namespace BluePlumGit.ViewModels
         /// リポジトリの削除
         /// </summary>
         [Command]
-        public void RepositoryRemove()
+        private void RepositoryRemove()
         {
         }
         #endregion
 
-        #region ConfigCommand
-        private ViewModelCommand configCommand;
-
-        public ViewModelCommand ConfigCommand
-        {
-            get
-            {
-                if (this.configCommand == null)
-                {
-                    this.configCommand = new ViewModelCommand(Config, CanConfig);
-                }
-                return this.configCommand;
-            }
-        }
-
-        public bool CanConfig()
-        {
-            return true;
-        }
-
+        #region 設定変更コマンド
         /// <summary>
-        /// 設定値コマンド
+        /// 設定変更コマンド
         /// </summary>
-        public void Config()
+        [Command]
+        private void Config()
         {
             RepositoryEntity entity = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
 
@@ -391,7 +327,7 @@ namespace BluePlumGit.ViewModels
         /// ブランチの作成
         /// </summary>
         [Command]
-        public void CreateBranch()
+        private void CreateBranch()
         {
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
@@ -413,60 +349,33 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-        #region CommitCommand
-        private ViewModelCommand commitCommand;
-
-        public ViewModelCommand CommitCommand
+        #region ブランチの削除
+        /// <summary>
+        /// ブランチの削除
+        /// </summary>
+        [Command]
+        private void RemoveBranch()
         {
-            get
-            {
-                if (this.commitCommand == null)
-                {
-                    this.commitCommand = new ViewModelCommand(Commit, CanCommit);
-                }
-                return this.commitCommand;
-            }
         }
+        #endregion
 
-        public bool CanCommit()
-        {
-            return true;
-        }
-
+        #region コミットコマンド
         /// <summary>
         /// コミットコマンド
         /// </summary>
-        public void Commit()
+        [Command]
+        private void Commit()
         {
             
         }
         #endregion
 
-
-        #region CloneCommand
-        private ViewModelCommand cloneCommand;
-
-        public ViewModelCommand CloneCommand
-        {
-            get
-            {
-                if (this.cloneCommand == null)
-                {
-                    this.cloneCommand = new ViewModelCommand(Clone, CanClone);
-                }
-                return this.cloneCommand;
-            }
-        }
-
-        public bool CanClone()
-        {
-            return true;
-        }
-
+        #region 複製コマンド
         /// <summary>
         /// 複製コマンド
         /// </summary>
-        public void Clone()
+        [Command]
+        private void RemoteRepositoryClone()
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
 
@@ -496,29 +405,12 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-        //private readonly FilePath trash = new FilePath(new FilePath("target"), "trash");
-
-        //protected internal virtual FilePath CreateTempDirectory(string name)
-        //{
-        //    string gitdirName = CreateUniqueTestFolderPrefix();
-        //    FilePath parent = new FilePath(trash, gitdirName);
-        //    FilePath directory = new FilePath(parent, name);
-        //    FileUtils.Mkdirs(directory);
-
-        //    return directory.GetCanonicalFile();
-        //}
-
-        //private string CreateUniqueTestFolderPrefix()
-        //{
-        //    return System.Guid.NewGuid().ToString();
-        //}
-
         #region 公開鍵の作成
         /// <summary>
         /// 公開鍵の作成
         /// </summary>
         [Command]
-        public void KeypairGeneration()
+        private void KeypairGeneration()
         {
             FilePath keyfile = new FilePath("RSAKey");
 
@@ -569,7 +461,7 @@ namespace BluePlumGit.ViewModels
         /// ウインドウクローズキャンセル処理
         /// </summary>
         [Command]
-        public void WindowCloseCancel()
+        private void WindowCloseCancel()
         {
             // TODO:終了時保存保護処理
             Environment.Exit(0);
@@ -623,17 +515,16 @@ namespace BluePlumGit.ViewModels
 
     }
 
+    #region プロパティクラス
     /// <summary>
     /// プロパティクラス
     /// </summary>
     public class MainWindowViewModelProperty : TacticsProperty
     {
-        /// <summary>
-        /// プロパティ１
-        /// </summary>
-        public virtual string TestProperty { get; set; }
     }
+    #endregion
 
+    #region コマンドクラス
     /// <summary>
     /// コマンドクラス
     /// </summary>
@@ -655,13 +546,34 @@ namespace BluePlumGit.ViewModels
         public TacticsCommand CreateBranch { get; set; }
 
         /// <summary>
+        /// ブランチの削除
+        /// </summary>
+        public TacticsCommand RemoveBranch { get; set; }
+
+        /// <summary>
         /// ウインドウクローズキャンセルコマンド
         /// </summary>
         public TacticsCommand WindowCloseCancel { get; set; }
 
         /// <summary>
-        /// 公開鍵作成コマンド
+        /// 公開鍵作成
         /// </summary>
         public TacticsCommand KeypairGeneration { get; set; }
+
+        /// <summary>
+        /// リモートリポジトリのクローン
+        /// </summary>
+        public TacticsCommand RemoteRepositoryClone { get; set; }
+
+        /// <summary>
+        /// 設定変更
+        /// </summary>
+        public TacticsCommand Config { get; set; }
+
+        /// <summary>
+        /// コミット
+        /// </summary>
+        public TacticsCommand Commit { get; set; }
     }
+    #endregion
 }

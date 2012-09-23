@@ -19,37 +19,32 @@
 
 namespace BluePlumGit.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
     using BluePlumGit.Entitys;
+    using Common.Library.Enums;
     using GordiasClassLibrary.Entitys;
     using GordiasClassLibrary.Headquarters;
     using GordiasClassLibrary.Interface;
-    using Livet;
     using Livet.Commands;
-    using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
-    using Common.Library.Enums;
 
     /// <summary>
     /// リポジトリ初期化ビューモデル
     /// </summary>
     public class InitializeRepositoryWindowViewModel : TacticsViewModel<InitializeRepositoryWindowViewModelProperty, InitializeRepositoryWindowViewModelCommand>, IWindowResult
     {
+        #region Initializeメソッド
         /// <summary>
-        /// フォルダーの選択
+        /// Initializeメソッド
         /// </summary>
-        /// <param name="message">フォルダー選択メッセージ</param>
-        public void FolderSelected(FolderSelectionMessage message)
+        public void Initialize()
         {
-            this.Propertys.FolderPath = message.Response;
         }
+        #endregion
 
-        #region Loaded
+        #region Loadedメソッド
         /// <summary>
-        /// Loadedコマンド
+        /// Loadedメソッド
         /// </summary>
-        [Command]
         public void Loaded()
         {
             this.Propertys.IsEntryOnly = true;
@@ -61,7 +56,7 @@ namespace BluePlumGit.ViewModels
         /// OKボタン処理
         /// </summary>
         [Command]
-        public void OkButton()
+        private void OkButton()
         {
             RepositoryEntity repositoryEntity = new RepositoryEntity
             {
@@ -91,7 +86,7 @@ namespace BluePlumGit.ViewModels
         /// Cancelボタン処理
         /// </summary>
         [Command]
-        public void CancelButton()
+        private void CancelButton()
         {
             this.Propertys.CanClose = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
@@ -104,7 +99,7 @@ namespace BluePlumGit.ViewModels
         /// ウインドウクローズキャンセル処理
         /// </summary>
         [Command]
-        public void WindowCloseCancel()
+        private void WindowCloseCancel()
         {
             // TODO:自分で閉じる方法が無い？
         }
@@ -116,6 +111,7 @@ namespace BluePlumGit.ViewModels
         public WindowResultEntity Responce { get; set; }
     }
 
+    #region プロパティクラス
     /// <summary>
     /// プロパティクラス
     /// </summary>
@@ -146,17 +142,14 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public virtual bool IsInitializeAndEntry { get; set; }
     }
+    #endregion
 
+    #region コマンドクラス
     /// <summary>
     /// コマンドクラス
     /// </summary>
     public class InitializeRepositoryWindowViewModelCommand
     {
-        /// <summary>
-        /// Loadedコマンド
-        /// </summary>
-        public TacticsCommand Loaded { get; set; }
-
         /// <summary>
         /// OkButtonコマンド
         /// </summary>
@@ -172,4 +165,5 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public TacticsCommand WindowCloseCancel { get; set; }
     }
+    #endregion
 }

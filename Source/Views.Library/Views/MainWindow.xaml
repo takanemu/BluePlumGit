@@ -106,8 +106,9 @@
 
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Command="{Binding CloneCommand}"
-                        Content="複製" />
+                        Command="{Binding Commands.RemoteRepositoryClone}"
+                        Content="複製"
+                        ToolTip="リモートリポジトリをローカルファイル複製"/>
                 <Button Height="23"
                         Margin="0,0,0,5"
                         Content="リモート同期" />
@@ -116,18 +117,19 @@
                         Content="ローカル取得" />
                 <Button Height="23"
                 	Margin="0,0,0,5"
-                	Content="設定" Command="{Binding ConfigCommand, Mode=OneWay}" />
+                	Content="設定" Command="{Binding Commands.Config}" />
             </StackPanel>
             <StackPanel Width="150" Height="272">
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Command="{Binding Commands.CreateBranch,
-                                          Mode=OneWay}"
+                        Command="{Binding Commands.CreateBranch}"
                         Content="ブランチ作成"
                         ToolTip="ブランチの作成" />
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Content="ブランチ削除" />
+                        Command="{Binding Commands.RemoveBranch}"
+                        Content="ブランチ削除"
+                        ToolTip="ブランチの削除"/>
                 <Button Height="23"
                         Margin="0,0,0,5"
                         Command="{Binding CommitCommand}"

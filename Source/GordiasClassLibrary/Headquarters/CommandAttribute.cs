@@ -38,7 +38,7 @@ namespace GordiasClassLibrary.Headquarters
         {
             var commands = target.Commands;
             Type targetType = target.GetType();
-            MethodInfo[] methods = targetType.GetMethods();
+            MethodInfo[] methods = targetType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (MethodInfo method in methods)
             {
