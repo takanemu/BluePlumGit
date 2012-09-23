@@ -27,11 +27,19 @@
     </i:Interaction.Triggers>
     
     <i:Interaction.Behaviors>
-        <l:WindowCloseCancelBehavior CanClose="{Binding Propertys.CanClose}" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
         <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
     </i:Interaction.Behaviors>
 
     <Grid>
-        <TextBlock Text="{Binding Path=Propertys.Text}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0"
+                        Width="200"
+                        Height="24"
+            			Command="{Binding Commands.CopyButton, Mode=OneWay}"
+                        Content="クリップボードにコピー"/>
+         <TextBlock Grid.Row="1" Text="{Binding Path=Propertys.Text}" />
     </Grid>
 </Window>

@@ -9,6 +9,8 @@ namespace BluePlumGit.ViewModels
     using GordiasClassLibrary.Headquarters;
     using GordiasClassLibrary.Interface;
     using BluePlumGit.Entitys;
+    using Livet.Messaging.Windows;
+    using System.Windows;
 
     /// <summary>
     /// 鍵表示ウインドウ
@@ -19,6 +21,17 @@ namespace BluePlumGit.ViewModels
         {
             this.Propertys.Text = ((RSAKeyEntity)this.Parameter).Text;
         }
+
+        #region Cancelボタン処理
+        /// <summary>
+        /// Cancelボタン処理
+        /// </summary>
+        [Command]
+        public void CopyButton()
+        {
+            Clipboard.SetText(this.Propertys.Text);
+        }
+        #endregion
 
         /// <summary>
         /// パラメーター
@@ -42,5 +55,9 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class KeyDispWindowViewModelCommand
     {
+        /// <summary>
+        /// OkButtonコマンド
+        /// </summary>
+        public TacticsCommand CopyButton { get; set; }
     }
 }

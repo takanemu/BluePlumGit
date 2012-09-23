@@ -37,6 +37,7 @@ namespace BluePlumGit.ViewModels
     using NGit.Util;
     using Sharpen;
     using Common.Library.Enums;
+    using System.Text;
 
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
     {
@@ -495,22 +496,22 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
-        private readonly FilePath trash = new FilePath(new FilePath("target"), "trash");
+        //private readonly FilePath trash = new FilePath(new FilePath("target"), "trash");
 
-        protected internal virtual FilePath CreateTempDirectory(string name)
-        {
-            string gitdirName = CreateUniqueTestFolderPrefix();
-            FilePath parent = new FilePath(trash, gitdirName);
-            FilePath directory = new FilePath(parent, name);
-            FileUtils.Mkdirs(directory);
+        //protected internal virtual FilePath CreateTempDirectory(string name)
+        //{
+        //    string gitdirName = CreateUniqueTestFolderPrefix();
+        //    FilePath parent = new FilePath(trash, gitdirName);
+        //    FilePath directory = new FilePath(parent, name);
+        //    FileUtils.Mkdirs(directory);
 
-            return directory.GetCanonicalFile();
-        }
+        //    return directory.GetCanonicalFile();
+        //}
 
-        private string CreateUniqueTestFolderPrefix()
-        {
-            return System.Guid.NewGuid().ToString();
-        }
+        //private string CreateUniqueTestFolderPrefix()
+        //{
+        //    return System.Guid.NewGuid().ToString();
+        //}
 
         #region 公開鍵の作成
         /// <summary>
@@ -575,11 +576,21 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
+        /// <summary>
+        /// 鍵表示ウインドウのオープン
+        /// </summary>
+        /// <param name="keyfile"></param>
         private void OpenKeyDispWindow(FilePath keyfile)
         {
+            StreamReader sr = new StreamReader("RSAKey", Encoding.UTF8);
+
+            string text = sr.ReadToEnd();
+
+            sr.Close();
+
             RSAKeyEntity key = new RSAKeyEntity
             {
-                Text = "aaaaaaaaaaaaaaaaaa",
+                Text = text,
             };
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
