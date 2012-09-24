@@ -8,12 +8,19 @@
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
         WindowStartupLocation="CenterOwner"
         Title="リポジトリの削除"
-        Width="525"
-        Height="350">
+        Width="300"
+        Height="100">
 
     <Window.DataContext>
         <vm:RemoveRepositoryWindowViewModel />
     </Window.DataContext>
 
-    <Grid />
+    <Grid Margin="5,0" >
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition/>
+    		<ColumnDefinition Width="75"/>
+    	</Grid.ColumnDefinitions>
+    	<ComboBox VerticalAlignment="Center" Margin="0,0,5,0"/>
+    	<Button Content="削除" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Grid.Column="1"/>
+    </Grid>
 </Window>

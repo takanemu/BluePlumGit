@@ -38,6 +38,7 @@ namespace BluePlumGit.ViewModels
     using Sharpen;
     using Common.Library.Enums;
     using System.Text;
+    using NGit.Transport;
 
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
     {
@@ -394,7 +395,7 @@ namespace BluePlumGit.ViewModels
                     CloneCommand command = Git.CloneRepository();
 
                     command.SetDirectory(directory);
-                    command.SetURI("https://github.com/takanemu/BluePlumGit.git");
+                    command.SetURI("git@192.168.11.47:livetsample.git");
                     command.Call();
                 }
                 else
