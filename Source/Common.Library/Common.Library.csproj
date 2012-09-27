@@ -34,6 +34,9 @@
     <Reference Include="Livet">
       <HintPath>..\InfrastructureAssemblies\Livet.dll</HintPath>
     </Reference>
+    <Reference Include="NGit">
+      <HintPath>..\InfrastructureAssemblies\NGit.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -54,6 +57,7 @@
     <Compile Include="Enums\WindowTypeEnum.cs" />
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\RepositotyUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GordiasClassLibrary\GordiasClassLibrary.csproj">

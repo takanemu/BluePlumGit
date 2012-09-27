@@ -39,6 +39,7 @@ namespace BluePlumGit.ViewModels
     using Common.Library.Enums;
     using System.Text;
     using NGit.Transport;
+    using BluePlumGit.Utility;
 
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
     {
@@ -257,7 +258,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         private void SyncCurrentBranch2Combobox()
         {
-            string name = this.git.GetRepository().GetBranch();
+            string name = RepositotyUtility.GetCurrentBranch(this.git);
 
             foreach (BranchEntity entity in this.branchCollection)
             {
@@ -326,7 +327,6 @@ namespace BluePlumGit.ViewModels
                     BranchEntity entity = (BranchEntity)message.Response.Result;
 
                     this.git.BranchCreate().SetName(entity.Name).Call();
-
                     this.UpdateBranchList();
                 }
             }
@@ -349,8 +349,21 @@ namespace BluePlumGit.ViewModels
 
             if (message.Response != null)
             {
-                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.DELETE)
                 {
+                    BranchEntity entity = (BranchEntity)message.Response.Result;
+
+                    string[] names = { entity.Name };
+
+                    try
+                    {
+                        this.git.BranchDelete().SetBranchNames(names).Call();
+                        this.UpdateBranchList();
+                    }
+                    catch (NGit.Api.Errors.NotMergedException exception)
+                    {
+                        MessageBox.Show("注意：マージされていないブランチを削除することは制限されています。\n強制的に削除したい場合には、強制削除のチェックボックをオンにしてください。");
+                    }
                 }
             }
         }

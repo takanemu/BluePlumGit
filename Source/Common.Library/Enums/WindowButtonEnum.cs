@@ -27,6 +27,7 @@ namespace Common.Library.Enums
     public enum WindowButtonEnum
     {
         OK,
-        CANCEL
+        CANCEL,
+        DELETE,
     }
 }

@@ -33,6 +33,8 @@ namespace BluePlumGit.ViewModels
     using NGit;
     using NGit.Api;
     using System.IO;
+    using BluePlumGit.Utility;
+    using Common.Library.Enums;
 
     /// <summary>
     /// ブランチの削除
@@ -96,7 +98,11 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void RemoveButton()
         {
-            this.Propertys.CanClose = true;
+            this.Responce = new WindowResultEntity
+            {
+                Button = WindowButtonEnum.DELETE,
+                Result = this.BranchCollectionView.CurrentItem,
+            };
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -107,6 +113,7 @@ namespace BluePlumGit.ViewModels
         private void UpdateBranchList()
         {
             IList<Ref> list = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+            string current = RepositotyUtility.GetCurrentBranch(this.git);
 
             this.branchCollection.Clear();
 
@@ -118,9 +125,11 @@ namespace BluePlumGit.ViewModels
                     Name = Path.GetFileName(branch.GetName()),
                     Path = branch.GetName(),
                 };
-                this.branchCollection.Add(be);
+                if (current != be.Name)
+                {
+                    this.branchCollection.Add(be);
+                }
             }
-            // TODO:カレントブランチの排除
             this.BranchCollectionView.MoveCurrentToFirst();
         }
 
@@ -141,11 +150,6 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class RemoveBranchWindowViewModelProperty : TacticsProperty
     {
-        /// <summary>
-        /// CanClose
-        /// </summary>
-        public virtual bool CanClose { get; set; }
-
         /// <summary>
         /// ブランチ名
         /// </summary>
