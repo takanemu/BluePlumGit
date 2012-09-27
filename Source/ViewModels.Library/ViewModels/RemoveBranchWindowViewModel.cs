@@ -21,17 +21,114 @@ namespace BluePlumGit.ViewModels
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text;
-    using GordiasClassLibrary.Interface;
-    using GordiasClassLibrary.Headquarters;
+    using BluePlumGit.Entitys;
+    using GordiasClassLibrary.Collections;
     using GordiasClassLibrary.Entitys;
+    using GordiasClassLibrary.Headquarters;
+    using GordiasClassLibrary.Interface;
+    using Livet.Messaging.Windows;
+    using NGit;
+    using NGit.Api;
+    using System.IO;
 
     /// <summary>
     /// ブランチの削除
     /// </summary>
-    public class RemoveBranchWindowViewModel : TacticsViewModel<RemoveBranchWindowViewModelProperty, RemoveBranchWindowViewModelCommand>, IWindowResult
+    public class RemoveBranchWindowViewModel : TacticsViewModel<RemoveBranchWindowViewModelProperty, RemoveBranchWindowViewModelCommand>, IWindowParameter, IWindowResult
     {
+        /// <summary>
+        /// カレントリポジトリ
+        /// </summary>
+        private Git git;
+
+        /// <summary>
+        /// ブランチリスト
+        /// </summary>
+        private CleanupObservableCollection<BranchEntity> branchCollection;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public RemoveBranchWindowViewModel()
+        {
+            this.branchCollection = new CleanupObservableCollection<BranchEntity>();
+        }
+
+        #region Initializeメソッド
+        /// <summary>
+        /// Initializeメソッド
+        /// </summary>
+        public void Initialize()
+        {
+        }
+        #endregion
+
+        #region Loadedメソッド
+        /// <summary>
+        /// Loadedメソッド
+        /// </summary>
+        public void Loaded()
+        {
+            this.git = (Git)this.Parameter;
+
+            this.UpdateBranchList();
+        }
+        #endregion
+
+        /// <summary>
+        /// ブランチコレクションのプロパティ
+        /// </summary>
+        public ICollectionView BranchCollectionView
+        {
+            get
+            {
+                return this.branchCollection.View;
+            }
+        }
+
+        #region 削除ボタン処理
+        /// <summary>
+        /// 削除ボタン処理
+        /// </summary>
+        [Command]
+        private void RemoveButton()
+        {
+            this.Propertys.CanClose = true;
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+        }
+        #endregion
+
+        /// <summary>
+        /// ブランチリストの更新
+        /// </summary>
+        private void UpdateBranchList()
+        {
+            IList<Ref> list = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+
+            this.branchCollection.Clear();
+
+            foreach (Ref branch in list)
+            {
+                BranchEntity be = new BranchEntity
+                {
+                    ID = 0,
+                    Name = Path.GetFileName(branch.GetName()),
+                    Path = branch.GetName(),
+                };
+                this.branchCollection.Add(be);
+            }
+            // TODO:カレントブランチの排除
+            this.BranchCollectionView.MoveCurrentToFirst();
+        }
+
+        /// <summary>
+        /// パラメーター
+        /// </summary>
+        public object Parameter { get; set; }
+
         /// <summary>
         /// 戻り値
         /// </summary>
@@ -44,6 +141,15 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class RemoveBranchWindowViewModelProperty : TacticsProperty
     {
+        /// <summary>
+        /// CanClose
+        /// </summary>
+        public virtual bool CanClose { get; set; }
+
+        /// <summary>
+        /// ブランチ名
+        /// </summary>
+        public virtual string BranceName { get; set; }
     }
     #endregion
 
@@ -53,6 +159,10 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class RemoveBranchWindowViewModelCommand
     {
+        /// <summary>
+        /// 削除Buttonコマンド
+        /// </summary>
+        public TacticsCommand RemoveButton { get; set; }
     }
     #endregion
 }

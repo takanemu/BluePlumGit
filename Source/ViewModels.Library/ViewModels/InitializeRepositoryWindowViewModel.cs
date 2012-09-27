@@ -26,6 +26,7 @@ namespace BluePlumGit.ViewModels
     using GordiasClassLibrary.Interface;
     using Livet.Commands;
     using Livet.Messaging.Windows;
+    using Livet.Messaging.IO;
 
     /// <summary>
     /// リポジトリ初期化ビューモデル
@@ -104,6 +105,15 @@ namespace BluePlumGit.ViewModels
             // TODO:自分で閉じる方法が無い？
         }
         #endregion
+
+        /// <summary>
+        /// フォルダーの選択
+        /// </summary>
+        /// <param name="message">フォルダー選択メッセージ</param>
+        public void FolderSelected(FolderSelectionMessage message)
+        {
+            this.Propertys.FolderPath = message.Response;
+        }
 
         /// <summary>
         /// 戻り値

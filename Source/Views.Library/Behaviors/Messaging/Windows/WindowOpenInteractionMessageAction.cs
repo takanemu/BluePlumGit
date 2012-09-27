@@ -59,7 +59,8 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
                 context.Parameter = windowOpenMessage.Parameter;
             }
 
-            Nullable<bool> dialogResult = window.ShowDialog();
+            //Nullable<bool> dialogResult = window.ShowDialog();
+            window.ShowDialog();
 
             IWindowResult viewModel = window.DataContext as IWindowResult;
 
@@ -89,6 +90,9 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
                     break;
                 case WindowTypeEnum.CREATE_BRANCH:
                     result = new CreateBranchWindow();
+                    break;
+                case WindowTypeEnum.REMOVE_BRANCH:
+                    result = new RemoveBranchWindow();
                     break;
                 case WindowTypeEnum.KEYDISP:
                     result = new KeyDispWindow();

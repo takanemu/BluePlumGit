@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluePlumGit", "BluePlumGit.csproj", "{A7AF152F-4B39-4B4E-BB21-06B60FCD8A08}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Views.Library", "Views.Library\Views.Library.csproj", "{A05F7AF6-727A-4D9A-829C-C6B52E3ADA66}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D43AFC5-70B6-4553-98B7-42ED6F0C2AAB} = {0D43AFC5-70B6-4553-98B7-42ED6F0C2AAB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels.Library", "ViewModels.Library\ViewModels.Library.csproj", "{FB6ACE27-7598-4351-AC4F-3BFC912E19D7}"
 EndProject

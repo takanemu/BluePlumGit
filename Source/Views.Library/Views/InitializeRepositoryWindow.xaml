@@ -80,7 +80,7 @@
                            Height="20"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
-                           Text="作成場所："
+                           Text="場所："
                            TextAlignment="Right"
                            TextWrapping="Wrap"
                            d:LayoutOverrides="HorizontalAlignment" />

@@ -31,6 +31,7 @@ namespace BluePlumGit.Enums
     {
         INITIALIZE,
         CREATE_BRANCH,
+        REMOVE_BRANCH,
         KEYDISP,
     }
 }

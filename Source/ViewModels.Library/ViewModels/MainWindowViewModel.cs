@@ -147,25 +147,8 @@ namespace BluePlumGit.ViewModels
                 }
                 this.RepositoryCollectionView.MoveCurrentToPosition(0);
 
-                RepositoryEntity selectedRepository = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
-
-                FileRepository db = new FileRepository(selectedRepository.Path);
-
-                this.git = new Git(db);
-
-                IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
-
-                foreach (Ref branch in list)
-                {
-                    BranchEntity be = new BranchEntity
-                    {
-                        ID = 0,
-                        Name = Path.GetFileName(branch.GetName()),
-                        Path = branch.GetName(),
-                    };
-                    this.branchCollection.Add(be);
-                }
-                this.SyncCurrentBranch2Combobox();
+                this.git = this.GetCurrentRepository();
+                this.UpdateBranchList();
             }
         }
         #endregion
@@ -357,6 +340,19 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void RemoveBranch()
         {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.REMOVE_BRANCH,
+                Parameter = this.git,
+            });
+
+            if (message.Response != null)
+            {
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
+                {
+                }
+            }
         }
         #endregion
 
@@ -500,6 +496,11 @@ namespace BluePlumGit.ViewModels
         /// <param name="e">イベントパラメーター</param>
         private void RepositoryCollectionViewCurrentChangedHandler(object sender, EventArgs e)
         {
+            if(this.git == null)
+            {
+                this.git = GetCurrentRepository();
+            }
+            this.UpdateBranchList();
         }
 
         /// <summary>
@@ -511,9 +512,11 @@ namespace BluePlumGit.ViewModels
         {
             BranchEntity entity = (BranchEntity)this.BranchCollectionView.CurrentItem;
 
-            this.git.Checkout().SetName(entity.Name).Call();
+            if (entity != null)
+            {
+                this.git.Checkout().SetName(entity.Name).Call();
+            }
         }
-
     }
 
     #region プロパティクラス
