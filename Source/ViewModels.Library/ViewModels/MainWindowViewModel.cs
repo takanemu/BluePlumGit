@@ -146,7 +146,7 @@ namespace BluePlumGit.ViewModels
                 {
                     this.repositorysCollection.Add(item);
                 }
-                this.RepositoryCollectionView.MoveCurrentToPosition(0);
+                this.RepositoryCollectionView.MoveCurrentToFirst();
 
                 this.git = this.GetCurrentRepository();
                 this.UpdateBranchList();
@@ -172,9 +172,7 @@ namespace BluePlumGit.ViewModels
                 InitializeRepositoryEntity initializeRepositoryEntity = (InitializeRepositoryEntity)message.Response.Result;
                 RepositoryEntity entity = initializeRepositoryEntity.Entity;
 
-                string gitdirName = entity.Path + "/" + Constants.DOT_GIT;
-
-                FilePath gitdir = new FilePath(gitdirName);
+                FilePath gitdir = new FilePath(entity.Path);
 
                 if (initializeRepositoryEntity.Mode == InitializeRepositoryEnum.EntryOnly)
                 {
@@ -278,7 +276,9 @@ namespace BluePlumGit.ViewModels
         {
             RepositoryEntity selectedRepository = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
 
-            FileRepository db = new FileRepository(selectedRepository.Path);
+            FilePath path = new FilePath(selectedRepository.Path);
+
+            FileRepository db = new FileRepository(path);
 
             Git git = new Git(db);
 
@@ -509,10 +509,8 @@ namespace BluePlumGit.ViewModels
         /// <param name="e">イベントパラメーター</param>
         private void RepositoryCollectionViewCurrentChangedHandler(object sender, EventArgs e)
         {
-            if(this.git == null)
-            {
-                this.git = GetCurrentRepository();
-            }
+            this.git = this.GetCurrentRepository();
+
             this.UpdateBranchList();
         }
 

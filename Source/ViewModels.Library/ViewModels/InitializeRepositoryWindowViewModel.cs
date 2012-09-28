@@ -25,8 +25,9 @@ namespace BluePlumGit.ViewModels
     using GordiasClassLibrary.Headquarters;
     using GordiasClassLibrary.Interface;
     using Livet.Commands;
-    using Livet.Messaging.Windows;
     using Livet.Messaging.IO;
+    using Livet.Messaging.Windows;
+    using NGit;
 
     /// <summary>
     /// リポジトリ初期化ビューモデル
@@ -62,7 +63,7 @@ namespace BluePlumGit.ViewModels
             RepositoryEntity repositoryEntity = new RepositoryEntity
             {
                 Name = this.Propertys.RepositoyName,
-                Path = this.Propertys.FolderPath,
+                Path = this.Propertys.FolderPath + "/" + Constants.DOT_GIT,
             };
 
             InitializeRepositoryEntity initializeRepositoryEntity = new InitializeRepositoryEntity
