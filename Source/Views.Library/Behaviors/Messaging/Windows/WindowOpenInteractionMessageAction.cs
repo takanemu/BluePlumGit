@@ -85,8 +85,11 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
 
             switch (type)
             {
-                case WindowTypeEnum.INITIALIZE:
+                case WindowTypeEnum.ENTORY_REPOSITORY:
                     result = new InitializeRepositoryWindow();
+                    break;
+                case WindowTypeEnum.REMOVE_REPOSITORY:
+                    result = new RemoveRepositoryWindow();
                     break;
                 case WindowTypeEnum.CREATE_BRANCH:
                     result = new CreateBranchWindow();

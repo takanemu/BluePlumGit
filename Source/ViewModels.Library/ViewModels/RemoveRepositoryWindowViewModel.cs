@@ -23,15 +23,90 @@ namespace BluePlumGit.ViewModels
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using BluePlumGit.Entitys;
+    using GordiasClassLibrary.Collections;
+    using GordiasClassLibrary.Entitys;
     using GordiasClassLibrary.Headquarters;
     using GordiasClassLibrary.Interface;
-    using GordiasClassLibrary.Entitys;
+    using System.ComponentModel;
+    using Common.Library.Enums;
+    using Livet.Messaging.Windows;
 
     /// <summary>
     /// リポジトリ削除ビューモデル
     /// </summary>
-    public class RemoveRepositoryWindowViewModel : TacticsViewModel<RemoveRepositoryWindowViewModelProperty, RemoveRepositoryWindowViewModelCommand>, IWindowResult
+    public class RemoveRepositoryWindowViewModel : TacticsViewModel<RemoveRepositoryWindowViewModelProperty, RemoveRepositoryWindowViewModelCommand>, IWindowParameter, IWindowResult
     {
+        /// <summary>
+        /// 登録リポジトリリスト
+        /// </summary>
+        private CleanupObservableCollection<RepositoryEntity> repositorysCollection;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public RemoveRepositoryWindowViewModel()
+        {
+            this.repositorysCollection = new CleanupObservableCollection<RepositoryEntity>();
+        }
+
+        /// <summary>
+        /// リポジトリコレクションビューのプロパティ
+        /// </summary>
+        public ICollectionView RepositoryCollectionView
+        {
+            get
+            {
+                return this.repositorysCollection.View;
+            }
+        }
+
+        #region Initializeメソッド
+        /// <summary>
+        /// Initializeメソッド
+        /// </summary>
+        public void Initialize()
+        {
+        }
+        #endregion
+
+        #region Loadedメソッド
+        /// <summary>
+        /// Loadedメソッド
+        /// </summary>
+        public void Loaded()
+        {
+            List<RepositoryEntity> list = (List<RepositoryEntity>)this.Parameter;
+
+            foreach(var item in list)
+            {
+                this.repositorysCollection.Add(item);
+            }
+            this.RepositoryCollectionView.MoveCurrentToFirst();
+        }
+        #endregion
+
+        #region 削除ボタン処理
+        /// <summary>
+        /// 削除ボタン処理
+        /// </summary>
+        [Command]
+        private void RemoveButton()
+        {
+            this.Responce = new WindowResultEntity
+            {
+                Button = WindowButtonEnum.DELETE,
+                Result = this.RepositoryCollectionView.CurrentItem,
+            };
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+        }
+        #endregion
+
+        /// <summary>
+        /// パラメーター
+        /// </summary>
+        public object Parameter { get; set; }
+
         /// <summary>
         /// 戻り値
         /// </summary>
@@ -53,6 +128,10 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class RemoveRepositoryWindowViewModelCommand
     {
+        /// <summary>
+        /// 削除Buttonコマンド
+        /// </summary>
+        public TacticsCommand RemoveButton { get; set; }
     }
     #endregion
 }

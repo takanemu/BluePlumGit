@@ -23,23 +23,24 @@ namespace BluePlumGit.ViewModels
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
+    using System.Linq;
+    using System.Text;
     using System.Windows;
     using BluePlumGit.Entitys;
     using BluePlumGit.Enums;
     using BluePlumGit.Messaging.Windows;
     using BluePlumGit.Models;
+    using BluePlumGit.Utility;
+    using Common.Library.Enums;
     using GordiasClassLibrary.Collections;
     using GordiasClassLibrary.Headquarters;
     using Livet.Commands;
     using NGit;
     using NGit.Api;
     using NGit.Storage.File;
+    using NGit.Transport;
     using NGit.Util;
     using Sharpen;
-    using Common.Library.Enums;
-    using System.Text;
-    using NGit.Transport;
-    using BluePlumGit.Utility;
 
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
     {
@@ -164,7 +165,7 @@ namespace BluePlumGit.ViewModels
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
-                WindowType = WindowTypeEnum.INITIALIZE,
+                WindowType = WindowTypeEnum.ENTORY_REPOSITORY,
             });
 
             if (message.Response != null)
@@ -222,6 +223,20 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void RepositoryRemove()
         {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.REMOVE_REPOSITORY,
+                Parameter = this.repositorysCollection.ToList(),
+            });
+            
+            if (message.Response != null)
+            {
+                RepositoryEntity entity = (RepositoryEntity)message.Response.Result;
+
+                // dbの削除
+                this._model.RemoveRepository(entity.ID);
+            }
         }
         #endregion
 

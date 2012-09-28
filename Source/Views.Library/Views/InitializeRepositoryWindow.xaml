@@ -43,7 +43,6 @@
     </i:Interaction.Triggers>
 
     <i:Interaction.Behaviors>
-        <l:WindowCloseCancelBehavior CanClose="{Binding Propertys.CanClose}" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
         <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
     </i:Interaction.Behaviors>
 

@@ -15,12 +15,40 @@
         <vm:RemoveRepositoryWindowViewModel />
     </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <!--  WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます  -->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodName="Initialize" MethodTarget="{Binding}" />
+        </i:EventTrigger>
+
+        <!--  Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます  -->
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction />
+        </i:EventTrigger>
+
+        <!--  WindowのLoadedイベントのタイミングでViewModelのLoadedメソッドが呼ばれます  -->
+        <i:EventTrigger>
+            <l:LivetCallMethodAction MethodName="Loaded" MethodTarget="{Binding}" />
+        </i:EventTrigger>
+
+        <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <i:Interaction.Behaviors>
+        <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
+    </i:Interaction.Behaviors>
+
     <Grid Margin="5,0" >
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition/>
     		<ColumnDefinition Width="75"/>
     	</Grid.ColumnDefinitions>
-    	<ComboBox VerticalAlignment="Center" Margin="0,0,5,0"/>
-    	<Button Content="削除" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Grid.Column="1"/>
+        <ComboBox VerticalAlignment="Center" Margin="0,0,5,0"
+                  DisplayMemberPath="Name"
+                  ItemsSource="{Binding Path=RepositoryCollectionView}"/>
+    	<Button Content="削除" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Grid.Column="1"
+                                Command="{Binding Commands.RemoveButton}"/>
     </Grid>
 </Window>

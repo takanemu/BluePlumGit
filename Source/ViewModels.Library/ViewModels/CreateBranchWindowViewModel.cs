@@ -68,8 +68,6 @@ namespace BluePlumGit.ViewModels
                 Result = branch,
             };
             this.Responce = windowResultEntity;
-
-            this.Propertys.CanClose = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -81,7 +79,6 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void CancelButton()
         {
-            this.Propertys.CanClose = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -98,11 +95,6 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class CreateBranchWindowViewModelProperty : TacticsProperty
     {
-        /// <summary>
-        /// CanClose
-        /// </summary>
-        public virtual bool CanClose { get; set; }
-
         /// <summary>
         /// ブランチ名
         /// </summary>

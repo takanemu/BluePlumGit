@@ -109,6 +109,20 @@ namespace BluePlumGit.Models
             ta.Update(repositorys);  
         }
 
+        public void RemoveRepository(long id)
+        {
+            var ta = new RepositorysTableAdapter();
+            var repositorys = ta.GetData();
+
+            BluePlumGit.RepositorysDataSet.RepositorysRow row = repositorys.FindByid(id);
+
+            if (row != null)
+            {
+                row.Delete();
+                ta.Update(repositorys);
+            }
+        }
+
         public int GetRepositoryCount()
         {
             var ta = new RepositorysTableAdapter();

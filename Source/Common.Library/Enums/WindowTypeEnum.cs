@@ -29,7 +29,8 @@ namespace BluePlumGit.Enums
     /// </summary>
     public enum WindowTypeEnum
     {
-        INITIALIZE,
+        ENTORY_REPOSITORY,
+        REMOVE_REPOSITORY,
         CREATE_BRANCH,
         REMOVE_BRANCH,
         KEYDISP,

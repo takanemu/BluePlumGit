@@ -78,7 +78,6 @@ namespace BluePlumGit.ViewModels
                 Result = initializeRepositoryEntity,
             };
             this.Responce = windowResultEntity;
-            this.Propertys.CanClose = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -90,7 +89,6 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void CancelButton()
         {
-            this.Propertys.CanClose = true;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
             this.Responce = null;
         }
@@ -137,11 +135,6 @@ namespace BluePlumGit.ViewModels
         /// FolderPath
         /// </summary>
         public virtual string FolderPath { get; set; }
-
-        /// <summary>
-        /// CanClose
-        /// </summary>
-        public virtual bool CanClose { get; set; }
 
         /// <summary>
         /// 登録のみ
