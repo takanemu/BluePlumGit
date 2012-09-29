@@ -42,6 +42,9 @@ namespace BluePlumGit.ViewModels
     using NGit.Util;
     using Sharpen;
 
+    /// <summary>
+    /// メインウインドウビューモデル
+    /// </summary>
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
     {
         /*コマンド、プロパティの定義にはそれぞれ 
@@ -402,29 +405,62 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void RemoteRepositoryClone()
         {
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
-
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-
-            if (System.Windows.Forms.DialogResult.OK == result)
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
-                string gitdirName = dialog.SelectedPath + "/" + Constants.DOT_GIT;
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.CLONE_REPOSITORY,
+            });
 
-                FilePath gitdir = new FilePath(gitdirName);
-
-                if (!gitdir.Exists())
+            if (message.Response != null)
+            {
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
                 {
-                    FilePath directory = gitdir.GetCanonicalFile();
+                    CloneEntity entity = (CloneEntity)message.Response.Result;
+                    string gitdirName = Path.Combine(entity.Path, Constants.DOT_GIT);
+                    FilePath gitdir = new FilePath(gitdirName);
+                    
+                    if (!gitdir.Exists())
+                    {
+                        FilePath directory = entity.Path;
+                        CloneCommand clone = Git.CloneRepository();
 
-                    CloneCommand command = Git.CloneRepository();
+                        clone.SetBare(false);
+                        clone.SetCloneAllBranches(true);
+                        clone.SetDirectory(directory);
+                        clone.SetURI(entity.Url);
+                        //clone.SetRemote(entity.Url);
 
-                    command.SetDirectory(directory);
-                    command.SetURI("git@192.168.11.47:livetsample.git");
-                    command.Call();
-                }
-                else
-                {
-                    MessageBox.Show(".gitディレクトリが、既に存在します。");
+                        BluePlumGit.Library.ProgressMonitor monitor = new BluePlumGit.Library.ProgressMonitor();
+
+                        clone.SetProgressMonitor(monitor);
+
+
+                        //UsernamePasswordCredentialsProvider user = new UsernamePasswordCredentialsProvider("", "");
+
+                        //clone.SetCredentialsProvider(user);
+
+                        // TODO:UIスレッドをブロックしないように、ワーカースレッド化する
+                        clone.Call();
+
+
+                        RepositoryEntity repository = new RepositoryEntity
+                        {
+                            ID = this._model.GetRepositoryCount() + 1,
+                            Name = entity.Name,
+                            Path = gitdir,
+                        };
+
+                        // dbの登録
+                        this._model.AddRepository(repository.ID, repository.Name, repository.Path);
+
+                        // リスト追加
+                        this.repositorysCollection.Add(repository);
+                        this.RepositoryCollectionView.MoveCurrentTo(repository);
+                    }
+                    else
+                    {
+                        MessageBox.Show(".gitディレクトリが、既に存在します。");
+                    }
                 }
             }
         }

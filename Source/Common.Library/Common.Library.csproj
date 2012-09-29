@@ -50,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitys\BranchEntity.cs" />
+    <Compile Include="Entitys\CloneEntity.cs" />
     <Compile Include="Entitys\InitializeRepositoryEntity.cs" />
     <Compile Include="Entitys\RepositoryEntity.cs" />
     <Compile Include="Entitys\RSAKeyEntity.cs" />
     <Compile Include="Enums\WindowButtonEnum.cs" />
     <Compile Include="Enums\WindowTypeEnum.cs" />
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
+    <Compile Include="ProgressMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\RepositotyUtility.cs" />
   </ItemGroup>

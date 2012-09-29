@@ -31,6 +31,7 @@ namespace BluePlumGit.Enums
     {
         ENTORY_REPOSITORY,
         REMOVE_REPOSITORY,
+        CLONE_REPOSITORY,
         CREATE_BRANCH,
         REMOVE_BRANCH,
         KEYDISP,
