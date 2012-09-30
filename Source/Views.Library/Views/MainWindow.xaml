@@ -84,57 +84,74 @@
                       
                       SelectedValuePath="ID" />
         </StackPanel>
-        <StackPanel Grid.Row="1"
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" 
                     Margin="5,0,5,5"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal"
                     d:LayoutOverrides="Height">
-            <StackPanel Width="150"
-                        Margin="0,0,5,0"
-                        Orientation="Vertical">
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.RepositoryRegistration,
-                                          Mode=OneWay}"
-                        Content="リポジトリ登録"
-                        ToolTip="リポジトリの追加登録および初期化して登録" />
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.RepositoryRemove,
-                                          Mode=OneWay}"
-                        Content="リポジトリ削除"
-                        ToolTip="リポジトリの登録解除" />
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.RemoteRepositoryClone}"
-                        Content="複製"
-                        ToolTip="リモートリポジトリをローカルファイル複製"/>
-                <Button Height="23"
-                	Margin="0,0,0,5"
-                	Content="設定" Command="{Binding Commands.Config}" />
+                <StackPanel Width="150"
+                            Margin="0,0,5,0"
+                            Orientation="Vertical">
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.RepositoryRegistration,
+                                              Mode=OneWay}"
+                            Content="リポジトリ登録"
+                            ToolTip="リポジトリの追加登録および初期化して登録" />
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.RepositoryRemove,
+                                              Mode=OneWay}"
+                            Content="リポジトリ削除"
+                            ToolTip="リポジトリの登録解除" />
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.RemoteRepositoryClone}"
+                            Content="複製"
+                            ToolTip="リモートリポジトリをローカルファイル複製"/>
+                    <Button Height="23"
+                	    Margin="0,0,0,5"
+                	    Content="設定" Command="{Binding Commands.Config}" />
+                </StackPanel>
+                <StackPanel Width="150">
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.CreateBranch}"
+                            Content="ブランチ作成"
+                            ToolTip="ブランチの作成" />
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.RemoveBranch}"
+                            Content="ブランチ削除"
+                            ToolTip="ブランチの削除"/>
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.Commit}"
+                            Content="コミット" />
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.KeypairGeneration}"
+                            Content="鍵作成"
+                            ToolTip="公開鍵キーペアの作成"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Width="150">
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.CreateBranch}"
-                        Content="ブランチ作成"
-                        ToolTip="ブランチの作成" />
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.RemoveBranch}"
-                        Content="ブランチ削除"
-                        ToolTip="ブランチの削除"/>
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.Commit}"
-                        Content="コミット" />
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Command="{Binding Commands.KeypairGeneration}"
-                        Content="鍵作成"
-                        ToolTip="公開鍵キーペアの作成"/>
-            </StackPanel>
-        </StackPanel>
+
+            <xctk:PropertyGrid Grid.Column="1" x:Name="_propertyGrid" Margin="5"
+                                        AutoGenerateProperties="False">
+                <xctk:PropertyGrid.PropertyDefinitions>
+                    <xctk:PropertyDefinition Name="FirstName" />
+                    <xctk:PropertyDefinition Name="FavoriteColor" />
+                    <xctk:PropertyDefinition Name="PetNames" />
+                </xctk:PropertyGrid.PropertyDefinitions>
+            </xctk:PropertyGrid>
+        </Grid>
 
         <xctk:BusyIndicator Grid.RowSpan="2" IsBusy="{Binding Propertys.IsBusyDialog}" BusyContent="{Binding}" DisplayAfter="0">
             <xctk:BusyIndicator.BusyContentTemplate>

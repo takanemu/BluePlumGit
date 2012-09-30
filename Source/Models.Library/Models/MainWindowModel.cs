@@ -147,7 +147,24 @@ namespace BluePlumGit.Models
 
             return repositorys.Rows.Count;
         }
-        
+
+        public int GetRepositoryNewId()
+        {
+            var ta = new RepositorysTableAdapter();
+            var repositorys = ta.GetData();
+
+            int result = -1;
+
+            for (int i = 0; i < int.MaxValue; i++)
+            {
+                if (repositorys.Rows.Find(i) == null)
+                {
+                    result = i;
+                    break;
+                }
+            }
+            return result;
+        }
 
         #region Complete変更通知プロパティ
         private bool complete;

@@ -42,6 +42,7 @@ namespace BluePlumGit.ViewModels
     using NGit.Util;
     using Sharpen;
     using BluePlumGit.Library;
+    using NGit.Api.Errors;
 
     /// <summary>
     /// メインウインドウビューモデル
@@ -92,21 +93,6 @@ namespace BluePlumGit.ViewModels
         /// カレントリポジトリ
         /// </summary>
         private Git git;
-
-        /// <summary>
-        /// タスクメッセージ
-        /// </summary>
-        private string busyIndicatorMessage;
-
-        /// <summary>
-        /// タスク数
-        /// </summary>
-        private int busyIndicatorTask;
-
-        /// <summary>
-        /// 処理カウンター
-        /// </summary>
-        private int busyIndicatorCounter;
 
         /// <summary>
         /// コンストラクタ
@@ -197,7 +183,7 @@ namespace BluePlumGit.ViewModels
                 if (initializeRepositoryEntity.Mode == InitializeRepositoryEnum.EntryOnly)
                 {
                     // リポジトリの登録のみ
-                    entity.ID = this.model.GetRepositoryCount() + 1;
+                    entity.ID = this.model.GetRepositoryNewId();
 
                     // dbの登録
                     this.model.AddRepository(entity.ID, entity.Name, gitdir);
@@ -217,7 +203,7 @@ namespace BluePlumGit.ViewModels
 
                         db.Create();
 
-                        entity.ID = this.model.GetRepositoryCount() + 1;
+                        entity.ID = this.model.GetRepositoryNewId();
 
                         // dbの登録
                         this.model.AddRepository(entity.ID, entity.Name, gitdir);
@@ -255,6 +241,13 @@ namespace BluePlumGit.ViewModels
 
                 // dbの削除
                 this.model.RemoveRepository(entity.ID);
+
+                // リスト削除
+                if (this.RepositoryCollectionView.CurrentItem == entity)
+                {
+                    this.RepositoryCollectionView.MoveCurrentToFirst();
+                }
+                this.repositorysCollection.Remove(entity);
             }
         }
         #endregion
@@ -310,6 +303,10 @@ namespace BluePlumGit.ViewModels
         {
             RepositoryEntity selectedRepository = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
 
+            if (selectedRepository == null)
+            {
+                return null;
+            }
             FilePath path = new FilePath(selectedRepository.Path);
 
             FileRepository db = new FileRepository(path);
@@ -324,6 +321,11 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         private void UpdateBranchList()
         {
+            if (this.git == null)
+            {
+                this.branchCollection.Clear();
+                return;
+            }
             IList<Ref> list = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
 
             this.branchCollection.Clear();
@@ -588,7 +590,14 @@ namespace BluePlumGit.ViewModels
 
             if (entity != null)
             {
-                this.git.Checkout().SetName(entity.Name).Call();
+                try
+                {
+                    this.git.Checkout().SetName(entity.Name).Call();
+                }
+                catch (CheckoutConflictException exception)
+                {
+                    MessageBox.Show("チェックアウトに失敗しました。\nコミットしていない編集中のファイルが有る場合には、ブランチの切り替えはできません。\nコミットを済ませるか、一時保存機能を使用してください。");
+                }
             }
         }
 
@@ -598,26 +607,9 @@ namespace BluePlumGit.ViewModels
         /// <param name="title">タイトル</param>
         private void OpenBusyIndicator(string title)
         {
-            this.busyIndicatorCounter = 0;
-            this.busyIndicatorTask = 0;
-            this.busyIndicatorMessage = "";
             this.Propertys.BusyDialogMessageTitle = title;
-            this.Propertys.BusyDialogProgressMessage = "";
-            this.Propertys.BusyDialogPcent = 0;
             this.Propertys.IsBusyDialog = true;
         }
-
-        /// <summary>
-        /// インジケータータスク開始
-        /// </summary>
-        /// <param name="message">タスクメッセージ</param>
-        /// <param name="task">タスク数</param>
-        //private void BeginBusyIndicator(string message, int task)
-        //{
-        //    this.busyIndicatorCounter = 0;
-        //    this.busyIndicatorTask = task;
-        //    this.busyIndicatorMessage = message;
-        //}
 
         /// <summary>
         /// インジケーターの更新
