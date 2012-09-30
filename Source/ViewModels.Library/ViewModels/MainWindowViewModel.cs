@@ -41,6 +41,7 @@ namespace BluePlumGit.ViewModels
     using NGit.Transport;
     using NGit.Util;
     using Sharpen;
+    using BluePlumGit.Library;
 
     /// <summary>
     /// メインウインドウビューモデル
@@ -75,7 +76,7 @@ namespace BluePlumGit.ViewModels
         /// <summary>
         /// モデル
         /// </summary>
-        private MainWindowModel _model;
+        private MainWindowModel model;
 
         /// <summary>
         /// 登録リポジトリリスト
@@ -93,11 +94,26 @@ namespace BluePlumGit.ViewModels
         private Git git;
 
         /// <summary>
+        /// タスクメッセージ
+        /// </summary>
+        private string busyIndicatorMessage;
+
+        /// <summary>
+        /// タスク数
+        /// </summary>
+        private int busyIndicatorTask;
+
+        /// <summary>
+        /// 処理カウンター
+        /// </summary>
+        private int busyIndicatorCounter;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public MainWindowViewModel()
         {
-            this._model = new MainWindowModel();
+            this.model = new MainWindowModel();
 
             this.repositorysCollection = new CleanupObservableCollection<RepositoryEntity>();
             this.branchCollection = new CleanupObservableCollection<BranchEntity>();
@@ -142,7 +158,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public void Loaded()
         {
-            var result = _model.OpenDataBase();
+            var result = this.model.OpenDataBase();
 
             if (result.Count > 0)
             {
@@ -181,10 +197,10 @@ namespace BluePlumGit.ViewModels
                 if (initializeRepositoryEntity.Mode == InitializeRepositoryEnum.EntryOnly)
                 {
                     // リポジトリの登録のみ
-                    entity.ID = this._model.GetRepositoryCount() + 1;
+                    entity.ID = this.model.GetRepositoryCount() + 1;
 
                     // dbの登録
-                    this._model.AddRepository(entity.ID, entity.Name, gitdir);
+                    this.model.AddRepository(entity.ID, entity.Name, gitdir);
 
                     // リスト追加
                     this.repositorysCollection.Add(entity);
@@ -201,10 +217,10 @@ namespace BluePlumGit.ViewModels
 
                         db.Create();
 
-                        entity.ID = this._model.GetRepositoryCount() + 1;
+                        entity.ID = this.model.GetRepositoryCount() + 1;
 
                         // dbの登録
-                        this._model.AddRepository(entity.ID, entity.Name, gitdir);
+                        this.model.AddRepository(entity.ID, entity.Name, gitdir);
 
                         // リスト追加
                         this.repositorysCollection.Add(entity);
@@ -238,7 +254,7 @@ namespace BluePlumGit.ViewModels
                 RepositoryEntity entity = (RepositoryEntity)message.Response.Result;
 
                 // dbの削除
-                this._model.RemoveRepository(entity.ID);
+                this.model.RemoveRepository(entity.ID);
             }
         }
         #endregion
@@ -421,41 +437,37 @@ namespace BluePlumGit.ViewModels
                     
                     if (!gitdir.Exists())
                     {
-                        FilePath directory = entity.Path;
-                        CloneCommand clone = Git.CloneRepository();
 
-                        clone.SetBare(false);
-                        clone.SetCloneAllBranches(true);
-                        clone.SetDirectory(directory);
-                        clone.SetURI(entity.Url);
-                        //clone.SetRemote(entity.Url);
+                        BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
 
-                        BluePlumGit.Library.ProgressMonitor monitor = new BluePlumGit.Library.ProgressMonitor();
+                        monitor.StartAction = () =>
+                            {
+                                this.OpenBusyIndicator("リポジトリの複製中です。");
+                            };
+                        monitor.UpdateAction = (string taskName, int cmp, int totalWork, int pcnt) =>
+                            {
+                                this.UpdateBusyIndicator(taskName, cmp, totalWork, pcnt);
+                            };
+                        monitor.CompleteAction = () =>
+                            {
+                                this.CloseBusyIndicator();
 
-                        clone.SetProgressMonitor(monitor);
+                                this.model.CloneRepository(entity, monitor);
 
+                                RepositoryEntity repository = new RepositoryEntity
+                                {
+                                    ID = this.model.GetRepositoryCount() + 1,
+                                    Name = entity.Name,
+                                    Path = gitdir,
+                                };
 
-                        //UsernamePasswordCredentialsProvider user = new UsernamePasswordCredentialsProvider("", "");
+                                // dbの登録
+                                this.model.AddRepository(repository.ID, repository.Name, repository.Path);
 
-                        //clone.SetCredentialsProvider(user);
-
-                        // TODO:UIスレッドをブロックしないように、ワーカースレッド化する
-                        clone.Call();
-
-
-                        RepositoryEntity repository = new RepositoryEntity
-                        {
-                            ID = this._model.GetRepositoryCount() + 1,
-                            Name = entity.Name,
-                            Path = gitdir,
-                        };
-
-                        // dbの登録
-                        this._model.AddRepository(repository.ID, repository.Name, repository.Path);
-
-                        // リスト追加
-                        this.repositorysCollection.Add(repository);
-                        this.RepositoryCollectionView.MoveCurrentTo(repository);
+                                // リスト追加
+                                this.repositorysCollection.Add(repository);
+                                this.RepositoryCollectionView.MoveCurrentTo(repository);
+                            };
                     }
                     else
                     {
@@ -579,6 +591,51 @@ namespace BluePlumGit.ViewModels
                 this.git.Checkout().SetName(entity.Name).Call();
             }
         }
+
+        /// <summary>
+        /// インジケーターを表示する
+        /// </summary>
+        /// <param name="title">タイトル</param>
+        private void OpenBusyIndicator(string title)
+        {
+            this.busyIndicatorCounter = 0;
+            this.busyIndicatorTask = 0;
+            this.busyIndicatorMessage = "";
+            this.Propertys.BusyDialogMessageTitle = title;
+            this.Propertys.BusyDialogProgressMessage = "";
+            this.Propertys.BusyDialogPcent = 0;
+            this.Propertys.IsBusyDialog = true;
+        }
+
+        /// <summary>
+        /// インジケータータスク開始
+        /// </summary>
+        /// <param name="message">タスクメッセージ</param>
+        /// <param name="task">タスク数</param>
+        //private void BeginBusyIndicator(string message, int task)
+        //{
+        //    this.busyIndicatorCounter = 0;
+        //    this.busyIndicatorTask = task;
+        //    this.busyIndicatorMessage = message;
+        //}
+
+        /// <summary>
+        /// インジケーターの更新
+        /// </summary>
+        /// <param name="complete">処理完了数</param>
+        private void UpdateBusyIndicator(string taskName, int cmp, int totalWork, int pcnt)
+        {
+            this.Propertys.BusyDialogPcent = (double)pcnt;
+            this.Propertys.BusyDialogProgressMessage = string.Format("{0} {1}/{2} {3}%", taskName, cmp, totalWork, pcnt);
+        }
+
+        /// <summary>
+        /// インジケーターを閉じる
+        /// </summary>
+        private void CloseBusyIndicator()
+        {
+            this.Propertys.IsBusyDialog = false;
+        }
     }
 
     #region プロパティクラス
@@ -587,6 +644,25 @@ namespace BluePlumGit.ViewModels
     /// </summary>
     public class MainWindowViewModelProperty : TacticsProperty
     {
+        /// <summary>
+        /// IsBusyDialog
+        /// </summary>
+        public virtual bool IsBusyDialog { get; set; }
+
+        /// <summary>
+        /// BusyDialogMessageTitle
+        /// </summary>
+        public virtual string BusyDialogMessageTitle { get; set; }
+
+        /// <summary>
+        /// BusyDialogProgressMessage
+        /// </summary>
+        public virtual string BusyDialogProgressMessage { get; set; }
+
+        /// <summary>
+        /// BusyDialogPcent
+        /// </summary>
+        public virtual double BusyDialogPcent { get; set; }
     }
     #endregion
 

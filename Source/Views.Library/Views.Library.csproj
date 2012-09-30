@@ -57,6 +57,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\InfrastructureAssemblies\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\Messaging\Windows\WindowOpenInteractionMessageAction.cs" />

@@ -9,6 +9,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="MainWindow"
         Width="525"
         WindowStartupLocation="CenterScreen"
@@ -103,23 +104,16 @@
                                           Mode=OneWay}"
                         Content="リポジトリ削除"
                         ToolTip="リポジトリの登録解除" />
-
                 <Button Height="23"
                         Margin="0,0,0,5"
                         Command="{Binding Commands.RemoteRepositoryClone}"
                         Content="複製"
                         ToolTip="リモートリポジトリをローカルファイル複製"/>
                 <Button Height="23"
-                        Margin="0,0,0,5"
-                        Content="リモート同期" />
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Content="ローカル取得" />
-                <Button Height="23"
                 	Margin="0,0,0,5"
                 	Content="設定" Command="{Binding Commands.Config}" />
             </StackPanel>
-            <StackPanel Width="150" Height="272">
+            <StackPanel Width="150">
                 <Button Height="23"
                         Margin="0,0,0,5"
                         Command="{Binding Commands.CreateBranch}"
@@ -132,11 +126,8 @@
                         ToolTip="ブランチの削除"/>
                 <Button Height="23"
                         Margin="0,0,0,5"
-                        Command="{Binding CommitCommand}"
+                        Command="{Binding Commands.Commit}"
                         Content="コミット" />
-                <Button Height="23"
-                        Margin="0,0,0,5"
-                        Content="マージ" />
                 <Button Height="23"
                         Margin="0,0,0,5"
                         Command="{Binding Commands.KeypairGeneration}"
@@ -144,5 +135,30 @@
                         ToolTip="公開鍵キーペアの作成"/>
             </StackPanel>
         </StackPanel>
+
+        <xctk:BusyIndicator Grid.RowSpan="2" IsBusy="{Binding Propertys.IsBusyDialog}" BusyContent="{Binding}" DisplayAfter="0">
+            <xctk:BusyIndicator.BusyContentTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="4">
+                        <TextBlock Text="{Binding Propertys.BusyDialogMessageTitle}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <StackPanel Margin="4">
+                            <TextBlock Text="{Binding Propertys.BusyDialogProgressMessage}"/>
+                            <ProgressBar Value="{Binding Propertys.BusyDialogPcent}" Height="15"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </xctk:BusyIndicator.BusyContentTemplate>
+            <xctk:BusyIndicator.OverlayStyle>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="#66000000"/>
+                </Style>
+            </xctk:BusyIndicator.OverlayStyle>
+            <xctk:BusyIndicator.ProgressBarStyle>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Style>
+            </xctk:BusyIndicator.ProgressBarStyle>
+            <ContentControl />
+        </xctk:BusyIndicator>
     </Grid>
 </Window>

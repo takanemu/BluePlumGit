@@ -57,7 +57,7 @@
     <Compile Include="Enums\WindowButtonEnum.cs" />
     <Compile Include="Enums\WindowTypeEnum.cs" />
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
-    <Compile Include="ProgressMonitor.cs" />
+    <Compile Include="BusyIndicatorProgressMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\RepositotyUtility.cs" />
   </ItemGroup>

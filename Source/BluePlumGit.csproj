@@ -91,6 +91,10 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit.Extended, Version=1.7.4644.13122, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>InfrastructureAssemblies\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -131,11 +135,24 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="InfrastructureAssemblies\Castle.Core.dll" />
     <Content Include="InfrastructureAssemblies\Design\Livet.Design.dll" />
     <Content Include="InfrastructureAssemblies\Design\Livet.Expression.Design.dll" />
+    <Content Include="InfrastructureAssemblies\ICSharpCode.SharpZipLib.dll" />
     <Content Include="InfrastructureAssemblies\Livet.dll" />
+    <Content Include="InfrastructureAssemblies\SharpSSH\Tamir.SharpSSH.dll" />
+    <Content Include="InfrastructureAssemblies\WPFToolkit.Extended.dll" />
     <Resource Include="InfrastructureAssemblies\Livet.XML" />
+    <Content Include="InfrastructureAssemblies\Livet.Extensions.dll" />
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
+    <Content Include="InfrastructureAssemblies\Microsoft.WindowsAPICodePack.dll" />
+    <Content Include="InfrastructureAssemblies\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <Content Include="InfrastructureAssemblies\Mono.Security.dll" />
+    <Content Include="InfrastructureAssemblies\NGit.dll" />
+    <Content Include="InfrastructureAssemblies\NSch.dll" />
+    <Content Include="InfrastructureAssemblies\Sharpen.dll" />
+    <Content Include="InfrastructureAssemblies\Sharpen.Unix.dll" />
+    <Content Include="InfrastructureAssemblies\System.Data.SQLite.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <ItemGroup>
