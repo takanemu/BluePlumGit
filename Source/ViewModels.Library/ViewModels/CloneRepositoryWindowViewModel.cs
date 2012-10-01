@@ -66,6 +66,9 @@ namespace BluePlumGit.ViewModels
                 Name = this.Propertys.RepositoyName,
                 Path = this.Propertys.FolderPath,
                 Url = this.Propertys.RemoteRepositoyUrl,
+                IsCredential = this.Propertys.IsCredential,
+                UserName = this.Propertys.UserName,
+                PassWord = this.Propertys.PassWord,
             };
             WindowResultEntity windowResultEntity = new WindowResultEntity
             {
@@ -124,6 +127,21 @@ namespace BluePlumGit.ViewModels
         /// FolderPath
         /// </summary>
         public virtual string FolderPath { get; set; }
+
+        /// <summary>
+        /// IsCredential
+        /// </summary>
+        public virtual bool IsCredential { get; set; }
+
+        /// <summary>
+        /// UserName
+        /// </summary>
+        public virtual string UserName { get; set; }
+
+        /// <summary>
+        /// PassWord
+        /// </summary>
+        public virtual string PassWord { get; set; }
     }
     #endregion
 

@@ -31,6 +31,8 @@ namespace BluePlumGit.Models
     using Livet;
     using NGit.Api;
     using Sharpen;
+    using NGit.Api.Errors;
+    using NGit.Transport;
 
     /// <summary>
     /// メインウインドウモデル
@@ -219,25 +221,34 @@ namespace BluePlumGit.Models
         {
             FilePath directory = entity.Path;
 
-            CloneCommand clone = Git.CloneRepository();
-            clone.SetBare(false);
-            clone.SetCloneAllBranches(true);
+            CloneCommand clone = new CloneCommand();
+
+            //clone.SetCloneAllBranches(true);
             clone.SetDirectory(directory);
             clone.SetURI(entity.Url);
-            //clone.SetRemote(entity.Url);
 
             clone.SetProgressMonitor(monitor);
 
-            //UsernamePasswordCredentialsProvider user = new UsernamePasswordCredentialsProvider("", "");
+            if (entity.IsCredential)
+            {
+                UsernamePasswordCredentialsProvider user = new UsernamePasswordCredentialsProvider(entity.UserName, entity.PassWord);
 
-            //clone.SetCredentialsProvider(user);
-
+                clone.SetCredentialsProvider(user);
+            }
             BackgroundWorker bw = new BackgroundWorker();
 
             bw.DoWork += (s, evt) =>
                 {
                     monitor.StartAction();
-                    clone.Call();
+
+                    try
+                    {
+                        clone.Call();
+                    }
+                    catch (JGitInternalException exception)
+                    {
+                        // TODO:
+                    }
                 };
             bw.RunWorkerCompleted += (s, evt) =>
                 {

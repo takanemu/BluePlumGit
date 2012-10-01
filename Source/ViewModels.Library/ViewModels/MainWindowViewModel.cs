@@ -454,11 +454,9 @@ namespace BluePlumGit.ViewModels
                             {
                                 this.CloseBusyIndicator();
 
-                                this.model.CloneRepository(entity, monitor);
-
                                 RepositoryEntity repository = new RepositoryEntity
                                 {
-                                    ID = this.model.GetRepositoryCount() + 1,
+                                    ID = this.model.GetRepositoryNewId(),
                                     Name = entity.Name,
                                     Path = gitdir,
                                 };
@@ -470,6 +468,8 @@ namespace BluePlumGit.ViewModels
                                 this.repositorysCollection.Add(repository);
                                 this.RepositoryCollectionView.MoveCurrentTo(repository);
                             };
+
+                        this.model.CloneRepository(entity, monitor);
                     }
                     else
                     {
