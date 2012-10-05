@@ -33,6 +33,8 @@ namespace BluePlumGit.Models
     using Sharpen;
     using NGit.Api.Errors;
     using NGit.Transport;
+    using NGit.Storage.File;
+    using NGit.Util;
 
     /// <summary>
     /// メインウインドウモデル
@@ -211,6 +213,44 @@ namespace BluePlumGit.Models
             }
         }
         #endregion
+
+        /// <summary>
+        /// グローバル設定ファイル読み込み
+        /// </summary>
+        public void LoadGrobalConfig()
+        {
+            FilePath gitconfig = new FilePath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".gitconfig");
+            FileBasedConfig config = new FileBasedConfig(gitconfig, FS.Detect());
+
+            config.Load();
+
+            string text = config.ToText();
+
+            foreach (string section in config.GetSections())
+            {
+                Console.Out.WriteLine("section = {0}", section);
+
+                if (config.GetSubsections(section).Count > 0)
+                {
+                    foreach (string subsection in config.GetSubsections(section))
+                    {
+                        Console.Out.WriteLine(" subsection = {0}", subsection);
+
+                        foreach (string name in config.GetNames(section, subsection))
+                        {
+                            Console.Out.WriteLine("  name = {0} / value = {1}", name, config.GetString(section, subsection, name));
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (string name in config.GetNames(section))
+                    {
+                        Console.Out.WriteLine("  name = {0} / value = {1}", name, config.GetString(section, null, name));
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// リモートリポジトリをローカルへ複製する

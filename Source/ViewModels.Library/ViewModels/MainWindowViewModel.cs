@@ -43,6 +43,7 @@ namespace BluePlumGit.ViewModels
     using Sharpen;
     using BluePlumGit.Library;
     using NGit.Api.Errors;
+    using GordiasClassLibrary.Utility;
 
     /// <summary>
     /// メインウインドウビューモデル
@@ -157,6 +158,8 @@ namespace BluePlumGit.ViewModels
                 this.git = this.GetCurrentRepository();
                 this.UpdateBranchList();
             }
+
+            this.model.LoadGrobalConfig();
         }
         #endregion
 
@@ -261,6 +264,15 @@ namespace BluePlumGit.ViewModels
         {
             RepositoryEntity entity = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
 
+            if (entity != null)
+            {
+                Repository repository = new RepositoryBuilder().FindGitDir(new FilePath(entity.Path)).Build();
+
+                Config storedConfig = repository.GetConfig();
+
+                ICollection<string> remotes = storedConfig.GetSubsections("remote");
+            }
+/*
             FilePath dir = new FilePath(entity.Path);
             FilePath dotGit = new FilePath(dir, Constants.DOT_GIT);
 
@@ -275,6 +287,7 @@ namespace BluePlumGit.ViewModels
             StoredConfig config = repository.GetConfig();
 
             string name = config.GetString("user", null, "name");
+*/
         }
         #endregion
 
