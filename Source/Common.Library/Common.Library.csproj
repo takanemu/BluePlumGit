@@ -47,10 +47,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\InfrastructureAssemblies\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitys\BranchEntity.cs" />
     <Compile Include="Entitys\CloneEntity.cs" />
+    <Compile Include="Entitys\GrobalConfigEntity.cs" />
     <Compile Include="Entitys\InitializeRepositoryEntity.cs" />
     <Compile Include="Entitys\RepositoryEntity.cs" />
     <Compile Include="Entitys\RSAKeyEntity.cs" />

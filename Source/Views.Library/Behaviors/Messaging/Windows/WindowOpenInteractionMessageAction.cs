@@ -100,6 +100,9 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
                 case WindowTypeEnum.REMOVE_BRANCH:
                     result = new RemoveBranchWindow();
                     break;
+                case WindowTypeEnum.CONFIG:
+                    result = new ConfigSettingWindow();
+                    break;
                 case WindowTypeEnum.KEYDISP:
                     result = new KeyDispWindow();
                     break;

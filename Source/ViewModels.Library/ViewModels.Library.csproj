@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModels\CloneRepositoryWindowViewModel.cs" />
+    <Compile Include="ViewModels\ConfigSettingWindowViewModel.cs" />
     <Compile Include="ViewModels\CreateBranchWindowViewModel.cs" />
     <Compile Include="ViewModels\InitializeRepositoryWindowViewModel.cs" />
     <Compile Include="ViewModels\KeyDispWindowViewModel.cs" />

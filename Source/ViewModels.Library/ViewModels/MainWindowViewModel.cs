@@ -26,25 +26,27 @@ namespace BluePlumGit.ViewModels
     using System.Linq;
     using System.Text;
     using System.Windows;
+    using System.Windows.Media;
     using BluePlumGit.Entitys;
     using BluePlumGit.Enums;
+    using BluePlumGit.Library;
     using BluePlumGit.Messaging.Windows;
     using BluePlumGit.Models;
     using BluePlumGit.Utility;
     using Common.Library.Enums;
     using GordiasClassLibrary.Collections;
     using GordiasClassLibrary.Headquarters;
+    using GordiasClassLibrary.Utility;
     using Livet.Commands;
     using NGit;
     using NGit.Api;
+    using NGit.Api.Errors;
     using NGit.Storage.File;
     using NGit.Transport;
     using NGit.Util;
     using Sharpen;
-    using BluePlumGit.Library;
-    using NGit.Api.Errors;
-    using GordiasClassLibrary.Utility;
 
+    #region メインクラス
     /// <summary>
     /// メインウインドウビューモデル
     /// </summary>
@@ -159,7 +161,7 @@ namespace BluePlumGit.ViewModels
                 this.UpdateBranchList();
             }
 
-            this.model.LoadGrobalConfig();
+            this.Propertys.Config = this.model.LoadGrobalConfig();
         }
         #endregion
 
@@ -262,32 +264,19 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void Config()
         {
-            RepositoryEntity entity = (RepositoryEntity)this.RepositoryCollectionView.CurrentItem;
-
-            if (entity != null)
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
-                Repository repository = new RepositoryBuilder().FindGitDir(new FilePath(entity.Path)).Build();
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.CONFIG,
+                Parameter = this.Propertys.Config,
+            });
 
-                Config storedConfig = repository.GetConfig();
+            if (message.Response != null)
+            {
+                RepositoryEntity entity = (RepositoryEntity)message.Response.Result;
 
-                ICollection<string> remotes = storedConfig.GetSubsections("remote");
+
             }
-/*
-            FilePath dir = new FilePath(entity.Path);
-            FilePath dotGit = new FilePath(dir, Constants.DOT_GIT);
-
-            FileRepositoryBuilder builder = new FileRepositoryBuilder();
-
-            builder.SetWorkTree(dir);
-            builder.FindGitDir(dir);
-            builder.SetMustExist(true);
-
-            FileRepository repository = builder.Build();
-
-            StoredConfig config = repository.GetConfig();
-
-            string name = config.GetString("user", null, "name");
-*/
         }
         #endregion
 
@@ -642,6 +631,7 @@ namespace BluePlumGit.ViewModels
             this.Propertys.IsBusyDialog = false;
         }
     }
+    #endregion
 
     #region プロパティクラス
     /// <summary>
@@ -668,6 +658,8 @@ namespace BluePlumGit.ViewModels
         /// BusyDialogPcent
         /// </summary>
         public virtual double BusyDialogPcent { get; set; }
+
+        public virtual GrobalConfigEntity Config { get; set; }
     }
     #endregion
 

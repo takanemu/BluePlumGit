@@ -30,6 +30,10 @@ namespace BluePlumGit.ViewModels
     using Common.Library.Enums;
     using BluePlumGit.Entitys;
 
+    #region メインクラス
+    /// <summary>
+    /// ブランチ作成ウインドウビューモデルクラス
+    /// </summary>
     public class CreateBranchWindowViewModel : TacticsViewModel<CreateBranchWindowViewModelProperty, CreateBranchWindowViewModelCommand>, IWindowResult
     {
         #region Initializeメソッド
@@ -88,6 +92,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public WindowResultEntity Responce { get; set; }
     }
+    #endregion
 
     #region プロパティクラス
     /// <summary>

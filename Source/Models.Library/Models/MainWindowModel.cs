@@ -217,7 +217,7 @@ namespace BluePlumGit.Models
         /// <summary>
         /// グローバル設定ファイル読み込み
         /// </summary>
-        public void LoadGrobalConfig()
+        public GrobalConfigEntity LoadGrobalConfig()
         {
             FilePath gitconfig = new FilePath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".gitconfig");
             FileBasedConfig config = new FileBasedConfig(gitconfig, FS.Detect());
@@ -250,6 +250,13 @@ namespace BluePlumGit.Models
                     }
                 }
             }
+
+            GrobalConfigEntity result = new GrobalConfigEntity();
+
+            result.EMail = config.GetString("user", null, "email");
+            result.Name = config.GetString("user", null, "name");
+
+            return result;
         }
 
         /// <summary>

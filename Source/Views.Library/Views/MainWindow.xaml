@@ -10,6 +10,7 @@
         xmlns:v="clr-namespace:BluePlumGit.Views"
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow"
         Width="525"
         WindowStartupLocation="CenterScreen"
@@ -88,7 +89,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" 
@@ -142,15 +143,6 @@
                             ToolTip="公開鍵キーペアの作成"/>
                 </StackPanel>
             </StackPanel>
-
-            <xctk:PropertyGrid Grid.Column="1" x:Name="_propertyGrid" Margin="5"
-                                        AutoGenerateProperties="False">
-                <xctk:PropertyGrid.PropertyDefinitions>
-                    <xctk:PropertyDefinition Name="FirstName" />
-                    <xctk:PropertyDefinition Name="FavoriteColor" />
-                    <xctk:PropertyDefinition Name="PetNames" />
-                </xctk:PropertyGrid.PropertyDefinitions>
-            </xctk:PropertyGrid>
         </Grid>
 
         <xctk:BusyIndicator Grid.RowSpan="2" IsBusy="{Binding Propertys.IsBusyDialog}" BusyContent="{Binding}" DisplayAfter="0">

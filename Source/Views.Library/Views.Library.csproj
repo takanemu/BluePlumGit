@@ -68,6 +68,9 @@
     <Compile Include="Views\CloneRepositoryWindow.xaml.cs">
       <DependentUpon>CloneRepositoryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfigSettingWindow.xaml.cs">
+      <DependentUpon>ConfigSettingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateBranchWindow.xaml.cs">
       <DependentUpon>CreateBranchWindow.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\CloneRepositoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfigSettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

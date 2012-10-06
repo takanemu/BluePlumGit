@@ -32,6 +32,7 @@ namespace BluePlumGit.ViewModels
     using Common.Library.Enums;
     using Livet.Messaging.Windows;
 
+    #region メインクラス
     /// <summary>
     /// リポジトリ削除ビューモデル
     /// </summary>
@@ -112,6 +113,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public WindowResultEntity Responce { get; set; }
     }
+    #endregion
 
     #region プロパティクラス
     /// <summary>

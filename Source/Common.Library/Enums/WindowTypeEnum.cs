@@ -34,6 +34,7 @@ namespace BluePlumGit.Enums
         CLONE_REPOSITORY,
         CREATE_BRANCH,
         REMOVE_BRANCH,
+        CONFIG,
         KEYDISP,
     }
 }

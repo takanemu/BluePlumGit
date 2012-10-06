@@ -19,21 +19,22 @@
 
 namespace BluePlumGit.ViewModels
 {
-    using BluePlumGit.Entitys;
-    using Common.Library.Enums;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using GordiasClassLibrary.Entitys;
     using GordiasClassLibrary.Headquarters;
     using GordiasClassLibrary.Interface;
-    using Livet.Commands;
-    using Livet.Messaging.IO;
+    using BluePlumGit.Entitys;
     using Livet.Messaging.Windows;
-    using NGit;
+    using Common.Library.Enums;
 
     #region メインクラス
     /// <summary>
-    /// リポジトリ初期化ビューモデル
+    /// 設定ウインドウビューモデルクラス
     /// </summary>
-    public class InitializeRepositoryWindowViewModel : TacticsViewModel<InitializeRepositoryWindowViewModelProperty, InitializeRepositoryWindowViewModelCommand>, IWindowResult
+    public class ConfigSettingWindowViewModel : TacticsViewModel<ConfigSettingViewModelProperty, ConfigSettingViewModelCommand>, IWindowParameter, IWindowResult
     {
         #region Initializeメソッド
         /// <summary>
@@ -50,7 +51,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public void Loaded()
         {
-            this.Propertys.IsEntryOnly = true;
+            this.Propertys.Config = (GrobalConfigEntity)((ICloneable)this.Parameter).Clone();
         }
         #endregion
 
@@ -61,24 +62,11 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void OkButton()
         {
-            RepositoryEntity repositoryEntity = new RepositoryEntity
-            {
-                Name = this.Propertys.RepositoyName,
-                Path = this.Propertys.FolderPath + "/" + Constants.DOT_GIT,
-            };
-
-            InitializeRepositoryEntity initializeRepositoryEntity = new InitializeRepositoryEntity
-            {
-                Mode = this.Propertys.IsEntryOnly == true ? InitializeRepositoryEnum.EntryOnly : InitializeRepositoryEnum.InitializeAndEntry,
-                Entity = repositoryEntity,
-            };
-
-            WindowResultEntity windowResultEntity = new WindowResultEntity
+            this.Responce = new WindowResultEntity
             {
                 Button = WindowButtonEnum.OK,
-                Result = initializeRepositoryEntity,
+                Result = this.Propertys.Config,
             };
-            this.Responce = windowResultEntity;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -90,30 +78,15 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void CancelButton()
         {
-            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
             this.Responce = null;
-        }
-        #endregion
-
-        #region WindowCloseCancelCommand
-        /// <summary>
-        /// ウインドウクローズキャンセル処理
-        /// </summary>
-        [Command]
-        private void WindowCloseCancel()
-        {
-            // TODO:自分で閉じる方法が無い？
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
 
         /// <summary>
-        /// フォルダーの選択
+        /// パラメーター
         /// </summary>
-        /// <param name="message">フォルダー選択メッセージ</param>
-        public void FolderSelected(FolderSelectionMessage message)
-        {
-            this.Propertys.FolderPath = message.Response;
-        }
+        public object Parameter { get; set; }
 
         /// <summary>
         /// 戻り値
@@ -126,27 +99,12 @@ namespace BluePlumGit.ViewModels
     /// <summary>
     /// プロパティクラス
     /// </summary>
-    public class InitializeRepositoryWindowViewModelProperty : TacticsProperty
+    public class ConfigSettingViewModelProperty : TacticsProperty
     {
         /// <summary>
-        /// RepositoyName
+        /// コンフィグ
         /// </summary>
-        public virtual string RepositoyName { get; set; }
-
-        /// <summary>
-        /// FolderPath
-        /// </summary>
-        public virtual string FolderPath { get; set; }
-
-        /// <summary>
-        /// 登録のみ
-        /// </summary>
-        public virtual bool IsEntryOnly { get; set; }
-
-        /// <summary>
-        /// 初期化後に登録
-        /// </summary>
-        public virtual bool IsInitializeAndEntry { get; set; }
+        public virtual GrobalConfigEntity Config { get; set; }
     }
     #endregion
 
@@ -154,7 +112,7 @@ namespace BluePlumGit.ViewModels
     /// <summary>
     /// コマンドクラス
     /// </summary>
-    public class InitializeRepositoryWindowViewModelCommand
+    public class ConfigSettingViewModelCommand
     {
         /// <summary>
         /// OkButtonコマンド
@@ -165,11 +123,6 @@ namespace BluePlumGit.ViewModels
         /// CancelButtonコマンド
         /// </summary>
         public TacticsCommand CancelButton { get; set; }
-
-        /// <summary>
-        /// ウインドウクローズキャンセルコマンド
-        /// </summary>
-        public TacticsCommand WindowCloseCancel { get; set; }
     }
     #endregion
 }

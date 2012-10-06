@@ -12,6 +12,7 @@ namespace BluePlumGit.ViewModels
     using Livet.Messaging.Windows;
     using System.Windows;
 
+    #region メインクラス
     /// <summary>
     /// 鍵表示ウインドウ
     /// </summary>
@@ -43,6 +44,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public object Parameter { get; set; }
     }
+    #endregion
 
     #region プロパティクラス
     /// <summary>

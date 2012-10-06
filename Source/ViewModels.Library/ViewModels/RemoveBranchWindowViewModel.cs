@@ -36,6 +36,7 @@ namespace BluePlumGit.ViewModels
     using BluePlumGit.Utility;
     using Common.Library.Enums;
 
+    #region メインクラス
     /// <summary>
     /// ブランチの削除
     /// </summary>
@@ -143,6 +144,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public WindowResultEntity Responce { get; set; }
     }
+    #endregion
 
     #region プロパティクラス
     /// <summary>

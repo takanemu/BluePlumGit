@@ -31,6 +31,7 @@ namespace BluePlumGit.ViewModels
     using Livet.Messaging.Windows;
     using BluePlumGit.Entitys;
 
+    #region メインクラス
     /// <summary>
     /// クローンウインドウビューモデル
     /// </summary>
@@ -106,6 +107,7 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public WindowResultEntity Responce { get; set; }
     }
+    #endregion
 
     #region プロパティクラス
     /// <summary>
