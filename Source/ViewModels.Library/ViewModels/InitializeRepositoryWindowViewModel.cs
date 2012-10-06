@@ -159,17 +159,17 @@ namespace BluePlumGit.ViewModels
         /// <summary>
         /// OkButtonコマンド
         /// </summary>
-        public TacticsCommand OkButton { get; set; }
+        public TacticsCommand OkButton { get; private set; }
 
         /// <summary>
         /// CancelButtonコマンド
         /// </summary>
-        public TacticsCommand CancelButton { get; set; }
+        public TacticsCommand CancelButton { get; private set; }
 
         /// <summary>
         /// ウインドウクローズキャンセルコマンド
         /// </summary>
-        public TacticsCommand WindowCloseCancel { get; set; }
+        public TacticsCommand WindowCloseCancel { get; private set; }
     }
     #endregion
 }

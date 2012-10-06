@@ -98,6 +98,11 @@ namespace BluePlumGit.ViewModels
         private Git git;
 
         /// <summary>
+        /// グローバルコンフィグ
+        /// </summary>
+        private GrobalConfigEntity globalConfig;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public MainWindowViewModel()
@@ -161,7 +166,12 @@ namespace BluePlumGit.ViewModels
                 this.UpdateBranchList();
             }
 
-            this.Propertys.Config = this.model.LoadGrobalConfig();
+            this.globalConfig = this.model.LoadGrobalConfig();
+
+            if (this.globalConfig == null)
+            {
+                this.Config();
+            }
         }
         #endregion
 
@@ -268,7 +278,7 @@ namespace BluePlumGit.ViewModels
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.CONFIG,
-                Parameter = this.Propertys.Config,
+                Parameter = this.globalConfig,
             });
 
             if (message.Response != null)
@@ -658,8 +668,6 @@ namespace BluePlumGit.ViewModels
         /// BusyDialogPcent
         /// </summary>
         public virtual double BusyDialogPcent { get; set; }
-
-        public virtual GrobalConfigEntity Config { get; set; }
     }
     #endregion
 
@@ -672,47 +680,47 @@ namespace BluePlumGit.ViewModels
         /// <summary>
         /// リポジトリの登録
         /// </summary>
-        public TacticsCommand RepositoryRegistration { get; set; }
+        public TacticsCommand RepositoryRegistration { get; private set; }
 
         /// <summary>
         /// リポジトリの削除
         /// </summary>
-        public TacticsCommand RepositoryRemove { get; set; }
+        public TacticsCommand RepositoryRemove { get; private set; }
 
         /// <summary>
         /// ブランチの作成
         /// </summary>
-        public TacticsCommand CreateBranch { get; set; }
+        public TacticsCommand CreateBranch { get; private set; }
 
         /// <summary>
         /// ブランチの削除
         /// </summary>
-        public TacticsCommand RemoveBranch { get; set; }
+        public TacticsCommand RemoveBranch { get; private set; }
 
         /// <summary>
         /// ウインドウクローズキャンセルコマンド
         /// </summary>
-        public TacticsCommand WindowCloseCancel { get; set; }
+        public TacticsCommand WindowCloseCancel { get; private set; }
 
         /// <summary>
         /// 公開鍵作成
         /// </summary>
-        public TacticsCommand KeypairGeneration { get; set; }
+        public TacticsCommand KeypairGeneration { get; private set; }
 
         /// <summary>
         /// リモートリポジトリのクローン
         /// </summary>
-        public TacticsCommand RemoteRepositoryClone { get; set; }
+        public TacticsCommand RemoteRepositoryClone { get; private set; }
 
         /// <summary>
         /// 設定変更
         /// </summary>
-        public TacticsCommand Config { get; set; }
+        public TacticsCommand Config { get; private set; }
 
         /// <summary>
         /// コミット
         /// </summary>
-        public TacticsCommand Commit { get; set; }
+        public TacticsCommand Commit { get; private set; }
     }
     #endregion
 }

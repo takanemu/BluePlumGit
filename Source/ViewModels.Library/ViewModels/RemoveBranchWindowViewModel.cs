@@ -168,7 +168,7 @@ namespace BluePlumGit.ViewModels
         /// <summary>
         /// 削除Buttonコマンド
         /// </summary>
-        public TacticsCommand RemoveButton { get; set; }
+        public TacticsCommand RemoveButton { get; private set; }
     }
     #endregion
 }

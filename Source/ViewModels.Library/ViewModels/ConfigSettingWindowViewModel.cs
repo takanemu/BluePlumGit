@@ -51,7 +51,19 @@ namespace BluePlumGit.ViewModels
         /// </summary>
         public void Loaded()
         {
-            this.Propertys.Config = (GrobalConfigEntity)((ICloneable)this.Parameter).Clone();
+            if (this.Parameter != null)
+            {
+                this.Propertys.Config = (GrobalConfigEntity)((ICloneable)this.Parameter).Clone();
+            }
+            else
+            {
+                GrobalConfigEntity config = new GrobalConfigEntity();
+
+                config.EMail = "";
+                config.Name = "";
+
+                this.Propertys.Config = config;
+            }
         }
         #endregion
 
@@ -117,12 +129,12 @@ namespace BluePlumGit.ViewModels
         /// <summary>
         /// OkButtonコマンド
         /// </summary>
-        public TacticsCommand OkButton { get; set; }
+        public TacticsCommand OkButton { get; private set; }
 
         /// <summary>
         /// CancelButtonコマンド
         /// </summary>
-        public TacticsCommand CancelButton { get; set; }
+        public TacticsCommand CancelButton { get; private set; }
     }
     #endregion
 }

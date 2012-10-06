@@ -6,11 +6,12 @@ using System.ComponentModel;
 
 namespace BluePlumGit.Entitys
 {
+    [DisplayName("グローバル設定")]
     public class GrobalConfigEntity : ICloneable 
     {
         [Category("Core")]
         [DisplayName("EMail")]
-        [Description("This property uses a TextBox as the default editor.")]
+        [Description("電子メールアドレスを設定してください。")]
         public string EMail
         {
             get;
@@ -19,7 +20,7 @@ namespace BluePlumGit.Entitys
 
         [Category("Core")]
         [DisplayName("Name")]
-        [Description("This property uses a TextBox as the default editor.")]
+        [Description("ユーザー名称を設定してください。")]
         public string Name
         {
             get;

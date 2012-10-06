@@ -68,7 +68,7 @@ namespace BluePlumGit.ViewModels
         /// <summary>
         /// OkButtonコマンド
         /// </summary>
-        public TacticsCommand CopyButton { get; set; }
+        public TacticsCommand CopyButton { get; private set; }
     }
     #endregion
 }
