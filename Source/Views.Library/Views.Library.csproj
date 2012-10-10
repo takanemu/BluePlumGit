@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Controls.Gravatar">
+      <HintPath>..\InfrastructureAssemblies\Controls.Gravatar.dll</HintPath>
+    </Reference>
     <Reference Include="Livet, Version=1.0.4.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Livet.dll</HintPath>

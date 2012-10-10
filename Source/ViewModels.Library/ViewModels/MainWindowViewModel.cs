@@ -172,6 +172,11 @@ namespace BluePlumGit.ViewModels
             {
                 this.Config();
             }
+
+            if (this.globalConfig != null && this.globalConfig.EMail != null)
+            {
+                this.Propertys.GravatarId = this.globalConfig.EMail;
+            }
         }
         #endregion
 
@@ -668,6 +673,11 @@ namespace BluePlumGit.ViewModels
         /// BusyDialogPcent
         /// </summary>
         public virtual double BusyDialogPcent { get; set; }
+
+        /// <summary>
+        /// Gravatarアイコン表示用ID
+        /// </summary>
+        public virtual string GravatarId { get; set; }
     }
     #endregion
 
