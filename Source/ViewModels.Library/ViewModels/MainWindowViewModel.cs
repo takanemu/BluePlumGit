@@ -41,8 +41,11 @@ namespace BluePlumGit.ViewModels
     using NGit;
     using NGit.Api;
     using NGit.Api.Errors;
+    using NGit.Diff;
+    using NGit.Revwalk;
     using NGit.Storage.File;
     using NGit.Transport;
+    using NGit.Treewalk;
     using NGit.Util;
     using Sharpen;
 
@@ -429,9 +432,33 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void Commit()
         {
-            
+            DiffCommand diff = this.git.Diff().SetShowNameAndStatusOnly(true).SetOldTree(GetTreeIterator("HEAD^^")).SetNewTree(GetTreeIterator("HEAD^"));
+
+            IList<DiffEntry> entries = diff.Call();
         }
         #endregion
+
+        private AbstractTreeIterator GetTreeIterator(string name)
+        {
+            Repository db = this.git.GetRepository();
+
+            ObjectId id = db.Resolve(name);
+            if (id == null)
+            {
+                throw new ArgumentException(name);
+            }
+            CanonicalTreeParser p = new CanonicalTreeParser();
+            ObjectReader or = db.NewObjectReader();
+            try
+            {
+                p.Reset(or, new RevWalk(db).ParseTree(id));
+                return p;
+            }
+            finally
+            {
+                or.Release();
+            }
+        }
 
         #region 複製コマンド
         /// <summary>

@@ -11,7 +11,7 @@
         xmlns:vm="clr-namespace:BluePlumGit.ViewModels;assembly=ViewModels.Library"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:Controls="clr-namespace:Controls;assembly=Controls.Gravatar"
+        xmlns:gravator="clr-namespace:Controls;assembly=Controls.Gravatar"
         x:Class="BluePlumGit.Views.MainWindow"
         Title="MainWindow"
         Width="525"
@@ -51,12 +51,12 @@
         <l:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
     </i:Interaction.Behaviors>
 
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Margin="5"
+        <StackPanel Margin="0"
                     Orientation="Horizontal"
                     d:LayoutOverrides="Height">
             <TextBlock Height="18"
@@ -84,9 +84,12 @@
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       ItemsSource="{Binding BranchCollectionView}"
-                      
                       SelectedValuePath="ID" />
         </StackPanel>
+
+        <Border Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Right" BorderBrush="SkyBlue" BorderThickness="1">
+            <gravator:Gravatar Height="36" Width="36" Email="{Binding Propertys.GravatarId}" />
+        </Border>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -142,7 +145,6 @@
                             Content="鍵作成"
                             ToolTip="公開鍵キーペアの作成"/>
                 </StackPanel>
-            	<Controls:Gravatar Height="60" Width="60" VerticalAlignment="Top" HorizontalAlignment="Left" Email="{Binding Propertys.GravatarId}"/>
             </StackPanel>
         </Grid>
 
@@ -168,7 +170,6 @@
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </Style>
             </xctk:BusyIndicator.ProgressBarStyle>
-            <ContentControl />
         </xctk:BusyIndicator>
     </Grid>
 </Window>
