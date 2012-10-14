@@ -106,6 +106,9 @@ namespace BluePlumGit.Behaviors.Messaging.Windows
                 case WindowTypeEnum.KEYDISP:
                     result = new KeyDispWindow();
                     break;
+                case WindowTypeEnum.COMMIT:
+                    result = new CommitWindow();
+                    break;
             }
             return result;
         }

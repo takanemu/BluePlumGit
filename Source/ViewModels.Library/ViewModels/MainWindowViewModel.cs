@@ -22,6 +22,7 @@ namespace BluePlumGit.ViewModels
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -48,6 +49,8 @@ namespace BluePlumGit.ViewModels
     using NGit.Treewalk;
     using NGit.Util;
     using Sharpen;
+    using System.Collections.ObjectModel;
+    using BluePlumGit.Items;
 
     #region メインクラス
     /// <summary>
@@ -432,9 +435,20 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void Commit()
         {
-            DiffCommand diff = this.git.Diff().SetShowNameAndStatusOnly(true).SetOldTree(GetTreeIterator("HEAD^^")).SetNewTree(GetTreeIterator("HEAD^"));
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.COMMIT,
+                Parameter = this.git,
+            });
 
-            IList<DiffEntry> entries = diff.Call();
+            if (message.Response != null)
+            {
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
+                {
+                    ObservableCollection<DiffValue> list = (ObservableCollection<DiffValue>)message.Response.Result;
+                }
+            }
         }
         #endregion
 

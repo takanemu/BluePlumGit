@@ -39,6 +39,10 @@
     <Reference Include="Controls.Gravatar">
       <HintPath>InfrastructureAssemblies\Controls.Gravatar.dll</HintPath>
     </Reference>
+    <Reference Include="DataGridThemes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>InfrastructureAssemblies\DataGrid Themes\DataGridThemes.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>InfrastructureAssemblies\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -139,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="InfrastructureAssemblies\Castle.Core.dll" />
+    <Content Include="InfrastructureAssemblies\DataGrid Themes\DataGridThemes.dll" />
     <Content Include="InfrastructureAssemblies\Design\Livet.Design.dll" />
     <Content Include="InfrastructureAssemblies\Design\Livet.Expression.Design.dll" />
     <Content Include="InfrastructureAssemblies\ICSharpCode.SharpZipLib.dll" />

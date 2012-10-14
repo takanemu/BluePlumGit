@@ -22,9 +22,12 @@ namespace BluePlumGit.ViewModels
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using BluePlumGit.Entitys;
+    using BluePlumGit.Utility;
+    using Common.Library.Enums;
     using GordiasClassLibrary.Collections;
     using GordiasClassLibrary.Entitys;
     using GordiasClassLibrary.Headquarters;
@@ -32,9 +35,6 @@ namespace BluePlumGit.ViewModels
     using Livet.Messaging.Windows;
     using NGit;
     using NGit.Api;
-    using System.IO;
-    using BluePlumGit.Utility;
-    using Common.Library.Enums;
 
     #region メインクラス
     /// <summary>
