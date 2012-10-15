@@ -52,6 +52,7 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
@@ -64,7 +65,10 @@
                			Command="{Binding Commands.AllReleaseButton, Mode=OneWay}"/>
             </StackPanel>
         </Grid>
-        <controls:DataGrid Grid.Row="1" ItemsSource="{Binding Propertys.Diffs, Mode=TwoWay}"
+        <Border Grid.Row="1" Margin="0,0,0,5" BorderBrush="#FF00FDFF">
+            <TextBox Text="{Binding Path=Propertys.CommitMessage, Mode=TwoWay}" />
+        </Border>
+        <controls:DataGrid Grid.Row="2" ItemsSource="{Binding Propertys.Diffs, Mode=TwoWay}"
                           AutoGenerateColumns="False"
                           SelectionMode="Extended"
                           themes:DataGridHelper.HorizontalMouseWheelScrollingEnabled="True"
@@ -73,10 +77,10 @@
                 <DataGridCheckBoxColumn IsReadOnly="False" Header="" Binding="{Binding Check}" Width="30" CellStyle="{StaticResource SingleClickEditing}"/>
                 <DataGridTextColumn IsReadOnly="True" Header="ファイル名称" Binding="{Binding Filename}" Width="200" />
                 <DataGridTextColumn IsReadOnly="True" Header="変更前名称" Binding="{Binding Oldname}" Width="100" />
-                <DataGridTextColumn IsReadOnly="True" Header="変更内容" Binding="{Binding ChangeType}" Width="100" />
+                <DataGridTextColumn IsReadOnly="True" Header="変更内容" Binding="{Binding ChangeTypeName}" Width="100" />
             </controls:DataGrid.Columns>
         </controls:DataGrid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <StackPanel Margin="0"
                     Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Commit" Height="23" Width="75" Margin="0,0,5,0"

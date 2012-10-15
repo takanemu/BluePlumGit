@@ -3,14 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using NGit.Diff;
+using Livet;
 
 namespace BluePlumGit.Items
 {
     [DataContract]
-    public class DiffValue
+    public class DiffValue : ViewModel
     {
-        [DataMember]
-        public bool Check { get; set; }
+        private bool _Check;
+
+        public bool Check
+        {
+            get
+            {
+                return _Check;
+            }
+            set
+            {
+                if (_Check == value)
+                {
+                    return;
+                }
+                _Check = value;
+                RaisePropertyChanged("Check");
+            }
+        }
 
 		[DataMember]
 		public string Filename { get; set; }
@@ -19,7 +37,10 @@ namespace BluePlumGit.Items
         public string Oldname { get; set; }
 
         [DataMember]
-        public string ChangeType { get; set; }
+        public string ChangeTypeName { get; set; }
+
+        [DataMember]
+        public DiffEntry.ChangeType ChangeType { get; set; }
 
         public override string ToString()
 		{

@@ -17,7 +17,7 @@ namespace BluePlumGit.ViewModels
     using Common.Library.Enums;
 
     #region メインクラス
-    public class CommitWindowViewModel : TacticsViewModel<CommitWindowViewModelProperty, CommitWindowViewModelCommand>, IWindowParameter, IWindowResult
+    public class CommitWindowViewModel : TacticsViewModel<CommitWindowViewModelProperty, CommitWindowViewModelCommand>, IWindowParameter
     {
         /// <summary>
         /// カレントリポジトリ
@@ -60,7 +60,7 @@ namespace BluePlumGit.ViewModels
 
             DiffCommand diff = this.git.Diff().SetShowNameAndStatusOnly(true);
 
-            IList<DiffEntry> entries = diff.Call();
+            IList< DiffEntry > entries = diff.Call();
 
             this.Propertys.Diffs = new ObservableCollection<DiffValue>();
 
@@ -68,7 +68,8 @@ namespace BluePlumGit.ViewModels
             {
                 DiffValue row = new DiffValue();
 
-                row.ChangeType = ConvChangeType(item.GetChangeType());
+                row.ChangeType = item.GetChangeType();
+                row.ChangeTypeName = ConvChangeType(item.GetChangeType());
 
                 switch (item.GetChangeType())
                 {
@@ -111,12 +112,32 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void CommitButton()
         {
-            WindowResultEntity windowResultEntity = new WindowResultEntity
+            string commitMessage = this.Propertys.CommitMessage;
+
+            if (commitMessage == null || commitMessage == string.Empty)
             {
-                Button = WindowButtonEnum.OK,
-                Result = this.Propertys.Diffs,
-            };
-            this.Responce = windowResultEntity;
+                MessageBox.Show("コミットメッセージを入力してください。");
+                return;
+            }
+            foreach (DiffValue item in this.Propertys.Diffs)
+            {
+                if(item.Check)
+                {
+                    if (item.ChangeType == DiffEntry.ChangeType.ADD)
+                    {
+                        this.git.Add().AddFilepattern(item.Filename).Call();
+                    }
+                    else if (item.ChangeType == DiffEntry.ChangeType.MODIFY)
+                    {
+                        this.git.Add().AddFilepattern(item.Filename).Call();
+                    }
+                    else if (item.ChangeType == DiffEntry.ChangeType.DELETE)
+                    {
+                        this.git.Rm().AddFilepattern(item.Filename).Call();
+                    }
+                }
+            }
+            this.git.Commit().SetMessage(commitMessage).Call();
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -129,7 +150,6 @@ namespace BluePlumGit.ViewModels
         private void CancelButton()
         {
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
-            this.Responce = null;
         }
         #endregion
 
@@ -139,6 +159,10 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void AllSelectButton()
         {
+            foreach (DiffValue item in this.Propertys.Diffs)
+            {
+                item.Check = true;
+            }
         }
 
         /// <summary>
@@ -147,17 +171,16 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void AllReleaseButton()
         {
+            foreach (DiffValue item in this.Propertys.Diffs)
+            {
+                item.Check = false;
+            }
         }
 
         /// <summary>
         /// パラメーター
         /// </summary>
         public object Parameter { get; set; }
-
-        /// <summary>
-        /// 戻り値
-        /// </summary>
-        public WindowResultEntity Responce { get; set; }
     }
     #endregion
 
@@ -171,6 +194,11 @@ namespace BluePlumGit.ViewModels
         /// RepositoyName
         /// </summary>
         public virtual ObservableCollection<DiffValue> Diffs { get; set; }
+
+        /// <summary>
+        /// コミットメッセージ
+        /// </summary>
+        public virtual string CommitMessage { get; set; }
     }
     #endregion
 
