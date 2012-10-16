@@ -428,6 +428,22 @@ namespace BluePlumGit.ViewModels
         }
         #endregion
 
+        #region 同期コマンド
+        [Command]
+        private void Sync()
+        {
+            RefSpec spec = new RefSpec("refs/heads/master:refs/heads/FETCH_HEAD");
+            this.git.Fetch().SetRefSpecs(spec).Call();
+
+            DiffCommand diff = this.git.Diff();
+
+            diff.SetOldTree(GetTreeIterator("HEAD"));
+            diff.SetNewTree(GetTreeIterator("FETCH_HEAD"));
+
+            IList<DiffEntry> list = diff.Call();
+        }
+        #endregion
+
         #region コミットコマンド
         /// <summary>
         /// コミットコマンド
@@ -772,6 +788,11 @@ namespace BluePlumGit.ViewModels
         /// コミット
         /// </summary>
         public TacticsCommand Commit { get; private set; }
+
+        /// <summary>
+        /// 同期
+        /// </summary>
+        public TacticsCommand Sync { get; private set; }
     }
     #endregion
 }
