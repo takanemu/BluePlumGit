@@ -312,5 +312,64 @@ namespace BluePlumGit.Models
                 };
             bw.RunWorkerAsync();
         }
+
+        public void Fetch(Git git, BusyIndicatorProgressMonitor monitor)
+        {
+            FetchCommand command = git.Fetch();
+
+            RefSpec spec = new RefSpec("refs/heads/master:refs/heads/FETCH_HEAD");
+
+            command.SetRefSpecs(spec);
+            command.SetProgressMonitor(monitor);
+
+            BackgroundWorker bw = new BackgroundWorker();
+
+            bw.DoWork += (s, evt) =>
+            {
+                monitor.StartAction();
+
+                try
+                {
+                    command.Call();
+                }
+                catch (JGitInternalException exception)
+                {
+                    // TODO:
+                }
+            };
+            bw.RunWorkerCompleted += (s, evt) =>
+            {
+                monitor.CompleteAction();
+            };
+            bw.RunWorkerAsync();
+        }
+
+        public void Pull(Git git, BusyIndicatorProgressMonitor monitor)
+        {
+            PullCommand command = git.Pull();
+
+            command.SetProgressMonitor(monitor);
+
+            BackgroundWorker bw = new BackgroundWorker();
+
+            bw.DoWork += (s, evt) =>
+            {
+                monitor.StartAction();
+
+                try
+                {
+                    command.Call();
+                }
+                catch (JGitInternalException exception)
+                {
+                    // TODO:
+                }
+            };
+            bw.RunWorkerCompleted += (s, evt) =>
+            {
+                monitor.CompleteAction();
+            };
+            bw.RunWorkerAsync();
+        }
     }
 }

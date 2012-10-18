@@ -141,6 +141,10 @@
                             Content="同期" />
                     <Button Height="23"
                             Margin="0,0,0,5"
+                            Command="{Binding Commands.Pull}"
+                            Content="取得" />
+                    <Button Height="23"
+                            Margin="0,0,0,5"
                             Command="{Binding Commands.Commit}"
                             Content="コミット" />
                     <Button Height="23"

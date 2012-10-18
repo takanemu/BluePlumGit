@@ -432,15 +432,54 @@ namespace BluePlumGit.ViewModels
         [Command]
         private void Sync()
         {
-            RefSpec spec = new RefSpec("refs/heads/master:refs/heads/FETCH_HEAD");
-            this.git.Fetch().SetRefSpecs(spec).Call();
+            BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
 
-            DiffCommand diff = this.git.Diff();
+            monitor.StartAction = () =>
+            {
+                this.OpenBusyIndicator("同期中です。");
+            };
+            monitor.UpdateAction = (string taskName, int cmp, int totalWork, int pcnt) =>
+            {
+                this.UpdateBusyIndicator(taskName, cmp, totalWork, pcnt);
+            };
+            monitor.CompleteAction = () =>
+            {
+                DiffCommand diff = this.git.Diff();
 
-            diff.SetOldTree(GetTreeIterator("HEAD"));
-            diff.SetNewTree(GetTreeIterator("FETCH_HEAD"));
+                diff.SetOldTree(GetTreeIterator("HEAD"));
+                diff.SetNewTree(GetTreeIterator("FETCH_HEAD"));
 
-            IList<DiffEntry> list = diff.Call();
+                IList<DiffEntry> list = diff.Call();
+
+                if (list.Count > 0)
+                {
+                    MessageBox.Show("リモートリポジトリの方が先に進んでいます。");
+                }
+                this.CloseBusyIndicator();
+            };
+            this.model.Fetch(this.git, monitor);
+        }
+        #endregion
+
+        #region 取得コマンド
+        [Command]
+        private void Pull()
+        {
+            BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
+
+            monitor.StartAction = () =>
+            {
+                this.OpenBusyIndicator("リモートリポジトリの取得中です。");
+            };
+            monitor.UpdateAction = (string taskName, int cmp, int totalWork, int pcnt) =>
+            {
+                this.UpdateBusyIndicator(taskName, cmp, totalWork, pcnt);
+            };
+            monitor.CompleteAction = () =>
+            {
+                this.CloseBusyIndicator();
+            };
+            this.model.Pull(this.git, monitor);
         }
         #endregion
 
@@ -513,7 +552,6 @@ namespace BluePlumGit.ViewModels
                     
                     if (!gitdir.Exists())
                     {
-
                         BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
 
                         monitor.StartAction = () =>
@@ -793,6 +831,11 @@ namespace BluePlumGit.ViewModels
         /// 同期
         /// </summary>
         public TacticsCommand Sync { get; private set; }
+
+        /// <summary>
+        /// 取得
+        /// </summary>
+        public TacticsCommand Pull { get; private set; }
     }
     #endregion
 }
