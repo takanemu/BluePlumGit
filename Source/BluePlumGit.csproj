@@ -150,6 +150,12 @@
     <Content Include="InfrastructureAssemblies\Livet.dll" />
     <Content Include="InfrastructureAssemblies\SharpSSH\Tamir.SharpSSH.dll" />
     <Content Include="InfrastructureAssemblies\WPFToolkit.Extended.dll" />
+    <Content Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="System.Data.SQLite.Linq.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="InfrastructureAssemblies\Livet.XML" />
     <Content Include="InfrastructureAssemblies\Livet.Extensions.dll" />
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
