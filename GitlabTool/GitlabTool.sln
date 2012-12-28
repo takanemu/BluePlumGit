@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitlabTool", "GitlabTool\GitlabTool.csproj", "{72759E7D-FD53-4B12-9E30-F4DA41AFEA0D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1} = {AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F} = {82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitlabTool.ViewModels", "GitlabTool.ViewModels\GitlabTool.ViewModels.csproj", "{D7BD22D1-2FF7-420E-980D-249D5F28FAC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1} = {AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F} = {82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitlabTool.Models", "GitlabTool.Models\GitlabTool.Models.csproj", "{0863DC2E-72D1-4723-AA37-8C407A2A5C64}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1} = {AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F} = {82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Library", "Common.Library\Common.Library.csproj", "{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F} = {82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gordias.Library", "Gordias.Library\Gordias.Library.csproj", "{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72759E7D-FD53-4B12-9E30-F4DA41AFEA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72759E7D-FD53-4B12-9E30-F4DA41AFEA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72759E7D-FD53-4B12-9E30-F4DA41AFEA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72759E7D-FD53-4B12-9E30-F4DA41AFEA0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7BD22D1-2FF7-420E-980D-249D5F28FAC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7BD22D1-2FF7-420E-980D-249D5F28FAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7BD22D1-2FF7-420E-980D-249D5F28FAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7BD22D1-2FF7-420E-980D-249D5F28FAC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0863DC2E-72D1-4723-AA37-8C407A2A5C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0863DC2E-72D1-4723-AA37-8C407A2A5C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0863DC2E-72D1-4723-AA37-8C407A2A5C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0863DC2E-72D1-4723-AA37-8C407A2A5C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA5A5938-FC7C-4ABE-BAD1-CBDE684614E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82C3F0AC-E9CB-4587-85F6-01A5AC93A13F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

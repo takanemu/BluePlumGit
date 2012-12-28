@@ -1,0 +1,5 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageBrush x:Key="GitIconWhiteBrush" ImageSource="/GitlabTool;component/Assets/Images/Git-Icon-White.png" />
+    <ImageBrush x:Key="GitIcon1788CBrush" ImageSource="/GitlabTool;component/Assets/Images/Git-Icon-1788C.png" />
+</ResourceDictionary>
