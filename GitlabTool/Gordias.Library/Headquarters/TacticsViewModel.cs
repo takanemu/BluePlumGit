@@ -20,11 +20,13 @@
 namespace Gordias.Library.Headquarters
 {
     using System;
+    using System.Windows;
     using System.Xml.Serialization;
     using Gordias.Library.Headquarters;
     using Gordias.Library.Interfaces;
     using Gordias.Library.Utility;
     using Livet;
+    using System.ComponentModel;
 
     /// <summary>
     /// ViewModel基底クラス
@@ -36,6 +38,8 @@ namespace Gordias.Library.Headquarters
         where PropertyType : class
         where CommandType : new()
     {
+        public FrameworkElement Parent { get; set; }
+
         /// <summary>
         /// コマンドプロパティ
         /// </summary>
@@ -101,9 +105,64 @@ namespace Gordias.Library.Headquarters
             Tweety.Instance.RequestTo(address, parameter);
         }
 
-        // TODO: OpenDialog
-        protected void OpenDialog()
+        /// <summary>
+        /// 初期化処理
+        /// </summary>
+        /// <param name="parent">親コンポーネント</param>
+        public void Initialize(FrameworkElement parent)
         {
+            this.Parent = parent;
+
+            if (this.Parent is Window)
+            {
+                this.EventSweeper.EntryEventListener(this.Parent, "Closed", new EventHandler(ClosedHandlerOverride));
+                this.EventSweeper.EntryEventListener(this.Parent, "Closing", new CancelEventHandler(ClosingHandlerOverride));
+            }
+            this.EventSweeper.EntryEventListener(this.Parent, "Loaded", new RoutedEventHandler(LoadedHandlerOverride));
+            this.EventSweeper.EntryEventListener(this.Parent, "Unloaded", new RoutedEventHandler(UnloadedHandlerOverride));
         }
+
+        /// <summary>
+        /// Loadedイベント処理
+        /// </summary>
+        /// <param name="sender">イベント元</param>
+        /// <param name="e">パラメーター</param>
+        protected virtual void LoadedHandlerOverride(object sender, RoutedEventArgs e)
+        {
+            // overrideして利用します。
+        }
+
+        /// <summary>
+        /// Unloadedイベント処理
+        /// </summary>
+        /// <param name="sender">イベント元</param>
+        /// <param name="e">パラメーター</param>
+        protected virtual void UnloadedHandlerOverride(object sender, RoutedEventArgs e)
+        {
+            this.EventSweeper.LeaveEventListener();
+        }
+
+        /// <summary>
+        /// Closingイベント処理
+        /// </summary>
+        /// <param name="sender">イベント元</param>
+        /// <param name="e">パラメーター</param>
+        protected virtual void ClosingHandlerOverride(object sender, CancelEventArgs e)
+        {
+            // overrideして利用します。
+        }
+
+        /// <summary>
+        /// Closedイベント処理
+        /// </summary>
+        /// <param name="sender">イベント元</param>
+        /// <param name="e">パラメーター</param>
+        protected virtual void ClosedHandlerOverride(object sender, EventArgs e)
+        {
+            // overrideして利用します。
+        }
+
+
+
     }
 }

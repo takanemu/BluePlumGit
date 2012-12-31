@@ -30,6 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Livet">
+      <HintPath>..\InfrastructureAssemblies\Livet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\InfrastructureAssemblies\Json\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NGit">
+      <HintPath>..\InfrastructureAssemblies\NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen">
+      <HintPath>..\InfrastructureAssemblies\Sharpen.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,7 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Library\Common.Library.csproj">
+      <Project>{aa5a5938-fc7c-4abe-bad1-cbde684614e1}</Project>
+      <Name>Common.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gordias.Library\Gordias.Library.csproj">
+      <Project>{82c3f0ac-e9cb-4587-85f6-01a5ac93a13f}</Project>
+      <Name>Gordias.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GitlabTool.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace GitlabTool.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            ((MainWindowViewModel)this.DataContext).Initialize(this);
         }
     }
 }
