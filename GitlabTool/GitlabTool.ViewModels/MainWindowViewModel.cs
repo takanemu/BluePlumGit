@@ -3,13 +3,18 @@ namespace GitlabTool.ViewModels
 {
     using Common.Library.Entitys;
     using Common.Library.Enums;
+    using Common.Library.Messaging.Windows;
     using GitlabTool;
     using GitlabTool.Models;
     using Gordias.Library.Headquarters;
+    using Sharpen;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
@@ -20,6 +25,8 @@ namespace GitlabTool.ViewModels
     /// </summary>
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
 	{
+        private static readonly string RSAKeyFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".ssh\gitlab_tool");
+
         /// <summary>
         /// モデル
         /// </summary>
@@ -205,6 +212,72 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region 公開鍵の作成
+        /// <summary>
+        /// 公開鍵の作成
+        /// </summary>
+        [Command]
+        private void KeypairGeneration()
+        {
+            // スクリプトで生成できないので、コマンドを呼び出して生成している。
+            FilePath keyfile = new FilePath(MainWindowViewModel.RSAKeyFilePath);
+
+            Process process = new Process();
+
+            process.StartInfo.FileName = @".\ssh-keygen.exe";
+            process.StartInfo.Arguments = @"-t rsa -N """" -C """ + this.globalConfig.EMail + @""" -f " + keyfile.GetAbsolutePath();
+            process.StartInfo.WorkingDirectory = @".\";
+
+            process.Start();
+
+            // TODO:キーの登録
+
+            /*
+            FilePath keyfile = new FilePath(MainWindowViewModel.RSAKeyFilePath);
+
+            if (keyfile.Exists())
+            {
+                return;
+            }
+
+            int type = Tamir.SharpSsh.jsch.KeyPair.RSA;
+
+            // Output file name
+            String filename = keyfile.GetAbsolutePath();
+            // Signature comment
+            String comment = "takanemu@gmail.com";
+
+            try
+            {
+                // Create a new JSch instance
+                Tamir.SharpSsh.jsch.JSch jsch = new Tamir.SharpSsh.jsch.JSch();
+
+                // Prompt the user for a passphrase for the private key file
+                String passphrase = "";
+
+                // Generate the new key pair
+                Tamir.SharpSsh.jsch.KeyPair kpair = Tamir.SharpSsh.jsch.KeyPair.genKeyPair(jsch, type);
+                // Set a passphrase
+                kpair.setPassphrase(passphrase);
+                // Write the private key to "filename"
+                kpair.writePrivateKey(filename);
+                // Write the public key to "filename.pub"
+                kpair.writePublicKey(filename + ".pub", comment);
+                // Print the key fingerprint
+                Console.WriteLine("Finger print: " + kpair.getFingerPrint());
+                // Free resources
+                kpair.dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            */
+        }
+
+
+
+        #endregion
 
         [Command]
         private void ChangePurple()
@@ -252,6 +325,11 @@ namespace GitlabTool.ViewModels
         /// 設定変更
         /// </summary>
         public TacticsCommand Config { get; private set; }
+
+        /// <summary>
+        /// 公開鍵作成
+        /// </summary>
+        public TacticsCommand KeypairGeneration { get; private set; }
 
         /// <summary>
         /// リポジトリの登録

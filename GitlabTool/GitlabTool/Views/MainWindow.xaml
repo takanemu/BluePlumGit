@@ -93,6 +93,12 @@
                     <Button Height="23"
                 	    Margin="0,0,0,5"
                 	    Content="設定" Command="{Binding Commands.Config}" />
+                    <Button Height="23"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.KeypairGeneration}"
+                            Content="鍵作成"
+                            ToolTip="公開鍵キーペアの作成"/>
+
                     <Button Content="Purple"
                         Command="{Binding Commands.ChangePurple, Mode=OneWay}"
 						Margin="0,0,0,5">
