@@ -152,11 +152,20 @@ namespace GitlabTool.ViewModels
 
 		#endregion
 
+        #region Initializeメソッド
+        /// <summary>
+        /// Initializeメソッド
+        /// </summary>
+        public void Initialize()
+        {
+        }
+        #endregion
+
         #region Loadedメソッド
         /// <summary>
         /// Loadedメソッド
         /// </summary>
-        protected override void LoadedHandlerOverride(object sender, RoutedEventArgs e)
+        public void Loaded()
         {
             this.config = this.model.OpenConfig();
 
@@ -177,18 +186,6 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
-        #region Closedメソッド
-        /// <summary>
-        /// Closedメソッド
-        /// </summary>
-        /// <param name="sender">イベント元</param>
-        /// <param name="e">パラメーター</param>
-        protected override void ClosedHandlerOverride(object sender, EventArgs e)
-        {
-            this.model.SaveConfig(this.config);
-        }
-        #endregion
-
         #region 設定変更コマンド
         /// <summary>
         /// 設定変更コマンド
@@ -196,7 +193,6 @@ namespace GitlabTool.ViewModels
         [Command]
         private void Config()
         {
-            /*
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
@@ -208,7 +204,6 @@ namespace GitlabTool.ViewModels
             {
                 RepositoryEntity entity = (RepositoryEntity)message.Response.Result;
             }
-            */
         }
         #endregion
 
@@ -301,6 +296,20 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region ウインドウクローズキャンセル処理
+        /// <summary>
+        /// ウインドウクローズキャンセル処理
+        /// </summary>
+        [Command]
+        private void WindowCloseCancel()
+        {
+            this.model.SaveConfig(this.config);
+
+            // TODO:終了時保存保護処理
+            Environment.Exit(0);
+        }
+        #endregion
+
         [Command]
         private void ChangePurple()
 		{
@@ -343,6 +352,11 @@ namespace GitlabTool.ViewModels
     /// </summary>
     public class MainWindowViewModelCommand
     {
+        /// <summary>
+        /// ウインドウクローズキャンセルコマンド
+        /// </summary>
+        public TacticsCommand WindowCloseCancel { get; private set; }
+
         /// <summary>
         /// 設定変更
         /// </summary>

@@ -31,8 +31,8 @@ namespace Commno.Library
     /// </summary>
     public class BusyIndicatorProgressMonitor : BatchingProgressMonitor
     {
-        private int counter;
-        private int total;
+        //private int counter;
+        //private int total;
 
         public BusyIndicatorProgressMonitor()
 		{

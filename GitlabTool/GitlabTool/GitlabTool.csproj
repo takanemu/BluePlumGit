@@ -78,6 +78,7 @@
     <Compile Include="Behaviors\MetroChromeBehavior.cs" />
     <Compile Include="Behaviors\ResizeGripBehavior.cs" />
     <Compile Include="Behaviors\WindowAction.cs" />
+    <Compile Include="Behaviors\WindowStyleFlagBehavior.cs" />
     <Compile Include="MetroChrome\CaptionButton.cs" />
     <Compile Include="MetroChrome\CaptionButtons.cs" />
     <Compile Include="MetroChrome\Glow.cs" />
@@ -97,12 +98,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ConfigSettingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\ConfigSettingWindow.xaml.cs">
+      <DependentUpon>ConfigSettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">

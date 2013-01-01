@@ -25,7 +25,30 @@
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i:EventTrigger>
+
+        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction/>
+        </i:EventTrigger>
+
+        <!--WindowのLoadedイベントのタイミングでViewModelのLoadedメソッドが呼ばれます-->
+        <i:EventTrigger>
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Loaded" />
+        </i:EventTrigger>
+
+        <!-- Dialog表示メッセージ -->
+        <l:InteractionMessageTrigger MessageKey="OpenWindow" Messenger="{Binding Messenger, Mode=OneWay}">
+            <action:WindowOpenInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
     <i:Interaction.Behaviors>
+        <l:WindowCloseCancelBehavior CanClose="False" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
         <bh:MetroChromeBehavior />
     </i:Interaction.Behaviors>
     
@@ -83,34 +106,38 @@
             </Border>
 
             <StackPanel Grid.Column="0" 
-                    Margin="5,0,5,5"
+                    Margin="10,0,5,5"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal"
                     d:LayoutOverrides="Height">
                 <StackPanel Width="150"
                             Margin="0,0,5,0"
                             Orientation="Vertical">
-                    <Button Height="23"
-                	    Margin="0,0,0,5"
-                	    Content="設定" Command="{Binding Commands.Config}" />
-                    <Button Height="23"
+                    <Button Height="30"
+                	        Margin="0,0,0,5"
+                	        Content="設定" 
+                            Command="{Binding Commands.Config}"
+                            ToolTip="アプリケーションの設定"/>
+                    <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.KeypairGeneration}"
                             Content="鍵作成"
                             ToolTip="公開鍵キーペアの作成"/>
-
-                    <Button Content="Purple"
-                        Command="{Binding Commands.ChangePurple, Mode=OneWay}"
-						Margin="0,0,0,5">
-                    </Button>
-                    <Button Content="Blue"
-                        Command="{Binding Commands.ChangeBlue, Mode=OneWay}"
-						Margin="0,0,0,5">
-                    </Button>
-                    <Button Content="Orange"
-                        Command="{Binding Commands.ChangeOrange, Mode=OneWay}"
-						Margin="0,0,0,5">
-                    </Button>
+                    <Button Height="30"
+                            Margin="0,0,0,5"
+                            Content="Purple"
+                            Command="{Binding Commands.ChangePurple, Mode=OneWay}"
+						    />
+                    <Button Height="30"
+                            Margin="0,0,0,5"
+                            Content="Blue"
+                            Command="{Binding Commands.ChangeBlue, Mode=OneWay}"
+    						/>
+                    <Button Height="30"
+                            Margin="0,0,0,5"
+                            Content="Orange"
+                            Command="{Binding Commands.ChangeOrange, Mode=OneWay}"
+						    />
                 </StackPanel>
             </StackPanel>
         </Grid>

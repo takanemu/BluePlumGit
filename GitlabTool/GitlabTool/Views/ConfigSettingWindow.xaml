@@ -1,0 +1,77 @@
+﻿<Window x:Class="GitlabTool.Views.ConfigSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:v="clr-namespace:GitlabTool.Views"
+        xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
+        xmlns:behavior="clr-namespace:GitlabTool.Behaviors"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="設定" 
+        Height="300" Width="400"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
+    
+    <Window.DataContext>
+        <vm:ConfigSettingWindowViewModel/>
+    </Window.DataContext>
+    
+     <i:Interaction.Triggers>
+        <!--  WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます  -->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodName="Initialize" MethodTarget="{Binding}" />
+        </i:EventTrigger>
+
+        <!--  Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます  -->
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction />
+        </i:EventTrigger>
+
+        <!--  WindowのLoadedイベントのタイミングでViewModelのLoadedメソッドが呼ばれます  -->
+        <i:EventTrigger>
+            <l:LivetCallMethodAction MethodName="Loaded" MethodTarget="{Binding}" />
+        </i:EventTrigger>
+
+        <!-- Dialog表示メッセージ -->
+        <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <i:Interaction.Behaviors>
+        <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
+    </i:Interaction.Behaviors>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <xctk:PropertyGrid Margin="5" SelectedObject="{Binding Path=Propertys.Config, Mode=TwoWay}"/>
+
+        <StackPanel Height="30"
+            		VerticalAlignment="Top"
+            		FlowDirection="RightToLeft"
+            		Orientation="Horizontal"
+            		d:LayoutOverrides="Width" Grid.Row="1">
+            <Button Width="80"
+            			Height="26"
+            			Margin="0,0,10,0"
+            			HorizontalAlignment="Left"
+            			VerticalAlignment="Center"
+            			Command="{Binding Commands.CancelButton, Mode=OneWay}"
+            			Content="キャンセル" />
+            <Button Width="80"
+            			Height="26"
+            			Margin="0"
+            			HorizontalAlignment="Left"
+            			VerticalAlignment="Center"
+            			Command="{Binding Commands.OkButton, Mode=OneWay}"
+            			Content="設定" />
+        </StackPanel>
+    </Grid>
+</Window>

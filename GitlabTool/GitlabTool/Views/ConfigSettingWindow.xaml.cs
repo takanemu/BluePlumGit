@@ -1,9 +1,7 @@
-﻿using GitlabTool.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,11 +15,11 @@ using System.Windows.Shapes;
 namespace GitlabTool.Views
 {
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// ConfigSettingWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ConfigSettingWindow : Window
     {
-        public MainWindow()
+        public ConfigSettingWindow()
         {
             InitializeComponent();
         }
