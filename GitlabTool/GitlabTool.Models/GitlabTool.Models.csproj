@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gitlab.Api.Library">
+      <HintPath>..\InfrastructureAssemblies\Gitlab\Gitlab.Api.Library.dll</HintPath>
+    </Reference>
     <Reference Include="Livet">
       <HintPath>..\InfrastructureAssemblies\Livet.dll</HintPath>
     </Reference>

@@ -217,11 +217,18 @@ namespace GitlabTool.ViewModels
         /// 公開鍵の作成
         /// </summary>
         [Command]
-        private void KeypairGeneration()
+        private async void KeypairGeneration()
         {
-            // スクリプトで生成できないので、コマンドを呼び出して生成している。
             FilePath keyfile = new FilePath(MainWindowViewModel.RSAKeyFilePath);
+            FilePath pubfile = new FilePath(MainWindowViewModel.RSAKeyFilePath + ".pub");
 
+            if (keyfile.Exists())
+            {
+                // 旧ファイルの削除
+                keyfile.Delete();
+                pubfile.Delete();
+            }
+            // スクリプトで生成できないので、コマンドを呼び出して生成している。
             Process process = new Process();
 
             process.StartInfo.FileName = @".\ssh-keygen.exe";
@@ -230,7 +237,25 @@ namespace GitlabTool.ViewModels
 
             process.Start();
 
-            // TODO:キーの登録
+            // キーの登録
+            if (pubfile.Exists())
+            {
+                // テキストファイル読み込み
+                StreamReader sr = new StreamReader(pubfile.GetAbsolutePath(), Encoding.UTF8);
+
+                string text = sr.ReadToEnd();
+
+                sr.Close();
+
+                // セッションの取得
+                bool saccess = await this.model.OpenServerSession(this.config.ServerUrl, this.globalConfig.EMail, this.config.Password);
+
+                if (saccess)
+                {
+                    // キーの追加
+                    await this.model.AddSSHkeyAsync(this.globalConfig.EMail, text);
+                }
+            }
 
             /*
             FilePath keyfile = new FilePath(MainWindowViewModel.RSAKeyFilePath);
@@ -274,9 +299,6 @@ namespace GitlabTool.ViewModels
             }
             */
         }
-
-
-
         #endregion
 
         [Command]

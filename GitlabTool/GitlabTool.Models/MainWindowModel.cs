@@ -37,6 +37,7 @@ namespace GitlabTool.Models
     using System.IO;
     using System.Text;
     using Newtonsoft.Json;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// メインウインドウモデル
@@ -58,6 +59,8 @@ namespace GitlabTool.Models
         private static readonly string ApplicationDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"2ndfactory\GitlabTool");
 
         private static readonly string ConfigFile = Path.Combine(MainWindowModel.ApplicationDataPath, "Config.json");
+
+        private Gitlab.Gitlab gitlab;
 
         /// <summary>
         /// コンストラクタ
@@ -113,6 +116,33 @@ namespace GitlabTool.Models
             sw.Write(json);
 
             sw.Close();
+        }
+
+        public async Task<bool> OpenServerSession(string host, string email, string password)
+        {
+            this.gitlab = new Gitlab.Gitlab(host);
+
+            this.gitlab.ErrorAction = (Exception exception) =>
+            {
+                // TODO:例外発生時の処理
+            };
+
+            // セッションの取得
+            bool saccess = await this.gitlab.RequestSessionAsync(email, password);
+
+            if (saccess)
+            {
+                // TODO:成功
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> AddSSHkeyAsync(string title, string text)
+        {
+            bool result = await this.gitlab.AddSSHkeyAsync(title, text);
+
+            return result;
         }
 
         #region Complete変更通知プロパティ
