@@ -123,21 +123,6 @@
                             Command="{Binding Commands.KeypairGeneration}"
                             Content="鍵作成"
                             ToolTip="公開鍵キーペアの作成"/>
-                    <Button Height="30"
-                            Margin="0,0,0,5"
-                            Content="Purple"
-                            Command="{Binding Commands.ChangePurple, Mode=OneWay}"
-						    />
-                    <Button Height="30"
-                            Margin="0,0,0,5"
-                            Content="Blue"
-                            Command="{Binding Commands.ChangeBlue, Mode=OneWay}"
-    						/>
-                    <Button Height="30"
-                            Margin="0,0,0,5"
-                            Content="Orange"
-                            Command="{Binding Commands.ChangeOrange, Mode=OneWay}"
-						    />
                 </StackPanel>
             </StackPanel>
         </Grid>

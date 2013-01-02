@@ -50,6 +50,7 @@
     <Compile Include="BusyIndicatorProgressMonitor.cs" />
     <Compile Include="Entitys\BranchEntity.cs" />
     <Compile Include="Entitys\CloneEntity.cs" />
+    <Compile Include="Entitys\ConfigDialogEntity.cs" />
     <Compile Include="Entitys\ConfigEntity.cs" />
     <Compile Include="Entitys\GrobalConfigEntity.cs" />
     <Compile Include="Entitys\InitializeRepositoryEntity.cs" />

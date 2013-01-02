@@ -54,14 +54,15 @@ namespace GitlabTool.ViewModels
         {
             if (this.Parameter != null)
             {
-                this.Propertys.Config = (GrobalConfigEntity)((ICloneable)this.Parameter).Clone();
+                this.Propertys.Config = (ConfigDialogEntity)((ICloneable)this.Parameter).Clone();
             }
             else
             {
-                GrobalConfigEntity config = new GrobalConfigEntity();
+                ConfigDialogEntity config = new ConfigDialogEntity();
 
-                config.EMail = "";
-                config.Name = "";
+                config.ServerUrl = "";
+                config.Password = "";
+                config.Accent = AccentEnum.Blue;
 
                 this.Propertys.Config = config;
             }
@@ -117,7 +118,7 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// コンフィグ
         /// </summary>
-        public virtual GrobalConfigEntity Config { get; set; }
+        public virtual ConfigDialogEntity Config { get; set; }
     }
     #endregion
 

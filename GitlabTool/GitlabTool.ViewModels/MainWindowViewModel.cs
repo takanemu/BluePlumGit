@@ -1,4 +1,22 @@
-﻿
+﻿#region Apache License
+//
+// Licensed to the Apache Software Foundation (ASF) under one or more 
+// contributor license agreements. See the NOTICE file distributed with
+// this work for additional information regarding copyright ownership. 
+// The ASF licenses this file to you under the Apache License, Version 2.0
+// (the "License"); you may not use this file except in compliance with 
+// the License. You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
 namespace GitlabTool.ViewModels
 {
     using Common.Library.Entitys;
@@ -193,16 +211,32 @@ namespace GitlabTool.ViewModels
         [Command]
         private void Config()
         {
+            ConfigDialogEntity param = new ConfigDialogEntity
+            {
+                ServerUrl = this.config.ServerUrl,
+                Password = this.config.Password,
+                Accent = this.config.Accent,
+            };
+
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.CONFIG,
-                Parameter = this.globalConfig,
+                Parameter = param,
             });
 
             if (message.Response != null)
             {
-                RepositoryEntity entity = (RepositoryEntity)message.Response.Result;
+                ConfigDialogEntity entity = (ConfigDialogEntity)message.Response.Result;
+
+                this.config.ServerUrl = entity.ServerUrl;
+                this.config.Password = entity.Password;
+
+                if (this.config.Accent != entity.Accent)
+                {
+                    this.config.Accent = entity.Accent;
+                    DataLogistics.Instance.SetValue(ApplicationEnum.Theme, this.config.Accent);
+                }
             }
         }
         #endregion
@@ -310,26 +344,6 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
-        [Command]
-        private void ChangePurple()
-		{
-            this.config.Accent = AccentEnum.Purple;
-            DataLogistics.Instance.SetValue(ApplicationEnum.Theme, this.config.Accent);
-		}
-        
-        [Command]
-        private void ChangeBlue()
-		{
-            this.config.Accent = AccentEnum.Blue;
-            DataLogistics.Instance.SetValue(ApplicationEnum.Theme, this.config.Accent);
-        }
-        
-        [Command]
-        private void ChangeOrange()
-		{
-            this.config.Accent = AccentEnum.Orange;
-            DataLogistics.Instance.SetValue(ApplicationEnum.Theme, this.config.Accent);
-        }
 	}
     #endregion
 
@@ -366,21 +380,6 @@ namespace GitlabTool.ViewModels
         /// 公開鍵作成
         /// </summary>
         public TacticsCommand KeypairGeneration { get; private set; }
-
-        /// <summary>
-        /// リポジトリの登録
-        /// </summary>
-        public TacticsCommand ChangePurple { get; private set; }
-        
-        /// <summary>
-        /// リポジトリの登録
-        /// </summary>
-        public TacticsCommand ChangeBlue { get; private set; }
-
-        /// <summary>
-        /// リポジトリの登録
-        /// </summary>
-        public TacticsCommand ChangeOrange { get; private set; }
     }
     #endregion
 }
