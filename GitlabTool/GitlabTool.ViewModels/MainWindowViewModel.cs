@@ -19,12 +19,14 @@
 
 namespace GitlabTool.ViewModels
 {
+    using Commno.Library;
     using Common.Library.Entitys;
     using Common.Library.Enums;
     using Common.Library.Messaging.Windows;
     using GitlabTool;
     using GitlabTool.Models;
     using Gordias.Library.Headquarters;
+    using NGit;
     using Sharpen;
     using System;
     using System.Collections.Generic;
@@ -330,6 +332,69 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region 複製コマンド
+        /// <summary>
+        /// 複製コマンド
+        /// </summary>
+        [Command]
+        private void RepositoryClone()
+        {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.CLONE_REPOSITORY,
+            });
+
+            if (message.Response != null)
+            {
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
+                {
+                    CloneEntity entity = (CloneEntity)message.Response.Result;
+                    string gitdirName = Path.Combine(entity.Path, Constants.DOT_GIT);
+                    FilePath gitdir = new FilePath(gitdirName);
+
+                    if (!gitdir.Exists())
+                    {
+                        BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
+
+                        monitor.StartAction = () =>
+                        {
+                            this.OpenBusyIndicator("リポジトリの複製中です。");
+                        };
+                        monitor.UpdateAction = (string taskName, int cmp, int totalWork, int pcnt) =>
+                        {
+                            this.UpdateBusyIndicator(taskName, cmp, totalWork, pcnt);
+                        };
+                        monitor.CompleteAction = () =>
+                        {
+                            this.CloseBusyIndicator();
+
+                            RepositoryEntity repository = new RepositoryEntity
+                            {
+                                //ID = this.model.GetRepositoryNewId(),
+                                Name = entity.Name,
+                                Path = gitdir,
+                            };
+
+                            // dbの登録
+                            //this.model.AddRepository(repository.ID, repository.Name, repository.Path);
+
+                            // リスト追加
+                            //this.repositorysCollection.Add(repository);
+                            //this.RepositoryCollectionView.MoveCurrentTo(repository);
+                        };
+
+                        this.model.CloneRepository(entity, monitor);
+                    }
+                    else
+                    {
+                        MessageBox.Show(".gitディレクトリが、既に存在します。");
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -344,6 +409,34 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        /// <summary>
+        /// インジケーターを表示する
+        /// </summary>
+        /// <param name="title">タイトル</param>
+        private void OpenBusyIndicator(string title)
+        {
+            this.Propertys.BusyDialogMessageTitle = title;
+            this.Propertys.IsBusyDialog = true;
+        }
+
+        /// <summary>
+        /// インジケーターの更新
+        /// </summary>
+        /// <param name="complete">処理完了数</param>
+        private void UpdateBusyIndicator(string taskName, int cmp, int totalWork, int pcnt)
+        {
+            this.Propertys.BusyDialogPcent = (double)pcnt;
+            this.Propertys.BusyDialogProgressMessage = string.Format("{0} {1}/{2} {3}%", taskName, cmp, totalWork, pcnt);
+        }
+
+        /// <summary>
+        /// インジケーターを閉じる
+        /// </summary>
+        private void CloseBusyIndicator()
+        {
+            this.Propertys.IsBusyDialog = false;
+        }
+
 	}
     #endregion
 
@@ -353,6 +446,26 @@ namespace GitlabTool.ViewModels
     /// </summary>
     public class MainWindowViewModelProperty : TacticsProperty
     {
+        /// <summary>
+        /// IsBusyDialog
+        /// </summary>
+        public virtual bool IsBusyDialog { get; set; }
+
+        /// <summary>
+        /// BusyDialogMessageTitle
+        /// </summary>
+        public virtual string BusyDialogMessageTitle { get; set; }
+
+        /// <summary>
+        /// BusyDialogProgressMessage
+        /// </summary>
+        public virtual string BusyDialogProgressMessage { get; set; }
+
+        /// <summary>
+        /// BusyDialogPcent
+        /// </summary>
+        public virtual double BusyDialogPcent { get; set; }
+
         /// <summary>
         /// Gravatarアイコン表示用ID
         /// </summary>
@@ -380,6 +493,11 @@ namespace GitlabTool.ViewModels
         /// 公開鍵作成
         /// </summary>
         public TacticsCommand KeypairGeneration { get; private set; }
+
+        /// <summary>
+        /// リポジトリのクローン
+        /// </summary>
+        public TacticsCommand RepositoryClone { get; private set; }
     }
     #endregion
 }

@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Livet.dll</HintPath>
     </Reference>
+    <Reference Include="Livet.Extensions">
+      <HintPath>..\InfrastructureAssemblies\Livet.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\InfrastructureAssemblies\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -98,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\CloneRepositoryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ConfigSettingWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,6 +115,10 @@
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\CloneRepositoryWindow.xaml.cs">
+      <DependentUpon>CloneRepositoryWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\ConfigSettingWindow.xaml.cs">

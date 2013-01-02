@@ -9,6 +9,7 @@
 		xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
         xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
         xmlns:gravator="clr-namespace:Controls;assembly=Controls.Gravatar"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="GitlabTool"
@@ -123,8 +124,37 @@
                             Command="{Binding Commands.KeypairGeneration}"
                             Content="鍵作成"
                             ToolTip="公開鍵キーペアの作成"/>
+                    <Button Height="30"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.RepositoryClone}"
+                            Content="リポジトリ複製"
+                            ToolTip="リポジトリの複製"/>
                 </StackPanel>
             </StackPanel>
+
+            <xctk:BusyIndicator Grid.RowSpan="2" IsBusy="{Binding Propertys.IsBusyDialog}" BusyContent="{Binding}" DisplayAfter="0">
+                <xctk:BusyIndicator.BusyContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="4">
+                            <TextBlock Text="{Binding Propertys.BusyDialogMessageTitle}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <StackPanel Margin="4">
+                                <TextBlock Text="{Binding Propertys.BusyDialogProgressMessage}"/>
+                                <ProgressBar Value="{Binding Propertys.BusyDialogPcent}" Height="15"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </xctk:BusyIndicator.BusyContentTemplate>
+                <xctk:BusyIndicator.OverlayStyle>
+                    <Style TargetType="{x:Type Rectangle}">
+                        <Setter Property="Fill" Value="#66000000"/>
+                    </Style>
+                </xctk:BusyIndicator.OverlayStyle>
+                <xctk:BusyIndicator.ProgressBarStyle>
+                    <Style TargetType="{x:Type ProgressBar}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Style>
+                </xctk:BusyIndicator.ProgressBarStyle>
+            </xctk:BusyIndicator>
         </Grid>
         <Grid Grid.Row="2"
 			  Background="{DynamicResource AccentBrushKey}">

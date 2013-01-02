@@ -1,0 +1,187 @@
+﻿<Window x:Class="GitlabTool.Views.CloneRepositoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
+        xmlns:behavior="clr-namespace:GitlabTool.Behaviors"
+        Title="リポジトリの複製"
+        Width="450"
+        Height="310"
+        MinWidth="450"
+        MinHeight="310"
+        MaxHeight="310"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
+    
+    <Window.DataContext>
+        <vm:CloneRepositoryWindowViewModel/>
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i:EventTrigger>
+
+        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction/>
+        </i:EventTrigger>
+
+        <!--WindowのLoadedイベントのタイミングでViewModelのLoadedメソッドが呼ばれます-->
+        <i:EventTrigger>
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Loaded" />
+        </i:EventTrigger>
+
+        <!-- Dialog表示メッセージ -->
+        <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <i:Interaction.Behaviors>
+        <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+        <StackPanel Margin="5">
+            <Border BorderThickness="1">
+                <TextBlock Margin="5">
+                    リモートリポジトリをローカルストレージへ複製します。
+					<LineBreak />
+					Gitlabから複製するときには、認証情報が必要です。
+                    <LineBreak /> 
+                    複製には少し時間がかかります。
+                </TextBlock>
+            </Border>
+            <Grid Height="30" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="84" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Width="84"
+                           Height="20"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right"
+                           TextWrapping="Wrap"
+                           d:LayoutOverrides="HorizontalAlignment"><Run Text="リポジトリ名：" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Height="20"
+                         Margin="0"
+                         VerticalAlignment="Center"
+                         Text="{Binding Propertys.RepositoyName,
+                                        Mode=OneWayToSource}"
+                         TextWrapping="Wrap" />
+            </Grid>
+            <Grid Height="30" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="84" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Width="84"
+                           Height="20"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right"
+                           TextWrapping="Wrap"
+                           d:LayoutOverrides="HorizontalAlignment"><Run Text="アドレス：" />
+                </TextBlock>
+                <TextBox Grid.Column="1"
+                         Height="20"
+                         Margin="0"
+                         VerticalAlignment="Center"
+                         Text="{Binding Propertys.RemoteRepositoyUrl,
+                                        Mode=OneWayToSource}"
+                         TextWrapping="Wrap" />
+            </Grid>
+            <Grid>
+            	<Grid.RowDefinitions>
+            		<RowDefinition/>
+            		<RowDefinition/>
+            	</Grid.RowDefinitions>
+            	<Grid.ColumnDefinitions>
+            		<ColumnDefinition Width="84"/>
+            		<ColumnDefinition/>
+            	</Grid.ColumnDefinitions>
+            	<CheckBox x:Name="checkBox" Content="認証情報：" d:LayoutOverrides="Height" VerticalAlignment="Center" HorizontalAlignment="Right" IsChecked="{Binding Propertys.IsCredential, Mode=TwoWay}"/>
+            	<TextBox TextWrapping="Wrap" Text="{Binding Propertys.UserName, Mode=TwoWay}" d:LayoutOverrides="Height" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=checkBox}" Margin="0,5"/>
+            	<PasswordBox d:LayoutOverrides="Height" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" MaxLength="128" PasswordChar="*" IsEnabled="{Binding IsChecked, ElementName=checkBox}" Margin="0,5">
+            		<i:Interaction.Behaviors>
+            			<l:PasswordBoxBindingSupportBehavior Password="{Binding Propertys.PassWord, Mode=TwoWay}"/>
+            		</i:Interaction.Behaviors>
+            	</PasswordBox>
+            </Grid>
+            <Grid Height="30" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="84" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="25" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Width="84"
+                           Height="20"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Text="複製する場所："
+                           TextAlignment="Right"
+                           TextWrapping="Wrap"
+                           d:LayoutOverrides="HorizontalAlignment" />
+                <TextBox Grid.Column="1"
+                         Height="20"
+                         Margin="0"
+                         VerticalAlignment="Center"
+                         Text="{Binding Propertys.FolderPath,
+                                        Mode=TwoWay}"
+                         TextWrapping="Wrap" />
+                <Button Grid.Column="2"
+                        Width="20"
+                        Height="20"
+                        Margin="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Content="...">
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <l:FolderBrowserDialogInteractionMessageAction>
+                                <l:DirectInteractionMessage CallbackMethodName="FolderSelected" CallbackMethodTarget="{Binding}">
+                                    <l:FolderSelectionMessage Description="フォルダーの選択" />
+                                </l:DirectInteractionMessage>
+                            </l:FolderBrowserDialogInteractionMessageAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                </Button>
+            </Grid>
+            <Grid Height="30" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Height="30"
+            		VerticalAlignment="Top"
+            		FlowDirection="RightToLeft"
+            		Orientation="Horizontal"
+            		d:LayoutOverrides="Width" Grid.Column="1">
+                    <Button Width="80"
+            			Height="26"
+            			Margin="0,0,10,0"
+            			HorizontalAlignment="Left"
+            			VerticalAlignment="Center"
+            			Command="{Binding Commands.CancelButton, Mode=OneWay}"
+            			Content="キャンセル" />
+                    <Button Width="80"
+            			Height="26"
+            			Margin="0"
+            			HorizontalAlignment="Left"
+            			VerticalAlignment="Center"
+            			Command="{Binding Commands.OkButton, Mode=OneWay}"
+            			Content="実行" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

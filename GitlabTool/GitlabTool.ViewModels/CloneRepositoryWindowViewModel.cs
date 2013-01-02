@@ -19,12 +19,12 @@
 
 namespace GitlabTool.ViewModels
 {
-    using Commno.Library.Entitys;
     using Common.Library.Entitys;
     using Common.Library.Enums;
     using Gordias.Library.Entitys;
     using Gordias.Library.Headquarters;
     using Gordias.Library.Interface;
+    using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
     using System;
     using System.Collections.Generic;
@@ -33,9 +33,9 @@ namespace GitlabTool.ViewModels
 
     #region メインクラス
     /// <summary>
-    /// 設定ウインドウビューモデルクラス
+    /// クローンウインドウビューモデル
     /// </summary>
-    public class ConfigSettingWindowViewModel : TacticsViewModel<ConfigSettingViewModelProperty, ConfigSettingViewModelCommand>, IWindowParameter, IWindowResult
+    public class CloneRepositoryWindowViewModel : TacticsViewModel<CloneRepositoryWindowViewModelProperty, CloneRepositoryWindowViewModelCommand>, IWindowResult
     {
         #region Initializeメソッド
         /// <summary>
@@ -52,20 +52,6 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Loaded()
         {
-            if (this.Parameter != null)
-            {
-                this.Propertys.Config = (ConfigDialogEntity)((ICloneable)this.Parameter).Clone();
-            }
-            else
-            {
-                ConfigDialogEntity config = new ConfigDialogEntity();
-
-                config.ServerUrl = "";
-                config.Password = "";
-                config.Accent = AccentEnum.Blue;
-
-                this.Propertys.Config = config;
-            }
         }
         #endregion
 
@@ -76,11 +62,21 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
-            this.Responce = new WindowResultEntity
+            CloneEntity entity = new CloneEntity
+            {
+                Name = this.Propertys.RepositoyName,
+                Path = this.Propertys.FolderPath,
+                Url = this.Propertys.RemoteRepositoyUrl,
+                IsCredential = this.Propertys.IsCredential,
+                UserName = this.Propertys.UserName,
+                PassWord = this.Propertys.PassWord,
+            };
+            WindowResultEntity windowResultEntity = new WindowResultEntity
             {
                 Button = WindowButtonEnum.OK,
-                Result = this.Propertys.Config,
+                Result = entity,
             };
+            this.Responce = windowResultEntity;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -92,15 +88,19 @@ namespace GitlabTool.ViewModels
         [Command]
         private void CancelButton()
         {
-            this.Responce = null;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+            this.Responce = null;
         }
         #endregion
 
         /// <summary>
-        /// パラメーター
+        /// フォルダーの選択
         /// </summary>
-        public object Parameter { get; set; }
+        /// <param name="message">フォルダー選択メッセージ</param>
+        public void FolderSelected(FolderSelectionMessage message)
+        {
+            this.Propertys.FolderPath = message.Response;
+        }
 
         /// <summary>
         /// 戻り値
@@ -113,12 +113,37 @@ namespace GitlabTool.ViewModels
     /// <summary>
     /// プロパティクラス
     /// </summary>
-    public class ConfigSettingViewModelProperty : TacticsProperty
+    public class CloneRepositoryWindowViewModelProperty : TacticsProperty
     {
         /// <summary>
-        /// コンフィグ
+        /// RepositoyName
         /// </summary>
-        public virtual ConfigDialogEntity Config { get; set; }
+        public virtual string RepositoyName { get; set; }
+
+        /// <summary>
+        /// RemoteRepositoyUrl
+        /// </summary>
+        public virtual string RemoteRepositoyUrl { get; set; }
+
+        /// <summary>
+        /// FolderPath
+        /// </summary>
+        public virtual string FolderPath { get; set; }
+
+        /// <summary>
+        /// IsCredential
+        /// </summary>
+        public virtual bool IsCredential { get; set; }
+
+        /// <summary>
+        /// UserName
+        /// </summary>
+        public virtual string UserName { get; set; }
+
+        /// <summary>
+        /// PassWord
+        /// </summary>
+        public virtual string PassWord { get; set; }
     }
     #endregion
 
@@ -126,7 +151,7 @@ namespace GitlabTool.ViewModels
     /// <summary>
     /// コマンドクラス
     /// </summary>
-    public class ConfigSettingViewModelCommand
+    public class CloneRepositoryWindowViewModelCommand
     {
         /// <summary>
         /// OkButtonコマンド
