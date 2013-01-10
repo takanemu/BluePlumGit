@@ -23,6 +23,7 @@ namespace GitlabTool.ViewModels
     using Common.Library.Entitys;
     using Common.Library.Enums;
     using Common.Library.Messaging.Windows;
+    using Gitlab;
     using GitlabTool;
     using GitlabTool.Models;
     using Gordias.Library.Headquarters;
@@ -218,6 +219,7 @@ namespace GitlabTool.ViewModels
                 ServerUrl = this.config.ServerUrl,
                 Password = this.config.Password,
                 Accent = this.config.Accent,
+                ApiVersion = this.config.ApiVersion,
             };
 
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
@@ -233,6 +235,7 @@ namespace GitlabTool.ViewModels
 
                 this.config.ServerUrl = entity.ServerUrl;
                 this.config.Password = entity.Password;
+                this.config.ApiVersion = entity.ApiVersion;
 
                 if (this.config.Accent != entity.Accent)
                 {
@@ -279,7 +282,7 @@ namespace GitlabTool.ViewModels
                 sr.Close();
 
                 // セッションの取得
-                bool saccess = await this.model.OpenServerSession(this.config.ServerUrl, this.globalConfig.EMail, this.config.Password);
+                bool saccess = await this.model.OpenServerSession(this.config.ServerUrl, this.globalConfig.EMail, this.config.Password, this.config.ApiVersion);
 
                 if (saccess)
                 {

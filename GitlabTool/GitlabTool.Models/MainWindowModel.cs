@@ -38,6 +38,7 @@ namespace GitlabTool.Models
     using System.Text;
     using Newtonsoft.Json;
     using System.Threading.Tasks;
+using Gitlab;
 
     /// <summary>
     /// メインウインドウモデル
@@ -60,7 +61,7 @@ namespace GitlabTool.Models
 
         private static readonly string ConfigFile = Path.Combine(MainWindowModel.ApplicationDataPath, "Config.json");
 
-        private Gitlab.Gitlab gitlab;
+        private Gitlab gitlab;
 
         /// <summary>
         /// コンストラクタ
@@ -118,9 +119,17 @@ namespace GitlabTool.Models
             sw.Close();
         }
 
-        public async Task<bool> OpenServerSession(string host, string email, string password)
+        /// <summary>
+        /// セッション取得
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<bool> OpenServerSession(string host, string email, string password, ApiVersionEnum version)
         {
-            this.gitlab = new Gitlab.Gitlab(host);
+            this.gitlab = new Gitlab(host);
+            this.gitlab.ApiVersion = version;
 
             this.gitlab.ErrorAction = (Exception exception) =>
             {

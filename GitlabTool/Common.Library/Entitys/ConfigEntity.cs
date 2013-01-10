@@ -20,11 +20,12 @@
 namespace Common.Library.Entitys
 {
     using Common.Library.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+    using Gitlab;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     
     public class ConfigEntity
     {
@@ -32,6 +33,7 @@ using System.Threading.Tasks;
         public string Password { get; set; }
         public List<RepositoryEntity> Repository { get; set; }
         public AccentEnum Accent { get; set; }
+        public ApiVersionEnum ApiVersion { get; set; }
 
         public ConfigEntity()
         {
@@ -39,6 +41,7 @@ using System.Threading.Tasks;
             this.Password = string.Empty;
             this.Repository = new List<RepositoryEntity>();
             this.Accent = AccentEnum.Blue;
+            this.ApiVersion = ApiVersionEnum.VERSION2;
         }
     }
 }

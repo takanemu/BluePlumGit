@@ -20,6 +20,7 @@
 namespace Common.Library.Entitys
 {
     using Common.Library.Enums;
+    using Gitlab;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -57,6 +58,15 @@ namespace Common.Library.Entitys
             set;
         }
 
+        [Category("Core")]
+        [DisplayName("API Version")]
+        [Description("通信ライブラリのバージョンを設定してください。")]
+        public ApiVersionEnum ApiVersion
+        {
+            get;
+            set;
+        }
+
         public virtual object Clone()
         {
             ConfigDialogEntity instance = (ConfigDialogEntity)Activator.CreateInstance(GetType());
@@ -64,6 +74,7 @@ namespace Common.Library.Entitys
             instance.ServerUrl = this.ServerUrl;
             instance.Password = this.Password;
             instance.Accent = this.Accent;
+            instance.ApiVersion = this.ApiVersion;
 
             return instance;
         }
