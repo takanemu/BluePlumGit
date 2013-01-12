@@ -38,12 +38,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Gitlab\Debug\Gitlab.Api.Library.dll</HintPath>
     </Reference>
-    <Reference Include="Livet, Version=1.0.4.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
+    <Reference Include="Livet, Version=1.0.6.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\InfrastructureAssemblies\Livet.dll</HintPath>
+      <HintPath>..\InfrastructureAssemblies\Livet\Livet.dll</HintPath>
     </Reference>
-    <Reference Include="Livet.Extensions">
-      <HintPath>..\InfrastructureAssemblies\Livet.Extensions.dll</HintPath>
+    <Reference Include="Livet.Extensions, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InfrastructureAssemblies\Livet\Livet.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="NGit, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
