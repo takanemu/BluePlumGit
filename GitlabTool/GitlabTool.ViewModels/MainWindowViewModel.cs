@@ -246,95 +246,6 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
-        #region 公開鍵の作成
-        /// <summary>
-        /// 公開鍵の作成
-        /// </summary>
-        [Command]
-        private async void KeypairGeneration()
-        {
-            FilePath keyfile = new FilePath(MainWindowViewModel.RSAKeyFilePath);
-            FilePath pubfile = new FilePath(MainWindowViewModel.RSAKeyFilePath + ".pub");
-
-            if (keyfile.Exists())
-            {
-                // 旧ファイルの削除
-                keyfile.Delete();
-                pubfile.Delete();
-            }
-            // スクリプトで生成できないので、コマンドを呼び出して生成している。
-            Process process = new Process();
-
-            process.StartInfo.FileName = @".\ssh-keygen.exe";
-            process.StartInfo.Arguments = @"-t rsa -N """" -C """ + this.globalConfig.EMail + @""" -f " + keyfile.GetAbsolutePath();
-            process.StartInfo.WorkingDirectory = @".\";
-
-            process.Start();
-
-            // キーの登録
-            if (pubfile.Exists())
-            {
-                // テキストファイル読み込み
-                StreamReader sr = new StreamReader(pubfile.GetAbsolutePath(), Encoding.UTF8);
-
-                string text = sr.ReadToEnd();
-
-                sr.Close();
-
-                // セッションの取得
-                bool saccess = await this.model.OpenServerSession(this.config.ServerUrl, this.globalConfig.EMail, this.config.Password, this.config.ApiVersion);
-
-                if (saccess)
-                {
-                    // キーの追加
-                    await this.model.AddSSHkeyAsync(this.globalConfig.EMail, text);
-                }
-            }
-
-            /*
-            FilePath keyfile = new FilePath(MainWindowViewModel.RSAKeyFilePath);
-
-            if (keyfile.Exists())
-            {
-                return;
-            }
-
-            int type = Tamir.SharpSsh.jsch.KeyPair.RSA;
-
-            // Output file name
-            String filename = keyfile.GetAbsolutePath();
-            // Signature comment
-            String comment = "takanemu@gmail.com";
-
-            try
-            {
-                // Create a new JSch instance
-                Tamir.SharpSsh.jsch.JSch jsch = new Tamir.SharpSsh.jsch.JSch();
-
-                // Prompt the user for a passphrase for the private key file
-                String passphrase = "";
-
-                // Generate the new key pair
-                Tamir.SharpSsh.jsch.KeyPair kpair = Tamir.SharpSsh.jsch.KeyPair.genKeyPair(jsch, type);
-                // Set a passphrase
-                kpair.setPassphrase(passphrase);
-                // Write the private key to "filename"
-                kpair.writePrivateKey(filename);
-                // Write the public key to "filename.pub"
-                kpair.writePublicKey(filename + ".pub", comment);
-                // Print the key fingerprint
-                Console.WriteLine("Finger print: " + kpair.getFingerPrint());
-                // Free resources
-                kpair.dispose();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            */
-        }
-        #endregion
-
         #region 複製コマンド
         /// <summary>
         /// 複製コマンド
@@ -491,11 +402,6 @@ namespace GitlabTool.ViewModels
         /// 設定変更
         /// </summary>
         public TacticsCommand Config { get; private set; }
-
-        /// <summary>
-        /// 公開鍵作成
-        /// </summary>
-        public TacticsCommand KeypairGeneration { get; private set; }
 
         /// <summary>
         /// リポジトリのクローン
