@@ -10,9 +10,16 @@
         xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
         xmlns:behavior="clr-namespace:GitlabTool.Behaviors"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:bh="clr-namespace:GitlabTool.Behaviors"
+		xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
         Title="設定" 
-        Height="300" Width="400"
+        Height="350" Width="400"
         WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrushKey}"
+		WindowState="{Binding WindowState}"
+		SnapsToDevicePixels="True"
+		ResizeMode="NoResize"
+		TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
     
     <Window.DataContext>
@@ -45,13 +52,56 @@
         <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
     </i:Interaction.Behaviors>
 
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=CaptionBar, Mode=OneWay}"
+					  ResizeBorderThickness="0"
+					  GlassFrameThickness="0,0,0,1" />
+    </WindowChrome.WindowChrome>
+
     <Grid Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <xctk:PropertyGrid Margin="5" SelectedObject="{Binding Path=Propertys.Config, Mode=TwoWay}"/>
+        <Border x:Name="CaptionBar"
+				Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <!--<Border Grid.Column="0"
+						Background="Transparent"
+						Margin="10,8"
+						WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Rectangle Width="20" Height="20" Fill="{DynamicResource GitIcon1788CBrush}" />
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <bh:DirectWindowAction WindowAction="OpenSystemMenu" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>-->
+                <TextBlock Grid.Column="1"
+						   Text="設定"
+						   Foreground="{DynamicResource ThemeForegroundDarkBrushKey}"
+						   FontSize="15"
+						   Margin="0,0,0,-2"
+						   VerticalAlignment="Center"
+						   TextTrimming="CharacterEllipsis"
+						   FontFamily="Meiryo" />
+                <metro:CaptionButtons Grid.Column="2"
+									  HorizontalAlignment="Right"
+									  VerticalAlignment="Top"
+									  CanMaximize="False"
+									  CanMinimize="False"
+									  CanNormalize="{Binding CanNormalize}" />
+            </Grid>
+        </Border>
+
+        <xctk:PropertyGrid Grid.Row="1" Margin="5" SelectedObject="{Binding Path=Propertys.Config, Mode=TwoWay}"/>
 
         <StackPanel Height="30"
             		VerticalAlignment="Top"
