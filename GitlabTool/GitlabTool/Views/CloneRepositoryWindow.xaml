@@ -20,7 +20,7 @@
         Background="{DynamicResource ThemeBackgroundBrushKey}"
 		WindowState="{Binding WindowState}"
 		SnapsToDevicePixels="True"
-		ResizeMode="NoResize"
+		ResizeMode="CanResize"
 		TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
     
@@ -52,6 +52,8 @@
 
     <i:Interaction.Behaviors>
         <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
+        <l:WindowCloseCancelBehavior CanClose="True" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
+        <bh:MetroChromeBehavior />
     </i:Interaction.Behaviors>
 
     <WindowChrome.WindowChrome>
@@ -90,7 +92,7 @@
 						   Text="リポジトリの複製"
 						   Foreground="{DynamicResource ThemeForegroundDarkBrushKey}"
 						   FontSize="15"
-						   Margin="0,0,0,-2"
+						   Margin="10,8,0,-2"
 						   VerticalAlignment="Center"
 						   TextTrimming="CharacterEllipsis"
 						   FontFamily="Meiryo" />

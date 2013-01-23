@@ -50,7 +50,11 @@
 
     <i:Interaction.Behaviors>
         <behavior:WindowStyleFlagBehavior MaximizeBox="False" MinimizeBox="False" />
+        <l:WindowCloseCancelBehavior CanClose="True" CloseCanceledCallbackCommand="{Binding Commands.WindowCloseCancel, Mode=OneWay}" />
+        <bh:MetroChromeBehavior />
     </i:Interaction.Behaviors>
+
+    
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=CaptionBar, Mode=OneWay}"
@@ -88,7 +92,7 @@
 						   Text="設定"
 						   Foreground="{DynamicResource ThemeForegroundDarkBrushKey}"
 						   FontSize="15"
-						   Margin="0,0,0,-2"
+						   Margin="8,6,0,-2"
 						   VerticalAlignment="Center"
 						   TextTrimming="CharacterEllipsis"
 						   FontFamily="Meiryo" />
@@ -107,7 +111,7 @@
             		VerticalAlignment="Top"
             		FlowDirection="RightToLeft"
             		Orientation="Horizontal"
-            		d:LayoutOverrides="Width" Grid.Row="1">
+            		d:LayoutOverrides="Width" Grid.Row="2" Margin="0,0,5,0">
             <Button Width="80"
             			Height="26"
             			Margin="0,0,10,0"
