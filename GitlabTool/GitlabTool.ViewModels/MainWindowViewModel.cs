@@ -253,10 +253,18 @@ namespace GitlabTool.ViewModels
         [Command]
         private void RepositoryClone()
         {
+            object[] param = new object[]
+            {
+                this.config.ServerUrl,
+                this.config.Password,
+                this.globalConfig.EMail
+            };
+
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.CLONE_REPOSITORY,
+                Parameter = param
             });
 
             if (message.Response != null)
