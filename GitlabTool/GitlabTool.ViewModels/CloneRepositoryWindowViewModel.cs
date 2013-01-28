@@ -30,13 +30,99 @@ namespace GitlabTool.ViewModels
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Gitlab;
+    using System.Windows;
 
     #region メインクラス
     /// <summary>
     /// クローンウインドウビューモデル
     /// </summary>
-    public class CloneRepositoryWindowViewModel : TacticsViewModel<CloneRepositoryWindowViewModelProperty, CloneRepositoryWindowViewModelCommand>, IWindowResult
+    public class CloneRepositoryWindowViewModel : TacticsViewModel<CloneRepositoryWindowViewModelProperty, CloneRepositoryWindowViewModelCommand>, IWindowParameter,IWindowResult
     {
+        #region Menber Variables
+        /// <summary>
+        /// 通信ライブラリ
+        /// </summary>
+        public Gitlab gitlab;
+
+        /// <summary>
+        /// サーバーURL
+        /// </summary>
+        public string serverurl;
+
+        /// <summary>
+        /// パスワード
+        /// </summary>
+        public string password;
+
+        /// <summary>
+        /// メールアドレス
+        /// </summary>
+        public string email;
+
+        /// <summary>
+        /// プロジェクトリストの表示状態を設定または取得します
+        /// </summary>
+        private bool isEnabledProjectList;
+
+        /// <summary>
+        /// プロジェクトリストを設定または取得します
+        /// </summary>
+        private List<Project> projectlist;
+
+        /// <summary>
+        /// 選択されたプロジェクトを設定または取得します。
+        /// </summary>
+        private Project selectedProject = null;
+
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// プロジェクトリストの表示状態を設定または取得します
+        /// </summary>
+        public bool IsEnabledProjectList
+        {
+            get { return this.isEnabledProjectList; }
+            set
+            {
+                this.isEnabledProjectList = value;
+                this.RaisePropertyChanged(() => IsEnabledProjectList);
+            }
+        }
+
+        /// <summary>
+        /// プロジェクトリストを設定または取得します
+        /// </summary>
+        public List<Project> ProjectList
+        {
+            get { return this.projectlist; }
+            set
+            {
+                if (this.projectlist != value)
+                {
+                    this.projectlist = value;
+                    this.RaisePropertyChanged(() => ProjectList);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 選択されたプロジェクトを設定または取得します。
+        /// </summary>
+        public Project SelectedProject
+        {
+            get { return this.selectedProject; }
+            set
+            {
+                if (this.selectedProject != value)
+                    this.Propertys.RepositoyName = value.Code;
+                this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
+            }
+        }
+
+        #endregion
+
         #region Initializeメソッド
         /// <summary>
         /// Initializeメソッド
@@ -52,8 +138,60 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Loaded()
         {
+            if (this.Parameter != null)
+            {
+                // パラメータ設定
+                this.serverurl = ((object[])this.Parameter)[0].ToString();
+                this.password = ((object[])this.Parameter)[1].ToString();
+                this.email = ((object[])this.Parameter)[2].ToString();
+
+                //プロジェクト取得処理
+                if (!string.IsNullOrEmpty(this.serverurl) && !string.IsNullOrEmpty(this.password) && !string.IsNullOrEmpty(this.email))
+                {
+                    try
+                    {
+                        this.gitlab = new Gitlab(serverurl);
+                        this.ProjectList = new List<Project>();
+
+                        this.Propertys.IsCredential = true;
+                        this.Propertys.PassWord = this.password;
+                        this.Propertys.UserName = this.email;
+
+                        this.getProjectList(email, password);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                        this.IsEnabledProjectList = false;
+                    }
+                }
+                else
+                {
+                    this.IsEnabledProjectList = false;
+                }
+            }
         }
         #endregion
+
+        /// <summary>
+        /// プロジェクトリスト情報を取得します
+        /// </summary>
+        /// <param name="email">メールアドレス</param>
+        /// <param name="password">パスワード</param>
+        async private void getProjectList(string email, string password)
+        {
+            bool success = await gitlab.RequestSessionAsync(email, password);
+
+            if (success)
+            {
+                this.ProjectList = await this.gitlab.RequestProjectsAsync();
+                this.IsEnabledProjectList = true;
+            }
+            else 
+            {
+                this.IsEnabledProjectList = false;
+            }
+        }
 
         #region OKボタン処理
         /// <summary>
@@ -101,6 +239,11 @@ namespace GitlabTool.ViewModels
         {
             this.Propertys.FolderPath = message.Response;
         }
+
+        /// <summary>
+        /// パラメーター
+        /// </summary>
+        public object Parameter { get; set; }
 
         /// <summary>
         /// 戻り値
