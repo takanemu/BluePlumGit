@@ -253,6 +253,12 @@ namespace GitlabTool.ViewModels
         [Command]
         private void RepositoryClone()
         {
+            if (this.globalConfig == null)
+            {
+                // .gitglobalが存在しない
+                MessageBox.Show(".gitglobalファイルが存在しません。GitHub for Windowsをインストールしてください。");
+                return;
+            }
             object[] param = new object[]
             {
                 this.config.ServerUrl,
