@@ -323,6 +323,26 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region 空フォルダの登録
+        /// <summary>
+        /// 空フォルダの登録
+        /// </summary>
+        [Command]
+        private void EmptyFolderKeep()
+        {
+        }
+        #endregion
+
+        #region 排他ファイルの作成
+        /// <summary>
+        /// 排他ファイルの作成
+        /// </summary>
+        [Command]
+        private void GitIgnore()
+        {
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -421,6 +441,16 @@ namespace GitlabTool.ViewModels
         /// リポジトリのクローン
         /// </summary>
         public TacticsCommand RepositoryClone { get; private set; }
+
+        /// <summary>
+        /// 空フォルダをGitで管理させる
+        /// </summary>
+        public TacticsCommand EmptyFolderKeep { get; private set; }
+
+        /// <summary>
+        /// 排他ファイルの作成
+        /// </summary>
+        public TacticsCommand GitIgnore { get; private set; }
     }
     #endregion
 }
