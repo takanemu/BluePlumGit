@@ -71,7 +71,6 @@ namespace GitlabTool.ViewModels
             this.model = new MainWindowModel();
         }
 
-
 		#region WindowState 変更通知プロパティ
 
 		private WindowState _WindowState;
@@ -330,6 +329,11 @@ namespace GitlabTool.ViewModels
         [Command]
         private void EmptyFolderKeep()
         {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.MANAGED_EMPTY_FOLDER,
+            });
         }
         #endregion
 
@@ -340,6 +344,11 @@ namespace GitlabTool.ViewModels
         [Command]
         private void GitIgnore()
         {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.CREATE_GITIGNORE,
+            });
         }
         #endregion
 

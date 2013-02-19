@@ -37,5 +37,7 @@ namespace Common.Library.Enums
         COMMIT,
         CONFIG,
         KEYDISP,
+        CREATE_GITIGNORE,
+        MANAGED_EMPTY_FOLDER,
     }
 }

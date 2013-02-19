@@ -109,6 +109,12 @@ namespace GitlabTool.Behaviors.Messaging.Windows
                 //case WindowTypeEnum.COMMIT:
                 //    result = new CommitWindow();
                 //    break;
+                case WindowTypeEnum.CREATE_GITIGNORE:
+                    result = new CreateIgnoreFileWindow();
+                    break;
+                case WindowTypeEnum.MANAGED_EMPTY_FOLDER:
+                    result = new EmptyFolderKeepWindow();
+                    break;
             }
             return result;
         }

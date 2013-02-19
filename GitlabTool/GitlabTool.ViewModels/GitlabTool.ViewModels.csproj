@@ -71,6 +71,8 @@
   <ItemGroup>
     <Compile Include="CloneRepositoryWindowViewModel.cs" />
     <Compile Include="ConfigSettingWindowViewModel.cs" />
+    <Compile Include="CreateIgnoreFileWindowViewModel.cs" />
+    <Compile Include="EmptyFolderKeepWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainWindowViewModel.cs" />
   </ItemGroup>
