@@ -19,11 +19,13 @@
 
 namespace GitlabTool.ViewModels
 {
+    using Common.Library.Entitys;
     using Gordias.Library.Headquarters;
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -40,6 +42,59 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
+            this.Propertys.ProjectKindList = new List<ProjectKind>();
+
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "ActionScript",
+                Filename = "Actionscript.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "Android",
+                Filename = "Android.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "C",
+                Filename = "C.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "C++",
+                Filename = "C++.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "C#",
+                Filename = "CSharp.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "Java",
+                Filename = "Java.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "Node.js",
+                Filename = "Node.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "Objective-C",
+                Filename = "Objective-C.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "Ruby on Rails",
+                Filename = "Rails.gitignore",
+            });
+            this.Propertys.ProjectKindList.Add(new ProjectKind
+            {
+                Name = "Ruby",
+                Filename = "Ruby.gitignore",
+            });
+            this.Propertys.SelectedProjectKind = this.Propertys.ProjectKindList[0];
         }
         #endregion
 
@@ -50,6 +105,12 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            // 実行パス取得
+            string baseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filepath = baseDir + @"\Assets\Gitignore\" + this.Propertys.SelectedProjectKind.Filename;
+
+            File.Copy(filepath, this.Propertys.FolderPath + @"\.gitignore");
+
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
@@ -86,6 +147,16 @@ namespace GitlabTool.ViewModels
         /// FolderPath
         /// </summary>
         public virtual string FolderPath { get; set; }
+
+        /// <summary>
+        /// ProjectKindList
+        /// </summary>
+        public virtual List<ProjectKind> ProjectKindList { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual ProjectKind SelectedProjectKind { get; set; }
     }
     #endregion
 

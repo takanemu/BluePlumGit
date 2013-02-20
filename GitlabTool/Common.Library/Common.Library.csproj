@@ -61,6 +61,7 @@
     <Compile Include="Entitys\ConfigEntity.cs" />
     <Compile Include="Entitys\GrobalConfigEntity.cs" />
     <Compile Include="Entitys\InitializeRepositoryEntity.cs" />
+    <Compile Include="Entitys\ProjectKind.cs" />
     <Compile Include="Entitys\RepositoryEntity.cs" />
     <Compile Include="Entitys\RSAKeyEntity.cs" />
     <Compile Include="Enums\AccentEnum.cs" />
