@@ -21,6 +21,7 @@ namespace GitlabTool.ViewModels
 {
     using Gordias.Library.Headquarters;
     using Livet.Messaging.IO;
+    using Livet.Messaging.Windows;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -39,6 +40,74 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
+        }
+        #endregion
+
+        #region OKボタン処理
+        /// <summary>
+        /// OKボタン処理
+        /// </summary>
+        [Command]
+        private void OkButton()
+        {
+            this.SearchDirectory(this.Propertys.FolderPath);
+
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+        }
+        #endregion
+
+        /// <summary>
+        /// 空フォルダに、.gitkeepファイルを作成する。
+        /// 空でないフォルダに、.gitkeepファイルが有ったら削除する。
+        /// </summary>
+        /// <param name="path">パス</param>
+        private void SearchDirectory(string path)
+        {
+            Action<string> checkDeleteGitKeep = (string check) =>
+                {
+                    if (System.IO.File.Exists(check + @"\.gitkeep"))
+                    {
+                        System.IO.File.Delete(check + @"\.gitkeep");
+                    }
+                };
+
+            string[] directorys = System.IO.Directory.GetDirectories(path, "*", System.IO.SearchOption.TopDirectoryOnly);
+            string[] files = System.IO.Directory.GetFiles(path, "*", System.IO.SearchOption.TopDirectoryOnly);
+
+            if (directorys.Length == 0 && files.Length == 0)
+            {
+                if (!System.IO.File.Exists(path + @"\.gitkeep"))
+                {
+                    System.IO.FileStream fs = System.IO.File.Open(path + @"\.gitkeep", System.IO.FileMode.Create);
+
+                    if (fs != null)
+                    {
+                        fs.Close();
+                    }
+                }
+            }
+            else if (directorys.Length > 0 && files.Length == 0)
+            {
+                foreach (string directory in directorys)
+                {
+                    this.SearchDirectory(directory);
+                }
+                checkDeleteGitKeep(path);
+            }
+            else if(!(files.Length == 1 && files[0].LastIndexOf(".gitkeep") != -1))
+            {
+                checkDeleteGitKeep(path);
+            }
+        }
+
+        #region Cancelボタン処理
+        /// <summary>
+        /// Cancelボタン処理
+        /// </summary>
+        [Command]
+        private void CancelButton()
+        {
+            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
 
