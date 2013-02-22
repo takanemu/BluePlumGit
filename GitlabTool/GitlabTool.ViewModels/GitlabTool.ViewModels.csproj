@@ -64,6 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Livet\Livet.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\InfrastructureAssemblies\log4net\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="NGit, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\NGit.dll</HintPath>

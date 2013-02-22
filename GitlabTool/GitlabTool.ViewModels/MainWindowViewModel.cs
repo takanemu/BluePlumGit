@@ -27,6 +27,7 @@ namespace GitlabTool.ViewModels
     using GitlabTool;
     using GitlabTool.Models;
     using Gordias.Library.Headquarters;
+    using log4net;
     using NGit;
     using Sharpen;
     using System;
@@ -46,6 +47,15 @@ namespace GitlabTool.ViewModels
     /// </summary>
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
 	{
+        /// <summary>
+        /// ログ
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly string RSAKeyFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".ssh\gitlab_tool");
 
         /// <summary>
@@ -68,6 +78,8 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
+            logger.Info("アプリケーション起動");
+
             this.model = new MainWindowModel();
         }
 

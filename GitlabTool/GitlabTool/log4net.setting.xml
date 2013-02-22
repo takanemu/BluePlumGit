@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<log4net>
+	<!-- 開発用コンソール出力定義 -->
+	<appender name="Console" type="log4net.Appender.ConsoleAppender">
+		<layout type="log4net.Layout.PatternLayout">
+			<!--ログ書式-->
+			<conversionPattern value="%date{yyyy-MM-dd HH:mm:ss,fff} [%thread] %-5level (%class::%method - %line) - %message%newline"/>
+		</layout>
+	</appender>
+
+	<!-- ログファイル出力用定義 -->
+	<appender name="AppRollingFileAppender" type="log4net.Appender.RollingFileAppender">
+		<file value="GitlabTool" />
+		<appendToFile value="true" />
+		<maximumFileSize value="10MB" />							<!-- 1ファイルサイズ -->
+		<maxSizeRollBackups value="5" />							<!-- ファイル世代数 -->
+
+		<param name="Encoding" value="utf-8" />						<!-- 文字コード -->
+		<param name="DatePattern" value='"."yyyy-MM-dd".log"' />
+		<param name="RollingStyle" value="Size " />					<!-- Date:日付ごとにファイルを作成/Size：サイズごとにファイルを作成 -->
+		<param name="StaticLogFileName" value="false" />
+		<param name="CountDirection" value="-1" />					<!-- -1:番号順に新しい/1:番号順とはかぎらない(速い) -->
+		<param name="immediateFlush" value="true" />				<!-- バッファリングON -->
+
+		<layout type="log4net.Layout.PatternLayout">
+			<!--ログ書式-->
+			<conversionPattern value="%d{yyyy-MM-dd HH:mm:ss.fff}, %-5p, %m%n"/>
+		</layout>
+	</appender>
+
+	<root>  
+		<!--ログレベル:ALL < DEBUG < INFO < WARN < ERROR < FATAL -->
+		<!-- 開発時ログ -->
+
+		<level value="DEBUG" />  
+		<appender-ref ref="Console" />
+		<appender-ref ref="AppRollingFileAppender" />
+
+		<!-- 開発時ログ -->
+
+		<!-- リリース時ログ -->
+
+		<!--<level value="INFO" />  
+		<appender-ref ref="AppRollingFileAppender" />-->
+
+		<!-- リリース時ログ -->
+
+	</root>  
+</log4net>
