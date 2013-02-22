@@ -74,7 +74,17 @@ namespace GitlabTool.ViewModels
             string[] directorys = System.IO.Directory.GetDirectories(path, "*", System.IO.SearchOption.TopDirectoryOnly);
             string[] files = System.IO.Directory.GetFiles(path, "*", System.IO.SearchOption.TopDirectoryOnly);
 
-            if (directorys.Length == 0 && files.Length == 0)
+            int filecnt = 0;
+
+            foreach (string file in files)
+            {
+                if (file.LastIndexOf(".gitkeep") != (file.Length - ".gitkeep".Length))
+                {
+                    filecnt++;
+                }
+            }
+
+            if (directorys.Length == 0 && filecnt == 0)
             {
                 if (!System.IO.File.Exists(path + @"\.gitkeep"))
                 {
@@ -86,15 +96,18 @@ namespace GitlabTool.ViewModels
                     }
                 }
             }
-            else if (directorys.Length > 0 && files.Length == 0)
+            else if (directorys.Length > 0)
             {
                 foreach (string directory in directorys)
                 {
-                    this.SearchDirectory(directory);
+                    if (directory.LastIndexOf(".git") == -1)
+                    {
+                        this.SearchDirectory(directory);
+                    }
                 }
                 checkDeleteGitKeep(path);
             }
-            else if(!(files.Length == 1 && files[0].LastIndexOf(".gitkeep") != -1))
+            else
             {
                 checkDeleteGitKeep(path);
             }
