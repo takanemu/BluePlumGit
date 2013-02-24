@@ -150,7 +150,7 @@ namespace GitlabTool.ViewModels
                 {
                     try
                     {
-                        this.gitlab = new Gitlab(serverurl);
+                        this.gitlab = new Gitlab(this.serverurl);
                         this.ProjectList = new List<Project>();
 
                         this.Propertys.IsCredential = true;
@@ -180,7 +180,7 @@ namespace GitlabTool.ViewModels
         /// <param name="password">パスワード</param>
         async private void getProjectList(string email, string password)
         {
-            bool success = await gitlab.RequestSessionAsync(email, password);
+            bool success = await this.gitlab.RequestSessionAsync(email, password);
 
             if (success)
             {

@@ -65,6 +65,10 @@
     <Reference Include="NGit">
       <HintPath>..\InfrastructureAssemblies\NGit.dll</HintPath>
     </Reference>
+    <Reference Include="NSch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InfrastructureAssemblies\NSch.dll</HintPath>
+    </Reference>
     <Reference Include="Sharpen">
       <HintPath>..\InfrastructureAssemblies\Sharpen.dll</HintPath>
     </Reference>

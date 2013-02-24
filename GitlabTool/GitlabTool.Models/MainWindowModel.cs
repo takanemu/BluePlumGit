@@ -41,6 +41,16 @@ namespace GitlabTool.Models
 using Gitlab;
 
     /// <summary>
+    /// SSH接続用クラス(未使用)
+    /// </summary>
+    internal class DefaultSshSessionFactory : JschConfigSessionFactory
+    {
+        protected override void Configure(NGit.Transport.OpenSshConfig.Host hc, NSch.Session session)
+        {
+        }
+    }
+
+    /// <summary>
     /// メインウインドウモデル
     /// </summary>
     public class MainWindowModel : NotificationObject
