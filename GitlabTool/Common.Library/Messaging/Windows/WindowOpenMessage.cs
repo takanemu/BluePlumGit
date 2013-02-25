@@ -70,7 +70,7 @@ namespace Common.Library.Messaging.Windows
             
             set
             {
-                SetValue(WindowTypeProperty, value);
+                this.SetValue(WindowTypeProperty, value);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Common.Library.Messaging.Windows
 
             set
             {
-                SetValue(ParameterProperty, value);
+                this.SetValue(ParameterProperty, value);
             }
         }
 

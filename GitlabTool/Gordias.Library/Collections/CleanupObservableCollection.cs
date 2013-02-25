@@ -52,7 +52,7 @@ namespace Gordias.Library.Collections
             this.collectionViewSource = new CollectionViewSource();
             this.collectionViewSource.Source = this;
 
-            this.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CleanupObservableCollection_CollectionChanged);
+            this.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(this.CleanupObservableCollection_CollectionChanged);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Gordias.Library.Collections
                 if (disposing)
                 {
                 }
-                this.CollectionChanged -= CleanupObservableCollection_CollectionChanged;
+                this.CollectionChanged -= this.CleanupObservableCollection_CollectionChanged;
                 this.collectionViewSource = null;
             }
             this.disposed = true;

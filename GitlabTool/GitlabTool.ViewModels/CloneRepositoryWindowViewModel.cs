@@ -37,7 +37,7 @@ namespace GitlabTool.ViewModels
     /// <summary>
     /// クローンウインドウビューモデル
     /// </summary>
-    public class CloneRepositoryWindowViewModel : TacticsViewModel<CloneRepositoryWindowViewModelProperty, CloneRepositoryWindowViewModelCommand>, IWindowParameter,IWindowResult
+    public class CloneRepositoryWindowViewModel : TacticsViewModel<CloneRepositoryWindowViewModelProperty, CloneRepositoryWindowViewModelCommand>, IWindowParameter, IWindowResult
     {
         #region Menber Variables
         /// <summary>
@@ -87,7 +87,7 @@ namespace GitlabTool.ViewModels
             set
             {
                 this.isEnabledProjectList = value;
-                this.RaisePropertyChanged(() => IsEnabledProjectList);
+                this.RaisePropertyChanged(() => this.IsEnabledProjectList);
             }
         }
 
@@ -102,7 +102,7 @@ namespace GitlabTool.ViewModels
                 if (this.projectlist != value)
                 {
                     this.projectlist = value;
-                    this.RaisePropertyChanged(() => ProjectList);
+                    this.RaisePropertyChanged(() => this.ProjectList);
                 }
             }
         }
@@ -157,7 +157,7 @@ namespace GitlabTool.ViewModels
                         this.Propertys.PassWord = this.password;
                         this.Propertys.UserName = this.email;
 
-                        this.getProjectList(email, password);
+                        this.getProjectList(this.email, this.password);
                     }
                     catch (Exception e)
                     {

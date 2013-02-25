@@ -46,7 +46,7 @@ namespace GitlabTool.Behaviors
         public bool MinimizeBox
         {
             get { return (bool)GetValue(MinimizeBoxProperty); }
-            set { SetValue(MinimizeBoxProperty, value); }
+            set { this.SetValue(MinimizeBoxProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MinimizeBox.  This enables animation, styling, binding, etc...
@@ -56,7 +56,7 @@ namespace GitlabTool.Behaviors
         public bool MaximizeBox
         {
             get { return (bool)GetValue(MaximizeBoxProperty); }
-            set { SetValue(MaximizeBoxProperty, value); }
+            set { this.SetValue(MaximizeBoxProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MaximizeBox.  This enables animation, styling, binding, etc...
@@ -66,7 +66,7 @@ namespace GitlabTool.Behaviors
         public bool ControlBox
         {
             get { return (bool)GetValue(ControlBoxProperty); }
-            set { SetValue(ControlBoxProperty, value); }
+            set { this.SetValue(ControlBoxProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ControlBox.  This enables animation, styling, binding, etc...
@@ -77,29 +77,29 @@ namespace GitlabTool.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            ((Window)this.AssociatedObject).SourceInitialized += new EventHandler(WindowStyleFlagBehavior_SourceInitialized);
+            ((Window)this.AssociatedObject).SourceInitialized += new EventHandler(this.WindowStyleFlagBehavior_SourceInitialized);
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            ((Window)this.AssociatedObject).SourceInitialized -= WindowStyleFlagBehavior_SourceInitialized;
+            ((Window)this.AssociatedObject).SourceInitialized -= this.WindowStyleFlagBehavior_SourceInitialized;
         }
 
         protected WindowStyleFlag GetWindowStyle(WindowStyleFlag windowStyle)
         {
             WindowStyleFlag style = windowStyle;
-            if (MinimizeBox)
+            if (this.MinimizeBox)
                 style |= WindowStyleFlag.WS_MINIMIZEBOX;
             else
                 style &= ~WindowStyleFlag.WS_MINIMIZEBOX;
 
-            if (MaximizeBox)
+            if (this.MaximizeBox)
                 style |= WindowStyleFlag.WS_MAXIMIZEBOX;
             else
                 style &= ~WindowStyleFlag.WS_MAXIMIZEBOX;
 
-            if (ControlBox)
+            if (this.ControlBox)
                 style |= WindowStyleFlag.WS_SYSMENU;
             else
                 style &= ~WindowStyleFlag.WS_SYSMENU;
@@ -112,7 +112,7 @@ namespace GitlabTool.Behaviors
             IntPtr handle = (new WindowInteropHelper(this.AssociatedObject)).Handle;
 
             WindowStyleFlag original = (WindowStyleFlag)GetWindowLong(handle, GWL_STYLE);
-            WindowStyleFlag current = GetWindowStyle(original);
+            WindowStyleFlag current = this.GetWindowStyle(original);
 
             if (original != current)
             {

@@ -47,7 +47,7 @@ namespace GitlabTool.Behaviors.Messaging.Windows
             }
             WindowOpenMessage windowOpenMessage = (WindowOpenMessage)message;
 
-            Window window = CreateWindow(windowOpenMessage.WindowType);
+            Window window = this.CreateWindow(windowOpenMessage.WindowType);
 
             // モーダルウィンドウ設定
             window.Owner = (Window)this.AssociatedObject;

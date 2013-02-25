@@ -103,7 +103,7 @@ using Gitlab;
 
                 sr.Close();
 
-                return JsonConvert.DeserializeObject<ConfigEntity>(json); ;
+                return JsonConvert.DeserializeObject<ConfigEntity>(json);
             }
             return new ConfigEntity();
         }
@@ -181,7 +181,7 @@ using Gitlab;
                     return;
                 }
                 this.complete = value;
-                RaisePropertyChanged(() => Complete);
+                this.RaisePropertyChanged(() => this.Complete);
             }
         }
         #endregion
@@ -203,7 +203,7 @@ using Gitlab;
                     return;
                 }
                 this.cloneCounter = value;
-                RaisePropertyChanged(() => CloneCounter);
+                this.RaisePropertyChanged(() => this.CloneCounter);
             }
         }
         #endregion

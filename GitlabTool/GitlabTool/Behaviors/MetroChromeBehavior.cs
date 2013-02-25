@@ -14,13 +14,13 @@ namespace GitlabTool.Behaviors
     /// 
     /// </summary>
     internal class MetroChromeBehavior : Behavior<Window>
-	{
+    {
         /// <summary>
         /// 
         /// </summary>
 		protected override void OnAttached()
 		{
-			base.OnAttached();
+            base.OnAttached();
 
 			this.AssociatedObject.Loaded += (sender, e) =>
 			{
@@ -38,7 +38,7 @@ namespace GitlabTool.Behaviors
 				right.Update();
 				top.Update();
 				bottom.Update();
-			}; ;
+			};
 		}
 	}
 }

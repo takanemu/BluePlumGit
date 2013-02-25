@@ -117,7 +117,7 @@ namespace GitlabTool.ViewModels
 				{
 					this._IsMaximized = value;
                     //this.RaisePropertyChanged();
-                    this.RaisePropertyChanged(() => IsMaximized);
+                    this.RaisePropertyChanged(() => this.IsMaximized);
 				}
 			}
 		}
@@ -137,7 +137,7 @@ namespace GitlabTool.ViewModels
 				{
 					this._CanMaximize = value;
                     //this.RaisePropertyChanged();
-                    this.RaisePropertyChanged(() => CanMaximize);
+                    this.RaisePropertyChanged(() => this.CanMaximize);
                 }
 			}
 		}
@@ -157,7 +157,7 @@ namespace GitlabTool.ViewModels
 				{
 					this._CanMinimize = value;
                     //this.RaisePropertyChanged();
-                    this.RaisePropertyChanged(() => CanMinimize);
+                    this.RaisePropertyChanged(() => this.CanMinimize);
                 }
 			}
 		}
@@ -177,7 +177,7 @@ namespace GitlabTool.ViewModels
 				{
 					this._CanNormalize = value;
                     //this.RaisePropertyChanged();
-                    this.RaisePropertyChanged(() => CanNormalize);
+                    this.RaisePropertyChanged(() => this.CanNormalize);
                 }
 			}
 		}
