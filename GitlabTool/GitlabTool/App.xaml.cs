@@ -48,6 +48,14 @@ namespace GitlabTool
         /// </summary>
         public App()
         {
+            //現在のコードを実行しているAssemblyを取得する
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            //指定されたマニフェストリソース(この場合だとアイコンファイル)を読み込む
+            //notifyicon.Icon = new System.Drawing.Icon(myAssembly.GetManifestResourceStream("プロジェクト名.ファイル名.ico"));  //タスクトレイのアイコンの指定
+
+            //this.Icon = BitmapFrame.Create(myAssembly.GetManifestResourceStream("プロジェクト名.ファイル名.ico"));             //ソフトウェアの左上のアイコンの指定
+
             DataLogistics.Instance.Change += (object sender, PropertyChangeEventArgs e) =>
             {
                 AccentEnum accent = (AccentEnum)DataLogistics.Instance.GetValue(ApplicationEnum.Theme);
