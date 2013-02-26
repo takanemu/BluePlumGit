@@ -1,5 +1,4 @@
 ﻿#region Apache License
-//
 // Licensed to the Apache Software Foundation (ASF) under one or more 
 // contributor license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright ownership. 
@@ -14,21 +13,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 #endregion
 
 namespace GitlabTool.Behaviors.Messaging.Windows
 {
-    using System;
-    using System.Windows;
     using Common.Library.Entitys;
-    using GitlabTool.ViewModels;
-    using GitlabTool.Views;
-    using Livet.Behaviors.Messaging;
-    using Livet.Messaging;
-    using Gordias.Library.Interface;
     using Common.Library.Enums;
     using Common.Library.Messaging.Windows;
+    using GitlabTool.ViewModels;
+    using GitlabTool.Views;
+    using Gordias.Library.Interface;
+    using Livet.Behaviors.Messaging;
+    using Livet.Messaging;
+    using System;
+    using System.Windows;
 
     /// <summary>
     /// ウインドウオープンメッセージアクションクラス

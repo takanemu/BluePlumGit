@@ -20,16 +20,16 @@ namespace GitlabTool.MetroChrome
     /// 
     /// </summary>
     public class CaptionButtons : Control
-	{
+    {
         /// <summary>
         /// 
         /// </summary>
-		static CaptionButtons()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(CaptionButtons), new FrameworkPropertyMetadata(typeof(CaptionButtons)));
-		}
+        static CaptionButtons()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CaptionButtons), new FrameworkPropertyMetadata(typeof(CaptionButtons)));
+        }
 
-		#region CanMinimize 依存関係プロパティ
+        #region CanMinimize 依存関係プロパティ
         /// <summary>
         /// 
         /// </summary>
@@ -40,13 +40,13 @@ namespace GitlabTool.MetroChrome
         /// 
         /// </summary>
         public bool CanMinimize
-		{
-			get { return (bool)this.GetValue(CaptionButtons.CanMinimizeProperty); }
-			set { this.SetValue(CaptionButtons.CanMinimizeProperty, value); }
-		}
-		#endregion
+        {
+            get { return (bool)this.GetValue(CaptionButtons.CanMinimizeProperty); }
+            set { this.SetValue(CaptionButtons.CanMinimizeProperty, value); }
+        }
+        #endregion
 
-		#region CanMaximize 依存関係プロパティ
+        #region CanMaximize 依存関係プロパティ
         /// <summary>
         /// 
         /// </summary>
@@ -57,13 +57,13 @@ namespace GitlabTool.MetroChrome
         /// 
         /// </summary>
         public bool CanMaximize
-		{
-			get { return (bool)this.GetValue(CaptionButtons.CanMaximizeProperty); }
-			set { this.SetValue(CaptionButtons.CanMaximizeProperty, value); }
-		}
-		#endregion
+        {
+            get { return (bool)this.GetValue(CaptionButtons.CanMaximizeProperty); }
+            set { this.SetValue(CaptionButtons.CanMaximizeProperty, value); }
+        }
+        #endregion
 
-		#region CanNormalize 依存関係プロパティ
+        #region CanNormalize 依存関係プロパティ
         /// <summary>
         /// 
         /// </summary>
@@ -73,11 +73,11 @@ namespace GitlabTool.MetroChrome
         /// <summary>
         /// 
         /// </summary>
-		public bool CanNormalize
-		{
-			get { return (bool)this.GetValue(CaptionButtons.CanNormalizeProperty); }
-			set { this.SetValue(CaptionButtons.CanNormalizeProperty, value); }
-		}
-		#endregion
-	}
+        public bool CanNormalize
+        {
+            get { return (bool)this.GetValue(CaptionButtons.CanNormalizeProperty); }
+            set { this.SetValue(CaptionButtons.CanNormalizeProperty, value); }
+        }
+        #endregion
+    }
 }

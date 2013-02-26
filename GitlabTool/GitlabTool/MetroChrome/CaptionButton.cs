@@ -20,10 +20,10 @@ namespace GitlabTool.MetroChrome
     /// 
     /// </summary>
     public class CaptionButton : Button
-	{
-		static CaptionButton()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(CaptionButton), new FrameworkPropertyMetadata(typeof(CaptionButton)));
-		}
-	}
+    {
+        static CaptionButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CaptionButton), new FrameworkPropertyMetadata(typeof(CaptionButton)));
+        }
+    }
 }

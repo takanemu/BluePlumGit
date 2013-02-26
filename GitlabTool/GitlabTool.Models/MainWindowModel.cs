@@ -1,5 +1,4 @@
 ﻿#region Apache License
-//
 // Licensed to the Apache Software Foundation (ASF) under one or more 
 // contributor license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright ownership. 
@@ -14,31 +13,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 #endregion
 
 namespace GitlabTool.Models
 {
+    using Commno.Library;
+    using Common.Library.Entitys;
+    using Gitlab;
+    using Gordias.Library.Collections;
+    using Livet;
+    using Newtonsoft.Json;
+    using NGit.Api;
+    using NGit.Api.Errors;
+    using NGit.Storage.File;
+    using NGit.Transport;
+    using NGit.Util;
+    using Sharpen;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Threading;
-    using Common.Library.Entitys;
-    using Gordias.Library.Collections;
-    using Livet;
-    using NGit.Api;
-    using Sharpen;
-    using NGit.Api.Errors;
-    using NGit.Transport;
-    using NGit.Storage.File;
-    using NGit.Util;
-    using Commno.Library;
     using System.IO;
+    using System.Linq;
     using System.Text;
-    using Newtonsoft.Json;
+    using System.Threading;
     using System.Threading.Tasks;
-using Gitlab;
 
     /// <summary>
     /// SSH接続用クラス(未使用)

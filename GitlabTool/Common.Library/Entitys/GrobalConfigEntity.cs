@@ -1,5 +1,4 @@
 ﻿#region Apache License
-//
 // Licensed to the Apache Software Foundation (ASF) under one or more 
 // contributor license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright ownership. 
@@ -14,16 +13,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 #endregion
 
 namespace Common.Library.Entitys
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text;
-    using System.ComponentModel;
 
     public class GrobalConfigEntity 
     {

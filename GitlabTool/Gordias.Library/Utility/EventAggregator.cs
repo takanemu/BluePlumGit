@@ -1,5 +1,4 @@
 ﻿#region Apache License
-//
 // Licensed to the Apache Software Foundation (ASF) under one or more 
 // contributor license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright ownership. 
@@ -14,7 +13,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 #endregion
 
 namespace Gordias.Library.Utility
@@ -173,7 +171,7 @@ namespace Gordias.Library.Utility
         /// </summary>
         ~EventAggregator()
         {
-            Dispose(false);
+            this.Dispose(false);
         }
 
         /// <summary>
@@ -264,7 +262,7 @@ namespace Gordias.Library.Utility
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 

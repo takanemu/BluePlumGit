@@ -9,16 +9,16 @@ namespace GitlabTool.MetroChrome
     /// 
     /// </summary>
     public class Glow : Control
-	{
+    {
         /// <summary>
         /// 
         /// </summary>
-		static Glow()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(Glow), new FrameworkPropertyMetadata(typeof(Glow)));
-		}
+        static Glow()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Glow), new FrameworkPropertyMetadata(typeof(Glow)));
+        }
 
-		#region GlowColor 依存関係プロパティ
+        #region GlowColor 依存関係プロパティ
         /// <summary>
         /// 
         /// </summary>
@@ -29,14 +29,14 @@ namespace GitlabTool.MetroChrome
         /// 
         /// </summary>
         public Color GlowColor
-		{
-			get { return (Color)this.GetValue(Glow.GlowColorProperty); }
-			set { this.SetValue(Glow.GlowColorProperty, value); }
-		}
+        {
+            get { return (Color)this.GetValue(Glow.GlowColorProperty); }
+            set { this.SetValue(Glow.GlowColorProperty, value); }
+        }
 
-		#endregion
+        #endregion
 
-		#region IsGlow 依存関係プロパティ
+        #region IsGlow 依存関係プロパティ
         /// <summary>
         /// 
         /// </summary>
@@ -46,14 +46,14 @@ namespace GitlabTool.MetroChrome
         /// <summary>
         /// 
         /// </summary>
-		public bool IsGlow
-		{
-			get { return (bool)this.GetValue(Glow.IsGlowProperty); }
-			set { this.SetValue(Glow.IsGlowProperty, value); }
-		}
-		#endregion
+        public bool IsGlow
+        {
+            get { return (bool)this.GetValue(Glow.IsGlowProperty); }
+            set { this.SetValue(Glow.IsGlowProperty, value); }
+        }
+        #endregion
 
-		#region Orientation 依存関係プロパティ
+        #region Orientation 依存関係プロパティ
         /// <summary>
         /// 
         /// </summary>
@@ -63,12 +63,11 @@ namespace GitlabTool.MetroChrome
         /// <summary>
         /// 
         /// </summary>
-		public Orientation Orientation
-		{
-			get { return (Orientation)this.GetValue(Glow.OrientationProperty); }
-			set { this.SetValue(Glow.OrientationProperty, value); }
-		}
-		#endregion
-
-	}
+        public Orientation Orientation
+        {
+            get { return (Orientation)this.GetValue(Glow.OrientationProperty); }
+            set { this.SetValue(Glow.OrientationProperty, value); }
+        }
+        #endregion
+    }
 }

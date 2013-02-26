@@ -1,5 +1,4 @@
 ﻿#region Apache License
-//
 // Licensed to the Apache Software Foundation (ASF) under one or more 
 // contributor license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright ownership. 
@@ -14,7 +13,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 #endregion
 
 namespace GitlabTool.ViewModels
@@ -46,7 +44,7 @@ namespace GitlabTool.ViewModels
     /// メインウインドウビューモデル
     /// </summary>
     public class MainWindowViewModel : TacticsViewModel<MainWindowViewModelProperty, MainWindowViewModelCommand>
-	{
+    {
         /// <summary>
         /// ログ
         /// </summary>
@@ -83,106 +81,106 @@ namespace GitlabTool.ViewModels
             this.model = new MainWindowModel();
         }
 
-		#region WindowState 変更通知プロパティ
+        #region WindowState 変更通知プロパティ
 
-		private WindowState _WindowState;
+        private WindowState _WindowState;
 
-		public WindowState WindowState
-		{
-			get { return this._WindowState; }
-			set
-			{
-				if (this._WindowState != value)
-				{
-					this._WindowState = value;
+        public WindowState WindowState
+        {
+            get { return this._WindowState; }
+            set
+            {
+                if (this._WindowState != value)
+                {
+                    this._WindowState = value;
                     this.IsMaximized = value == WindowState.Maximized;
                     this.CanNormalize = value == WindowState.Maximized;
                     this.CanMaximize = value == WindowState.Normal;
                     this.RaisePropertyChanged(() => WindowState);
                 }
-			}
-		}
-		#endregion
+            }
+        }
+        #endregion
         
-		#region IsMaximized 変更通知プロパティ
+        #region IsMaximized 変更通知プロパティ
 
-		private bool _IsMaximized;
+        private bool _IsMaximized;
 
-		public bool IsMaximized
-		{
-			get { return this._IsMaximized; }
-			set
-			{
-				if (this._IsMaximized != value)
-				{
-					this._IsMaximized = value;
+        public bool IsMaximized
+        {
+            get { return this._IsMaximized; }
+            set
+            {
+                if (this._IsMaximized != value)
+                {
+                    this._IsMaximized = value;
                     //this.RaisePropertyChanged();
                     this.RaisePropertyChanged(() => this.IsMaximized);
-				}
-			}
-		}
+                }
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region CanMaximize 変更通知プロパティ
+        #region CanMaximize 変更通知プロパティ
 
-		private bool _CanMaximize = true;
+        private bool _CanMaximize = true;
 
-		public bool CanMaximize
-		{
-			get { return this._CanMaximize; }
-			set
-			{
-				if (this._CanMaximize != value)
-				{
-					this._CanMaximize = value;
+        public bool CanMaximize
+        {
+            get { return this._CanMaximize; }
+            set
+            {
+                if (this._CanMaximize != value)
+                {
+                    this._CanMaximize = value;
                     //this.RaisePropertyChanged();
                     this.RaisePropertyChanged(() => this.CanMaximize);
                 }
-			}
-		}
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region CanMinimize 変更通知プロパティ
+        #region CanMinimize 変更通知プロパティ
 
-		private bool _CanMinimize = true;
+        private bool _CanMinimize = true;
 
-		public bool CanMinimize
-		{
-			get { return this._CanMinimize; }
-			set
-			{
-				if (this._CanMinimize != value)
-				{
-					this._CanMinimize = value;
+        public bool CanMinimize
+        {
+            get { return this._CanMinimize; }
+            set
+            {
+                if (this._CanMinimize != value)
+                {
+                    this._CanMinimize = value;
                     //this.RaisePropertyChanged();
                     this.RaisePropertyChanged(() => this.CanMinimize);
                 }
-			}
-		}
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region CanNormalize 変更通知プロパティ
+        #region CanNormalize 変更通知プロパティ
 
-		private bool _CanNormalize = false;
+        private bool _CanNormalize = false;
 
-		public bool CanNormalize
-		{
-			get { return this._CanNormalize; }
-			set
-			{
-				if (this._CanNormalize != value)
-				{
-					this._CanNormalize = value;
+        public bool CanNormalize
+        {
+            get { return this._CanNormalize; }
+            set
+            {
+                if (this._CanNormalize != value)
+                {
+                    this._CanNormalize = value;
                     //this.RaisePropertyChanged();
                     this.RaisePropertyChanged(() => this.CanNormalize);
                 }
-			}
-		}
+            }
+        }
 
-		#endregion
+        #endregion
 
         #region Initializeメソッド
         /// <summary>
@@ -202,7 +200,6 @@ namespace GitlabTool.ViewModels
             this.config = this.model.OpenConfig();
 
             DataLogistics.Instance.SetValue(ApplicationEnum.Theme, this.config.Accent);
-
 
             this.globalConfig = this.model.LoadGrobalConfig();
 
@@ -405,8 +402,7 @@ namespace GitlabTool.ViewModels
         {
             this.Propertys.IsBusyDialog = false;
         }
-
-	}
+    }
     #endregion
 
     #region プロパティクラス

@@ -18,27 +18,27 @@ namespace GitlabTool.Behaviors
         /// <summary>
         /// 
         /// </summary>
-		protected override void OnAttached()
-		{
+        protected override void OnAttached()
+        {
             base.OnAttached();
 
-			this.AssociatedObject.Loaded += (sender, e) =>
-			{
-				var left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
-				var right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
-				var top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
-				var bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
+            this.AssociatedObject.Loaded += (sender, e) =>
+            {
+                var left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
+                var right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
+                var top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
+                var bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
 
-				left.Show();
-				right.Show();
-				top.Show();
-				bottom.Show();
+                left.Show();
+                right.Show();
+                top.Show();
+                bottom.Show();
 
-				left.Update();
-				right.Update();
-				top.Update();
-				bottom.Update();
-			};
-		}
-	}
+                left.Update();
+                right.Update();
+                top.Update();
+                bottom.Update();
+            };
+        }
+    }
 }
