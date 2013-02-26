@@ -21,12 +21,8 @@ namespace GitlabTool.ViewModels
     using Gordias.Library.Headquarters;
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
-    using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     #region メインクラス
     /// <summary>

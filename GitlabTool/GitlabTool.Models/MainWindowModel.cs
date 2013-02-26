@@ -23,6 +23,7 @@ namespace GitlabTool.Models
     using Gordias.Library.Collections;
     using Livet;
     using Newtonsoft.Json;
+    using NGit;
     using NGit.Api;
     using NGit.Api.Errors;
     using NGit.Storage.File;
@@ -301,8 +302,44 @@ namespace GitlabTool.Models
             bw.RunWorkerCompleted += (s, evt) =>
                 {
                     monitor.CompleteAction();
+                    this.SettingHttpBufferSize(entity.Path);
                 };
             bw.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// httpプロトコルバッファ値を設定。
+        /// この設定がないと大きなファイルをpushできない。
+        /// </summary>
+        /// <param name="folderPath">リポジトリパス</param>
+        private void SettingHttpBufferSize(string folderPath)
+        {
+            FilePath path = new FilePath(folderPath, @".git");
+
+            FileRepository db = new FileRepository(path);
+
+            Git git = new Git(db);
+
+            var config = git.GetRepository().GetConfig();
+
+            config.SetString("http", null, "postBuffer", "524288000");
+            config.Save();
+        }
+
+        private void CheckConfig(StoredConfig config)
+        {
+            foreach (string section in config.GetSections())
+            {
+                foreach (string name in config.GetNames(section))
+                {
+                }
+                foreach (string subsection in config.GetSubsections(section))
+                {
+                    foreach (string name in config.GetNames(section, subsection))
+                    {
+                    }
+                }
+            }
         }
 
         public void Fetch(Git git, BusyIndicatorProgressMonitor monitor)
