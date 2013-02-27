@@ -22,7 +22,10 @@ namespace Gordias.Library.Headquarters
     using System.Linq;
     using System.Text;
 
-    class Valkyria
+    /// <summary>
+    /// Valkyria
+    /// </summary>
+    public class Valkyria
     {
     }
 }

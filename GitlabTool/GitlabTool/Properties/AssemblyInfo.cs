@@ -29,7 +29,6 @@ using System.Windows;
 //プロジェクト ファイルの UICulture 設定と一致するよう更新します。
 
 // [assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
-
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //テーマ固有のリソース ディクショナリが置かれている場所
     //(リソースがページ、

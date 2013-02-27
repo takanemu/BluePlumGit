@@ -32,7 +32,7 @@ namespace Gordias.Library.Controls
         /// <summary>
         /// コントロールのコンテンツを格納するオブジェクト
         /// </summary>
-        public new Object Content
+        public new object Content
         {
             get
             {

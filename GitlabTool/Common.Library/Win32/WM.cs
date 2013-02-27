@@ -980,70 +980,87 @@ namespace GitlabTool.Win32
         /// An application sends a WM_CUT message to an edit control or combo box to delete (cut) the current selection, if any, in the edit control and copy the deleted text to the clipboard in CF_TEXT format. 
         /// </summary>
         CUT = 0x0300,
+
         /// <summary>
         /// An application sends the WM_COPY message to an edit control or combo box to copy the current selection to the clipboard in CF_TEXT format. 
         /// </summary>
         COPY = 0x0301,
+        
         /// <summary>
         /// An application sends a WM_PASTE message to an edit control or combo box to copy the current content of the clipboard to the edit control at the current caret position. Data is inserted only if the clipboard contains data in CF_TEXT format. 
         /// </summary>
         PASTE = 0x0302,
+        
         /// <summary>
         /// An application sends a WM_CLEAR message to an edit control or combo box to delete (clear) the current selection, if any, from the edit control. 
         /// </summary>
         CLEAR = 0x0303,
+        
         /// <summary>
         /// An application sends a WM_UNDO message to an edit control to undo the last operation. When this message is sent to an edit control, the previously deleted text is restored or the previously added text is deleted.
         /// </summary>
         UNDO = 0x0304,
+        
         /// <summary>
         /// The WM_RENDERFORMAT message is sent to the clipboard owner if it has delayed rendering a specific clipboard format and if an application has requested data in that format. The clipboard owner must render data in the specified format and place it on the clipboard by calling the SetClipboardData function. 
         /// </summary>
         RENDERFORMAT = 0x0305,
+        
         /// <summary>
         /// The WM_RENDERALLFORMATS message is sent to the clipboard owner before it is destroyed, if the clipboard owner has delayed rendering one or more clipboard formats. For the content of the clipboard to remain available to other applications, the clipboard owner must render data in all the formats it is capable of generating, and place the data on the clipboard by calling the SetClipboardData function. 
         /// </summary>
         RENDERALLFORMATS = 0x0306,
+        
         /// <summary>
         /// The WM_DESTROYCLIPBOARD message is sent to the clipboard owner when a call to the EmptyClipboard function empties the clipboard. 
         /// </summary>
         DESTROYCLIPBOARD = 0x0307,
+        
         /// <summary>
         /// The WM_DRAWCLIPBOARD message is sent to the first window in the clipboard viewer chain when the content of the clipboard changes. This enables a clipboard viewer window to display the new content of the clipboard. 
         /// </summary>
         DRAWCLIPBOARD = 0x0308,
+        
         /// <summary>
         /// The WM_PAINTCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and the clipboard viewer's client area needs repainting. 
         /// </summary>
         PAINTCLIPBOARD = 0x0309,
+        
         /// <summary>
         /// The WM_VSCROLLCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and an event occurs in the clipboard viewer's vertical scroll bar. The owner should scroll the clipboard image and update the scroll bar values. 
         /// </summary>
         VSCROLLCLIPBOARD = 0x030A,
+        
         /// <summary>
         /// The WM_SIZECLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and the clipboard viewer's client area has changed size. 
         /// </summary>
         SIZECLIPBOARD = 0x030B,
+        
         /// <summary>
         /// The WM_ASKCBFORMATNAME message is sent to the clipboard owner by a clipboard viewer window to request the name of a CF_OWNERDISPLAY clipboard format.
         /// </summary>
         ASKCBFORMATNAME = 0x030C,
+        
         /// <summary>
         /// The WM_CHANGECBCHAIN message is sent to the first window in the clipboard viewer chain when a window is being removed from the chain. 
         /// </summary>
         CHANGECBCHAIN = 0x030D,
+        
         /// <summary>
         /// The WM_HSCROLLCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window. This occurs when the clipboard contains data in the CF_OWNERDISPLAY format and an event occurs in the clipboard viewer's horizontal scroll bar. The owner should scroll the clipboard image and update the scroll bar values. 
         /// </summary>
         HSCROLLCLIPBOARD = 0x030E,
+        
         /// <summary>
         /// This message informs a window that it is about to receive the keyboard focus, giving the window the opportunity to realize its logical palette when it receives the focus. 
         /// </summary>
         QUERYNEWPALETTE = 0x030F,
+        
         /// <summary>
         /// The WM_PALETTEISCHANGING message informs applications that an application is going to realize its logical palette. 
         /// </summary>
         PALETTEISCHANGING = 0x0310,
+        
         /// <summary>
         /// This message is sent by the OS to all top-level and overlapped windows after the window with the keyboard focus realizes its logical palette. 
         /// This message enables windows that do not have the keyboard focus to realize their logical palettes and update their client areas.
@@ -1139,6 +1156,7 @@ namespace GitlabTool.Win32
         /// The WM_APP constant is used by applications to help define private messages, usually of the form WM_APP+X, where X is an integer value. 
         /// </summary>
         APP = 0x8000,
+        
         /// <summary>
         /// The WM_USER constant is used by applications to help define private messages for use by private window classes, usually of the form WM_USER+X, where X is an integer value. 
         /// </summary>
@@ -1148,10 +1166,12 @@ namespace GitlabTool.Win32
         /// An application sends the WM_CPL_LAUNCH message to Windows Control Panel to request that a Control Panel application be started. 
         /// </summary>
         CPL_LAUNCH = USER + 0x1000,
+        
         /// <summary>
         /// The WM_CPL_LAUNCHED message is sent when a Control Panel application, started by the WM_CPL_LAUNCH message, has closed. The WM_CPL_LAUNCHED message is sent to the window identified by the wParam parameter of the WM_CPL_LAUNCH message that started the application.
         /// </summary>
         CPL_LAUNCHED = USER + 0x1001,
+        
         /// <summary>
         /// WM_SYSTIMER is a well-known yet still undocumented message. Windows uses WM_SYSTIMER for internal actions like scrolling.
         /// </summary>

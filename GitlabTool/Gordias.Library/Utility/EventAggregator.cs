@@ -27,7 +27,7 @@ namespace Gordias.Library.Utility
     /// イベント基底情報インターフェース
     /// </summary>
     /// <author>Takanori Shibuya</author>
-    abstract internal class EventParam
+    internal abstract class EventParam
     {
         /// <summary>
         /// イベントハンドラー
@@ -37,12 +37,12 @@ namespace Gordias.Library.Utility
         /// <summary>
         /// イベント追加
         /// </summary>
-        abstract public void AddEventHandler();
+        public abstract void AddEventHandler();
 
         /// <summary>
         /// イベント廃棄
         /// </summary>
-        abstract public void RemoveHandler();
+        public abstract void RemoveHandler();
     }
 
     /// <summary>

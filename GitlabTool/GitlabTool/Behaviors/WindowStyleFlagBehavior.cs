@@ -31,6 +31,9 @@ namespace GitlabTool.Behaviors
         WS_MAXIMIZEBOX = 0x00010000,
     }
 
+    /// <summary>
+    /// WindowStyleFlagBehavior
+    /// </summary>
     public class WindowStyleFlagBehavior : Behavior<Window>
     {
         const int GWL_STYLE = -16;
@@ -86,21 +89,31 @@ namespace GitlabTool.Behaviors
         protected WindowStyleFlag GetWindowStyle(WindowStyleFlag windowStyle)
         {
             WindowStyleFlag style = windowStyle;
+            
             if (this.MinimizeBox)
+            {
                 style |= WindowStyleFlag.WS_MINIMIZEBOX;
+            }
             else
+            {
                 style &= ~WindowStyleFlag.WS_MINIMIZEBOX;
-
+            }
             if (this.MaximizeBox)
+            {
                 style |= WindowStyleFlag.WS_MAXIMIZEBOX;
+            }
             else
+            {
                 style &= ~WindowStyleFlag.WS_MAXIMIZEBOX;
-
+            }
             if (this.ControlBox)
+            {
                 style |= WindowStyleFlag.WS_SYSMENU;
+            }
             else
+            {
                 style &= ~WindowStyleFlag.WS_SYSMENU;
-
+            }
             return style;
         }
 

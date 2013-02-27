@@ -58,8 +58,8 @@ namespace GitlabTool.ViewModels
             {
                 ConfigDialogEntity config = new ConfigDialogEntity();
 
-                config.ServerUrl = "";
-                config.Password = "";
+                config.ServerUrl = string.Empty;
+                config.Password = string.Empty;
                 config.Accent = AccentEnum.Blue;
 
                 this.Propertys.Config = config;

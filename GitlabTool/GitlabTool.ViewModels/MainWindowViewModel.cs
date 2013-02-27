@@ -83,16 +83,16 @@ namespace GitlabTool.ViewModels
 
         #region WindowState 変更通知プロパティ
 
-        private WindowState _WindowState;
+        private WindowState windowState;
 
         public WindowState WindowState
         {
-            get { return this._WindowState; }
+            get { return this.windowState; }
             set
             {
-                if (this._WindowState != value)
+                if (this.windowState != value)
                 {
-                    this._WindowState = value;
+                    this.windowState = value;
                     this.IsMaximized = value == WindowState.Maximized;
                     this.CanNormalize = value == WindowState.Maximized;
                     this.CanMaximize = value == WindowState.Normal;
@@ -104,17 +104,16 @@ namespace GitlabTool.ViewModels
         
         #region IsMaximized 変更通知プロパティ
 
-        private bool _IsMaximized;
+        private bool isMaximized;
 
         public bool IsMaximized
         {
-            get { return this._IsMaximized; }
+            get { return this.isMaximized; }
             set
             {
-                if (this._IsMaximized != value)
+                if (this.isMaximized != value)
                 {
-                    this._IsMaximized = value;
-                    //this.RaisePropertyChanged();
+                    this.isMaximized = value;
                     this.RaisePropertyChanged(() => this.IsMaximized);
                 }
             }
@@ -124,17 +123,16 @@ namespace GitlabTool.ViewModels
 
         #region CanMaximize 変更通知プロパティ
 
-        private bool _CanMaximize = true;
+        private bool canMaximize = true;
 
         public bool CanMaximize
         {
-            get { return this._CanMaximize; }
+            get { return this.canMaximize; }
             set
             {
-                if (this._CanMaximize != value)
+                if (this.canMaximize != value)
                 {
-                    this._CanMaximize = value;
-                    //this.RaisePropertyChanged();
+                    this.canMaximize = value;
                     this.RaisePropertyChanged(() => this.CanMaximize);
                 }
             }
@@ -144,17 +142,16 @@ namespace GitlabTool.ViewModels
 
         #region CanMinimize 変更通知プロパティ
 
-        private bool _CanMinimize = true;
+        private bool canMinimize = true;
 
         public bool CanMinimize
         {
-            get { return this._CanMinimize; }
+            get { return this.canMinimize; }
             set
             {
-                if (this._CanMinimize != value)
+                if (this.canMinimize != value)
                 {
-                    this._CanMinimize = value;
-                    //this.RaisePropertyChanged();
+                    this.canMinimize = value;
                     this.RaisePropertyChanged(() => this.CanMinimize);
                 }
             }
@@ -164,17 +161,16 @@ namespace GitlabTool.ViewModels
 
         #region CanNormalize 変更通知プロパティ
 
-        private bool _CanNormalize = false;
+        private bool canNormalize = false;
 
         public bool CanNormalize
         {
-            get { return this._CanNormalize; }
+            get { return this.canNormalize; }
             set
             {
-                if (this._CanNormalize != value)
+                if (this.canNormalize != value)
                 {
-                    this._CanNormalize = value;
-                    //this.RaisePropertyChanged();
+                    this.canNormalize = value;
                     this.RaisePropertyChanged(() => this.CanNormalize);
                 }
             }

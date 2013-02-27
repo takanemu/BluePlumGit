@@ -65,8 +65,8 @@ namespace Gordias.Library.Headquarters
             this.Commands = new CommandType();
 
             CommandAttribute.Construction(this);
-            MessageReceiveAttribute.Construction(this, EventSweeper);
-            LogisticsPropertyChangedAttribute.Construction(this, EventSweeper);
+            MessageReceiveAttribute.Construction(this, this.EventSweeper);
+            LogisticsPropertyChangedAttribute.Construction(this, this.EventSweeper);
         }
 
         /// <summary>

@@ -89,24 +89,24 @@ namespace GitlabTool.Behaviors.Messaging.Windows
                 //case WindowTypeEnum.REMOVE_REPOSITORY:
                 //    result = new RemoveRepositoryWindow();
                 //    break;
-                case WindowTypeEnum.CLONE_REPOSITORY:
-                    result = new CloneRepositoryWindow();
-                    break;
                 //case WindowTypeEnum.CREATE_BRANCH:
                 //    result = new CreateBranchWindow();
                 //    break;
                 //case WindowTypeEnum.REMOVE_BRANCH:
                 //    result = new RemoveBranchWindow();
                 //    break;
-                case WindowTypeEnum.CONFIG:
-                    result = new ConfigSettingWindow();
-                    break;
                 //case WindowTypeEnum.KEYDISP:
                 //    result = new KeyDispWindow();
                 //    break;
                 //case WindowTypeEnum.COMMIT:
                 //    result = new CommitWindow();
                 //    break;
+                case WindowTypeEnum.CLONE_REPOSITORY:
+                    result = new CloneRepositoryWindow();
+                    break;
+                case WindowTypeEnum.CONFIG:
+                    result = new ConfigSettingWindow();
+                    break;
                 case WindowTypeEnum.CREATE_GITIGNORE:
                     result = new CreateIgnoreFileWindow();
                     break;

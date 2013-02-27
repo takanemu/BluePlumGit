@@ -24,7 +24,10 @@ namespace Gordias.Library.Headquarters
     using System.Linq;
     using System.Text;
 
-    class Servant
+    /// <summary>
+    /// Servant
+    /// </summary>
+    public class Servant
     {
     }
 }

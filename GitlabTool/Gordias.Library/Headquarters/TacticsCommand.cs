@@ -28,8 +28,15 @@ namespace Gordias.Library.Headquarters
     /// </summary>
     public class TacticsCommand : Command, ICommand, INotifyPropertyChanged
     {
-        private Action _execute;
-        private bool _isExecute;
+        /// <summary>
+        /// 実行アクション
+        /// </summary>
+        private Action execute;
+
+        /// <summary>
+        /// 実行可能フラグ
+        /// </summary>
+        private bool isExecute;
 
         /// <summary>
         /// コンストラクタ
@@ -41,7 +48,7 @@ namespace Gordias.Library.Headquarters
             {
                 throw new ArgumentNullException("execute");
             }
-            this._execute = execute;
+            this.execute = execute;
             this.IsExecute = true;
         }
 
@@ -60,16 +67,16 @@ namespace Gordias.Library.Headquarters
         {
             get
             {
-                return this._isExecute;
+                return this.isExecute;
             }
 
             set
             {
-                if (this._isExecute == value)
+                if (this.isExecute == value)
                 {
                     return;
                 }
-                this._isExecute = value;
+                this.isExecute = value;
                 this.RaiseCanExecuteChanged();
             }
         }
@@ -79,12 +86,12 @@ namespace Gordias.Library.Headquarters
         /// </summary>
         public void Execute()
         {
-            this._execute();
+            this.execute();
         }
 
         void ICommand.Execute(object parameter)
         {
-            Execute();
+            this.Execute();
         }
 
         bool ICommand.CanExecute(object parameter)
@@ -99,7 +106,7 @@ namespace Gordias.Library.Headquarters
 
         private void OnPropertyChanged()
         {
-            var handler = Interlocked.CompareExchange(ref PropertyChanged, null, null);
+            var handler = Interlocked.CompareExchange(ref this.PropertyChanged, null, null);
             
             if (handler != null)
             {
@@ -113,8 +120,8 @@ namespace Gordias.Library.Headquarters
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public void RaiseCanExecuteChanged()
         {
-            OnPropertyChanged();
-            OnCanExecuteChanged();
+            this.OnPropertyChanged();
+            this.OnCanExecuteChanged();
         }
     }
 }

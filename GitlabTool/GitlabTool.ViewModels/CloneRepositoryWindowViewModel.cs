@@ -41,22 +41,22 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// 通信ライブラリ
         /// </summary>
-        public Gitlab gitlab;
+        private Gitlab gitlab;
 
         /// <summary>
         /// サーバーURL
         /// </summary>
-        public string serverurl;
+        private string serverurl;
 
         /// <summary>
         /// パスワード
         /// </summary>
-        public string password;
+        private string password;
 
         /// <summary>
         /// メールアドレス
         /// </summary>
-        public string email;
+        private string email;
 
         /// <summary>
         /// プロジェクトリストの表示状態を設定または取得します
@@ -110,11 +110,17 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public Project SelectedProject
         {
-            get { return this.selectedProject; }
+            get
+            {
+                return this.selectedProject;
+            }
+
             set
             {
                 if (this.selectedProject != value)
+                {
                     this.Propertys.RepositoyName = value.Code;
+                }
                 this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
             }
         }
@@ -176,7 +182,7 @@ namespace GitlabTool.ViewModels
         /// </summary>
         /// <param name="email">メールアドレス</param>
         /// <param name="password">パスワード</param>
-        async private void getProjectList(string email, string password)
+        private async void getProjectList(string email, string password)
         {
             bool success = await this.gitlab.RequestSessionAsync(email, password);
 
