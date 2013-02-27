@@ -22,7 +22,6 @@ namespace GitlabTool.ViewModels
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
     using System.Collections.Generic;
-    using System.IO;
 
     #region メインクラス
     /// <summary>
@@ -103,9 +102,15 @@ namespace GitlabTool.ViewModels
             string baseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string filepath = baseDir + @"\Assets\Gitignore\" + this.Propertys.SelectedProjectKind.Filename;
 
-            File.Copy(filepath, this.Propertys.FolderPath + @"\.gitignore");
-
-            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+            if (!System.IO.File.Exists(this.Propertys.FolderPath + @"\.gitignore"))
+            {
+                System.IO.File.Copy(filepath, this.Propertys.FolderPath + @"\.gitignore");
+                this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(".gitignoreファイルが既に存在します。");
+            }
         }
         #endregion
 
