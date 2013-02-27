@@ -15,18 +15,36 @@
 // limitations under the License.
 #endregion
 
-namespace GitlabTool.Views
+namespace GitlabTool.Behaviors
 {
     using System.Windows;
+    using System.Windows.Interactivity;
+    using System.Windows.Media.Imaging;
 
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// Iconを設定する
     /// </summary>
-    public partial class MainWindow : Window
+    public class IconSetBehavior : Behavior<Window>
     {
-        public MainWindow()
+        /// <summary>
+        /// リソース名
+        /// </summary>
+        public string ResourceName { private get; set; }
+
+        /// <summary>
+        /// ビヘイビアがアタッチされた時の処理
+        /// </summary>
+        protected override void OnAttached()
         {
-            InitializeComponent();
+            base.OnAttached();
+
+            //現在のコードを実行しているAssemblyを取得する
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            Window window = (Window)this.AssociatedObject;
+
+            //ソフトウェアの左上のアイコンの指定
+            window.Icon = BitmapFrame.Create(myAssembly.GetManifestResourceStream(this.ResourceName));
         }
     }
 }

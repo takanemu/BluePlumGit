@@ -110,6 +110,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\DirectWindowAction.cs" />
+    <Compile Include="Behaviors\IconSetBehavior.cs" />
     <Compile Include="Behaviors\Messaging\Windows\WindowOpenInteractionMessageAction.cs" />
     <Compile Include="Behaviors\MetroChromeBehavior.cs" />
     <Compile Include="Behaviors\ResizeGripBehavior.cs" />
@@ -261,7 +262,7 @@
     <Content Include="Assets\Images\Git-Icon-White.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="icons.ico" />
+    <EmbeddedResource Include="icons.ico" />
     <Content Include="log4net.setting.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
