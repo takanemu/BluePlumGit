@@ -54,6 +54,7 @@
             </Style>
 
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GitlabTool;component/ResourceDictionary/ExpressionDark.xaml"/>
                 <ResourceDictionary Source="/GitlabTool;component/Assets/Styles/Brushs.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
