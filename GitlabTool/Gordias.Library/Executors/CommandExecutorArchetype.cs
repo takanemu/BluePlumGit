@@ -22,7 +22,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// コマンド実行基底クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public abstract class CommandExecutorArchetype : INotifyComplete, ICommandComplete, ICommandAbort
     {
         /// <summary>
@@ -33,7 +32,6 @@ namespace Gordias.Library.Executors
         /// <summary>
         /// アボート発火
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         public void DoAbort()
         {
             this.OnComplete(true);
@@ -42,7 +40,6 @@ namespace Gordias.Library.Executors
         /// <summary>
         /// 完了イベント発火
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         public void DoComplete()
         {
             this.OnComplete();
@@ -52,7 +49,6 @@ namespace Gordias.Library.Executors
         /// 完了イベント発火
         /// </summary>
         /// <param name="isAbort">trueならアボート</param>
-        /// <author>Takanori Shibuya</author>
         protected void OnComplete(bool isAbort = false)
         {
             CompleteEventArgs ea = new CompleteEventArgs();
@@ -69,7 +65,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// パラメーター付きコマンド実行基底クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public abstract class CommandParameterExecutorArchetype : CommandExecutorArchetype, ICommandParameter
     {
         /// <summary>
@@ -82,7 +77,6 @@ namespace Gordias.Library.Executors
         /// </summary>
         /// <param name="data">データ</param>
         /// <returns>メソッドチェーン</returns>
-        /// <author>Takanori Shibuya.</author>
         public ICommandParameter SetData(object data)
         {
             this.data = data;

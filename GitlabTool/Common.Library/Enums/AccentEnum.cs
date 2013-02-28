@@ -24,7 +24,7 @@ namespace Common.Library.Enums
     using System.Threading.Tasks;
 
     /// <summary>
-    /// 
+    /// AccentEnum
     /// </summary>
     public enum AccentEnum
     {

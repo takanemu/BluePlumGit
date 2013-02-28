@@ -26,7 +26,6 @@ namespace Gordias.Library.Headquarters
     /// <summary>
     /// 大域変数管理クラスで入れ子管理するためのインターフェース<br/>
     /// </summary>
-    /// <author>Takanori Shibuya.</author>
     public interface IEntityNotifyProperty : INotifyPropertyChanged
     {
         /// <summary>
@@ -83,7 +82,6 @@ namespace Gordias.Library.Headquarters
         /// </summary>
         /// <param name="key">データ格納キー</param><br/>
         /// <param name="value">格納データ</param><br/>
-        /// <author>Takanori Shibuya.</author>
         public void SetValue(Enum key, object value)
         {
             if (value is IEntityNotifyProperty)
@@ -165,7 +163,6 @@ namespace Gordias.Library.Headquarters
         /// </summary>
         /// <param name="sender">イベント発生元</param>
         /// <param name="e">パラメーター</param>
-        /// <author>Takanori Shibuya.</author>
         private void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangeEventArgs ne = new PropertyChangeEventArgs();
@@ -191,7 +188,6 @@ namespace Gordias.Library.Headquarters
         /// イベントの発生<br/>
         /// </summary>
         /// <param name="e">データ変更イベントパラメーター</param><br/>
-        /// <author>Takanori Shibuya.</author>
         protected virtual void OnPropertyChange(PropertyChangeEventArgs e)
         {
             if (this.Change != null)
@@ -205,7 +201,6 @@ namespace Gordias.Library.Headquarters
         /// </summary>
         /// <param name="key">データ取得キー</param><br/>
         /// <returns>格納データ</returns>
-        /// <author>Takanori Shibuya.</author>
         public object GetValue(Enum key)
         {
             return this.map[key];
@@ -215,7 +210,6 @@ namespace Gordias.Library.Headquarters
     /// <summary>
     /// 大域変数管理データ変更イベントパラメータークラス<br/>
     /// </summary>
-    /// <author>Takanori Shibuya.</author>
     public class PropertyChangeEventArgs : EventArgs
     {
         /// <summary>
@@ -256,7 +250,6 @@ namespace Gordias.Library.Headquarters
         /// コンストラクタ
         /// </summary>
         /// <param name="value">変数識別キー</param>
-        /// <author>Takanori Shibuya.</author>
         public LogisticsPropertyChangedAttribute(object value)
         {
             this.dataKey = value as Enum;
@@ -265,7 +258,6 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// 属性パラメーター
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         public Enum DataKey
         {
             get { return this.dataKey; }
@@ -277,7 +269,6 @@ namespace Gordias.Library.Headquarters
         /// </summary>
         /// <param name="target">構築対象クラス</param><br/>
         /// <param name="sweep">イベント管理クラス</param><br/>
-        /// <author>Takanori Shibuya.</author>
         public static void Construction(object target, EventAggregator sweep)
         {
             Type type = target.GetType();
@@ -313,7 +304,6 @@ namespace Gordias.Library.Headquarters
         /// <param name="target">メソッドを持ったクラス</param>
         /// <param name="name">メソッド名</param>
         /// <returns>属性パラメーター(列挙型)、取得できない場合には、nullを返す。</returns>
-        /// <author>Takanori Shibuya.</author>
         private static Enum GetDataKey(object target, string name)
         {
             Type t = target.GetType();
@@ -332,7 +322,6 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// 無名イベント中継クラス<br/>
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         private class AnonymousDispather
         {
             /// <summary>
@@ -350,7 +339,6 @@ namespace Gordias.Library.Headquarters
             /// </summary>
             /// <param name="sender">イベント元</param>
             /// <param name="e">パラメーター</param>
-            /// <author>Takanori Shibuya.</author>
             public void ChangeHandler(object sender, PropertyChangeEventArgs e)
             {
                 // 同一のenum型かチェックする

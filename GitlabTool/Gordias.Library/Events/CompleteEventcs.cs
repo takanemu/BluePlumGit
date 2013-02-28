@@ -22,7 +22,6 @@ namespace Gordias.Library.Events
     /// <summary>
     /// 完了イベント実装インターフェース
     /// </summary>
-    /// <author>Takanori Shibuya.</author>
     public interface INotifyComplete
     {
         /// <summary>
@@ -36,13 +35,11 @@ namespace Gordias.Library.Events
     /// </summary>
     /// <param name="sender">イベント元</param>
     /// <param name="e">パラメーター</param>
-    /// <author>Takanori Shibuya.</author>
     public delegate void CompleteEventHandler(object sender, CompleteEventArgs e);
 
     /// <summary>
     /// 完了イベントパラメーター
     /// </summary>
-    /// <author>Takanori Shibuya.</author>
     public class CompleteEventArgs : EventArgs
     {
         /// <summary>

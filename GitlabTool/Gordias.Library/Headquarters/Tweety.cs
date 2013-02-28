@@ -24,7 +24,6 @@ namespace Gordias.Library.Headquarters
     /// <summary>
     /// ビューモデル間通信クラス<br/>
     /// </summary>
-    /// <author>Takanori Shibuya.</author>
     public class Tweety
     {
         /// <summary>
@@ -63,9 +62,9 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// リクエスト送信<br/>
         /// </summary>
-        /// <param name="address">宛先</param><br/>
-        /// <param name="parameter">パラメーター</param><br/>
-        /// <author>Takanori Shibuya.</author>
+        /// <typeparam name="RequestType">型</typeparam>
+        /// <param name="address">宛先</param>
+        /// <param name="parameter">パラメーター</param>
         public void RequestTo<RequestType>(Enum address, RequestType parameter)
         {
             MessageReceiveEventArgs e = new MessageReceiveEventArgs();
@@ -80,7 +79,6 @@ namespace Gordias.Library.Headquarters
         /// イベントの発生<br/>
         /// </summary>
         /// <param name="e">メッセージ通信イベントパラメーター</param><br/>
-        /// <author>Takanori Shibuya.</author>
         protected virtual void OnMessageReceive(MessageReceiveEventArgs e)
         {
             if (this.Receive != null)
@@ -93,7 +91,6 @@ namespace Gordias.Library.Headquarters
     /// <summary>
     /// メッセージ通信イベントパラメータークラス<br/>
     /// </summary>
-    /// <author>Takanori Shibuya.</author>
     public class MessageReceiveEventArgs : EventArgs
     {
         /// <summary>
@@ -119,7 +116,6 @@ namespace Gordias.Library.Headquarters
         /// コンストラクタ<br/>
         /// </summary>
         /// <param name="value">変数識別キー</param><br/>
-        /// <author>Takanori Shibuya.</author>
         public MessageReceiveAttribute(object value)
         {
             this.dataKey = value as Enum;
@@ -128,7 +124,6 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// 属性パラメーター<br/>
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         public Enum DataKey
         {
             get { return this.dataKey; }
@@ -140,7 +135,6 @@ namespace Gordias.Library.Headquarters
         /// </summary>
         /// <param name="target">構築対象クラス</param><br/>
         /// <param name="sweep">イベント管理クラス</param><br/>
-        /// <author>Takanori Shibuya.</author>
         public static void Construction(object target, EventAggregator sweep)
         {
             Type type = target.GetType();
@@ -177,7 +171,6 @@ namespace Gordias.Library.Headquarters
         /// <param name="target">メソッドを持ったクラス</param><br/>
         /// <param name="name">メソッド名</param><br/>
         /// <returns>属性パラメーター(列挙型)、取得できない場合には、nullを返す。</returns><br/>
-        /// <author>Takanori Shibuya.</author>
         private static Enum GetDataKey(object target, string name)
         {
             Type t = target.GetType();
@@ -196,7 +189,6 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// 無名イベント中継クラス<br/>
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         private class AnonymousDispather
         {
             /// <summary>
@@ -214,7 +206,6 @@ namespace Gordias.Library.Headquarters
             /// </summary>
             /// <param name="sender">イベント元</param><br/>
             /// <param name="e">パラメーター</param><br/>
-            /// <author>Takanori Shibuya.</author>
             public void ReceiveHandler(object sender, MessageReceiveEventArgs e)
             {
                 Type t1 = this.DataKey.GetType();

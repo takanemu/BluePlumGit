@@ -51,8 +51,11 @@ namespace Commno.Library
         }
 
         public Action StartAction { get; set; }
+        
         public Action<string, int> BeginTaskAction { get; set; }
+        
         public Action<string, int, int, int> UpdateAction { get; set; }
+        
         public Action CompleteAction { get; set; }
     }
 }

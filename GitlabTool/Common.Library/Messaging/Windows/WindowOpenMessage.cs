@@ -50,7 +50,7 @@ namespace Common.Library.Messaging.Windows
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="messageKey"></param>
+        /// <param name="messageKey">メッセージキー</param>
         public WindowOpenMessage(string messageKey)
             : base(messageKey)
         {

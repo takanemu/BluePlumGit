@@ -131,10 +131,10 @@ namespace GitlabTool.Models
         /// <summary>
         /// セッション取得
         /// </summary>
-        /// <param name="host"></param>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="host">ホストアドレス</param>
+        /// <param name="email">電子メールアドレス</param>
+        /// <param name="password">パスワード</param>
+        /// <returns>true成功</returns>
         public async Task<bool> OpenServerSession(string host, string email, string password, ApiVersionEnum version)
         {
             this.gitlab = new Gitlab(host);

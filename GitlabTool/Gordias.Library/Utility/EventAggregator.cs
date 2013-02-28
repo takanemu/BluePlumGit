@@ -26,7 +26,6 @@ namespace Gordias.Library.Utility
     /// <summary>
     /// イベント基底情報インターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     internal abstract class EventParam
     {
         /// <summary>
@@ -48,7 +47,6 @@ namespace Gordias.Library.Utility
     /// <summary>
     /// CLRイベント情報クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     internal class CLREventParam : EventParam
     {
         /// <summary>
@@ -81,7 +79,6 @@ namespace Gordias.Library.Utility
         /// <summary>
         /// イベント廃棄
         /// </summary>
-        /// <author>Takanori Shibuya</author>
         public override void RemoveHandler()
         {
             EventInfo eventInfo = this.Target.GetType().GetEvent(this.Type);
@@ -93,7 +90,6 @@ namespace Gordias.Library.Utility
     /// <summary>
     /// Routedイベント情報クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     internal class RoutedEventParam : EventParam
     {
         /// <summary>
@@ -132,7 +128,6 @@ namespace Gordias.Library.Utility
     /// イベント情報集約クラス
     /// イベントハンドラーを管理し簡単に解除を行えるようにする。
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public class EventAggregator
     {
         /// <summary>

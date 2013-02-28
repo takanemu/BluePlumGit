@@ -28,10 +28,15 @@ namespace Common.Library.Entitys
     public class CloneEntity
     {
         public string Name { get; set; }
+        
         public string Url { get; set; }
+        
         public string Path { get; set; }
+        
         public bool IsCredential { get; set; }
+        
         public string UserName { get; set; }
+        
         public string PassWord { get; set; }
     }
 }

@@ -22,7 +22,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// コマンド実行クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public class CommandExecutor : CommandParameterExecutorArchetype, ICommandParameter
     {
         /// <summary>
@@ -34,7 +33,6 @@ namespace Gordias.Library.Executors
         /// コンストラクタ
         /// </summary>
         /// <param name="action">処理</param>
-        /// <author>Takanori Shibuya.</author>
         public CommandExecutor(Action<ICommandParameter> action)
         {
             this.EntryAction(action);
@@ -44,7 +42,6 @@ namespace Gordias.Library.Executors
         /// 処理登録
         /// </summary>
         /// <param name="action">処理</param>
-        /// <author>Takanori Shibuya.</author>
         public void EntryAction(Action<ICommandParameter> action)
         {
             this.action = action;
@@ -53,7 +50,6 @@ namespace Gordias.Library.Executors
         /// <summary>
         /// 処理実行
         /// </summary>
-        /// <author>Takanori Shibuya.</author>
         public void Execution()
         {
             try

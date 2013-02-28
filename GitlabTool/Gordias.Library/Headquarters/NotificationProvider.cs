@@ -27,7 +27,6 @@ namespace Gordias.Library.Headquarters
     /// <summary>
     /// Notification基底クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     [Serializable]
     public class NotificationProvider : INotifyPropertyChanged
     {
@@ -40,8 +39,8 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// プロパティ変更イベントを発行する(ラムダ式)
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="propertyExpression"></param>
+        /// <typeparam name="T">型</typeparam>
+        /// <param name="propertyExpression">ラムダ式</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
@@ -63,7 +62,7 @@ namespace Gordias.Library.Headquarters
         /// <summary>
         /// プロパティ変更イベントを発行する(名称)
         /// </summary>
-        /// <param name="propertyName"></param>
+        /// <param name="propertyName">プロパティ名</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         protected virtual void RaisePropertyChanged(string propertyName)
         {

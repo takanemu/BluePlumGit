@@ -23,7 +23,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// 順次実行管理クラス
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public class SerialExecutor : CommandExecutorArchetype, INotifyCompleteExecutor
     {
         /// <summary>
@@ -35,7 +34,6 @@ namespace Gordias.Library.Executors
         /// 処理の登録
         /// </summary>
         /// <param name="execute">処理クラス</param>
-        /// <author>Takanori Shibuya</author>
         public void EntryAction(INotifyCompleteExecutor execute)
         {
             execute.Complete += new CompleteEventHandler(this.CompleteEventHandler);
@@ -45,7 +43,6 @@ namespace Gordias.Library.Executors
         /// <summary>
         /// 処理実行
         /// </summary>
-        /// <author>Takanori Shibuya</author>
         public void Execution()
         {
             if (this.list.Count > 0)
@@ -59,7 +56,6 @@ namespace Gordias.Library.Executors
         /// </summary>
         /// <param name="sender">イベント元</param>
         /// <param name="e">パラメーター</param>
-        /// <author>Takanori Shibuya</author>
         private void CompleteEventHandler(object sender, CompleteEventArgs e)
         {
             if (e.IsAbort)

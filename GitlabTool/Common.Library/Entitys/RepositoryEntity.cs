@@ -23,7 +23,9 @@ namespace Common.Library.Entitys
     public class RepositoryEntity
     {
         public long ID { get; set; }
+        
         public string Name { get; set; }
+        
         public string Path { get; set; }
     }
 }

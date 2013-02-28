@@ -23,7 +23,9 @@ namespace Commno.Library.Entitys
     public class BranchEntity
     {
         public long ID { get; set; }
+
         public string Name { get; set; }
+        
         public string Path { get; set; }
     }
 }

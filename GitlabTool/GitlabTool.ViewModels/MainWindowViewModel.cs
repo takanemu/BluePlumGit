@@ -52,11 +52,6 @@ namespace GitlabTool.ViewModels
         private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// 
-        /// </summary>
-        private static readonly string RSAKeyFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".ssh\gitlab_tool");
-
-        /// <summary>
         /// モデル
         /// </summary>
         private MainWindowModel model;
@@ -384,7 +379,10 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// インジケーターの更新
         /// </summary>
-        /// <param name="complete">処理完了数</param>
+        /// <param name="taskName">処理名称</param>
+        /// <param name="cmp">完了数</param>
+        /// <param name="totalWork">全タスク数</param>
+        /// <param name="pcnt">パーセント</param>
         private void UpdateBusyIndicator(string taskName, int cmp, int totalWork, int pcnt)
         {
             this.Propertys.BusyDialogPcent = (double)pcnt;

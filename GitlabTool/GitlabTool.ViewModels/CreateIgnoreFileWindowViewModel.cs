@@ -153,7 +153,7 @@ namespace GitlabTool.ViewModels
         public virtual List<ProjectKind> ProjectKindList { get; set; }
 
         /// <summary>
-        /// 
+        /// SelectedProjectKind
         /// </summary>
         public virtual ProjectKind SelectedProjectKind { get; set; }
     }

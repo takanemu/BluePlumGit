@@ -26,7 +26,6 @@ namespace Gordias.Library.Headquarters
     /// </summary>
     /// <typeparam name="PropertyType">プロパティクラス</typeparam>
     /// <typeparam name="CommandType">コマンドクラス</typeparam>
-    /// <author>Takanori Shibuya</author>
     [Serializable]
     public abstract class ViewModelArchetype<PropertyType, CommandType> : NotificationProvider, IDisposable, ITacticsCommand<CommandType>
         where PropertyType : class

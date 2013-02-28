@@ -22,7 +22,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// 処理実行インターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public interface IExecutor
     {
         /// <summary>
@@ -34,7 +33,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// 処理実行＆完了イベントインターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public interface INotifyCompleteExecutor : INotifyComplete, IExecutor
     {
     }
@@ -42,7 +40,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// パラメーターインターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public interface ICommandParameter
     {
         /// <summary>
@@ -62,7 +59,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// イベント完了インターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public interface ICommandComplete
     {
         /// <summary>
@@ -74,7 +70,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// アボートインターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public interface ICommandAbort
     {
         /// <summary>
@@ -86,7 +81,6 @@ namespace Gordias.Library.Executors
     /// <summary>
     /// コマンド実装インターフェース
     /// </summary>
-    /// <author>Takanori Shibuya</author>
     public interface ICommandExecutor : ICommandComplete, ICommandAbort, ICommandParameter, INotifyCompleteExecutor
     {
     }
