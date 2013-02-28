@@ -14,13 +14,13 @@
         Width="450"
         Height="350"
         MinWidth="450"
-        MinHeight="310"
-        MaxHeight="350"
+        MinHeight="340"
+        MaxHeight="340"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
 		WindowState="{Binding WindowState}"
 		SnapsToDevicePixels="True"
-		ResizeMode="CanResize"
 		TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
     
@@ -200,7 +200,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
-                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Width="100"
                            Foreground="{StaticResource ThemeForegroundBrushKey}"
@@ -219,6 +219,7 @@
                                         Mode=TwoWay}"
                          TextWrapping="Wrap" />
                 <Button Grid.Column="2"
+                        Width="25"
                         Height="20"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Right"
@@ -262,5 +263,22 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
+
+        <Grid Grid.Row="2" Background="{DynamicResource AccentBrushKey}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1"
+                    Width="16"
+                    Height="16"
+                    VerticalAlignment="Bottom"
+                    Background="Transparent"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
+                <i:Interaction.Behaviors>
+                    <bh:ResizeGripBehavior />
+                </i:Interaction.Behaviors>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

@@ -48,6 +48,10 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            if (string.IsNullOrEmpty(this.Propertys.FolderPath))
+            {
+                return;
+            }
             this.SearchDirectory(this.Propertys.FolderPath);
 
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));

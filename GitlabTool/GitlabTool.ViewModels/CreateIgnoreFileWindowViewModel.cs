@@ -98,6 +98,10 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            if (string.IsNullOrEmpty(this.Propertys.FolderPath))
+            {
+                return;
+            }
             // 実行パス取得
             string baseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string filepath = baseDir + @"\Assets\Gitignore\" + this.Propertys.SelectedProjectKind.Filename;

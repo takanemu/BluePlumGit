@@ -16,7 +16,7 @@
             <SolidColorBrush x:Key="ThemeForegroundBrushKey" Color="#FFF1F1F1" />
             <SolidColorBrush x:Key="ThemeForegroundDarkBrushKey" Color="#FF969696" />
 
-            <Style TargetType="{x:Type Button}">
+            <!--<Style TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="{DynamicResource ThemeBackgroundDarkBrushKey}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
                 <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrushKey}" />
@@ -51,7 +51,7 @@
                         <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundDarkBrushKey}" />
                     </Trigger>
                 </Style.Triggers>
-            </Style>
+            </Style>-->
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GitlabTool;component/ResourceDictionary/ExpressionDark.xaml"/>

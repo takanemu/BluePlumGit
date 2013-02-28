@@ -16,6 +16,7 @@
         Height="130"
         MinHeight="130"
         MaxHeight="130"
+        ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
         SnapsToDevicePixels="True"
         TextOptions.TextFormattingMode="Display"
@@ -94,7 +95,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
-                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Width="100"
                            Foreground="{StaticResource ThemeForegroundBrushKey}"
@@ -113,6 +114,7 @@
                                         Mode=TwoWay}"
                          TextWrapping="Wrap" />
                 <Button Grid.Column="2"
+                        Width="25"
                         Height="20"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Right"
@@ -130,13 +132,12 @@
                 </Button>
             </Grid>
 
-            <Grid Height="30" Margin="0,10,0,0">
+            <Grid Height="40" Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="1"
-                            Height="30"
                             VerticalAlignment="Top"
                             FlowDirection="RightToLeft"
                             Orientation="Horizontal"
@@ -160,5 +161,22 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
+
+        <Grid Grid.Row="2" Background="{DynamicResource AccentBrushKey}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1"
+                    Width="16"
+                    Height="16"
+                    VerticalAlignment="Bottom"
+                    Background="Transparent"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
+                <i:Interaction.Behaviors>
+                    <bh:ResizeGripBehavior />
+                </i:Interaction.Behaviors>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
