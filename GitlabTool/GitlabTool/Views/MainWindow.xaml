@@ -131,11 +131,13 @@
                             Margin="0,0,0,5"
                             Command="{Binding Commands.Config}"
                             Content="設定"
+                            Style="{DynamicResource FlatBlackButtonStyle}"
                             ToolTip="アプリケーションの設定" />
                     <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.RepositoryClone}"
                             Content="リポジトリ複製"
+                            Style="{DynamicResource ShinyRedButtonStyle}"
                             ToolTip="リポジトリの複製" />
                     <Button Height="30"
                             Margin="0,0,0,5"

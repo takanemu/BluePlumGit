@@ -1,0 +1,217 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="ShinyRedTextBrush" Color="#FFFFFFFF"/>
+    
+    <Color x:Key="ShinyRedNormalBrushGradient1">#FFF1BCBE</Color>
+    <Color x:Key="ShinyRedNormalBrushGradient2">#FFCE6865</Color>
+    <Color x:Key="ShinyRedNormalBrushGradient3">#FFAF231E</Color>
+    <Color x:Key="ShinyRedNormalBrushGradient4">#FF601818</Color>
+
+    <Color x:Key="ShinyRedNormalBorderBrushGradient1">#FFBBBBBB</Color>
+    <Color x:Key="ShinyRedNormalBorderBrushGradient2">#FF737373</Color>
+    <Color x:Key="ShinyRedNormalBorderBrushGradient3">#FF646464</Color>
+    <Color x:Key="ShinyRedNormalBorderBrushGradient4">#FF000000</Color>
+
+    <SolidColorBrush x:Key="ShinyRedDisabledForegroundBrush" Color="#FF636363"/>
+    <SolidColorBrush x:Key="ShinyRedDisabledBorderBrush" Color="#AAA"/>
+
+    <LinearGradientBrush x:Key="ShinyRedNormalBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="{StaticResource ShinyRedNormalBrushGradient1}" />
+        <GradientStop Offset="0.41800001263618469" Color="{StaticResource ShinyRedNormalBrushGradient2}" />
+        <GradientStop Offset="0.418" Color="{StaticResource ShinyRedNormalBrushGradient3}" />
+        <GradientStop Offset="1" Color="{StaticResource ShinyRedNormalBrushGradient4}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ShinyRedNormalBorderBrush"
+                       EndPoint="0.5,1"
+                       StartPoint="0.5,0">
+        <GradientStop Color="{StaticResource ShinyRedNormalBorderBrushGradient1}" />
+        <GradientStop Color="{StaticResource ShinyRedNormalBorderBrushGradient2}"
+                  Offset="0.38" />
+        <GradientStop Color="{StaticResource ShinyRedNormalBorderBrushGradient3}"
+                  Offset="0.384" />
+        <GradientStop Color="{StaticResource ShinyRedNormalBorderBrushGradient4}"
+                  Offset="1" />
+    </LinearGradientBrush>
+    
+    <Style x:Key="ShinyRedNuclearButtonFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle Margin="2" Stroke="#60000000" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <RadialGradientBrush x:Key="ShinyRedHoverBrush">
+        <RadialGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5"
+                        CenterY="0.5"
+                        ScaleX="1.804"
+                        ScaleY="0.743" />
+                <SkewTransform CenterX="0.5"
+                       CenterY="0.5" />
+                <RotateTransform CenterX="0.5"
+                         CenterY="0.5" />
+                <TranslateTransform Y="0.47999998927116394" />
+            </TransformGroup>
+        </RadialGradientBrush.RelativeTransform>
+        <GradientStop Color="#FFFFC398"
+                  Offset="0.209" />
+        <GradientStop Color="#00FFB598"
+                  Offset="1" />
+        <GradientStop Color="#FFFFFFFF"
+                  Offset="0" />
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="ShinyRedDisabledBackgroundBrush"
+                       EndPoint="0.5,1"
+                       StartPoint="0.5,0">
+        <GradientStop Color="#FFFFFFFF" />
+        <GradientStop Color="#FF62676A"
+                  Offset="1" />
+        <GradientStop Color="#FFD1D4D6"
+                  Offset="0.41800001263618469" />
+        <GradientStop Color="#FFA9AFB5"
+                  Offset="0.425" />
+    </LinearGradientBrush>
+    
+    <ControlTemplate x:Key="ShinyRedButtonTemplate" TargetType="{x:Type Button}">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="HoverOn">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="HoverOff">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="PressedOn">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Background" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.6"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="PressedOff">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Background" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="FocusedOn">
+                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00.1000000" Value="{x:Static Visibility.Visible}"/>
+                </ObjectAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+
+            </Storyboard>
+            <Storyboard x:Key="FocusedOff">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+
+        <Grid x:Name="Grid">
+            <Border x:Name="Background" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2,2,2,2" CornerRadius="2,2,2,2">
+                <Border x:Name="Hover" Background="{StaticResource ShinyRedHoverBrush}" CornerRadius="1,1,1,1" Height="Auto" Width="Auto" Opacity="0"/>
+            </Border>
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+            <Border x:Name="FocusVisualElement"
+                    IsHitTestVisible="false"
+                    BorderBrush="{StaticResource ShinyRedHoverBrush}"
+                    BorderThickness="2,2,2,2"
+                    CornerRadius="2,2,2,2" Opacity="0"/>
+        </Grid>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefault" Value="True">
+                <Setter Property="BorderBrush" TargetName="Background" Value="{DynamicResource DefaultedBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource FocusedOn}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard x:Name="FocusedOff_BeginStoryboard" Storyboard="{StaticResource FocusedOff}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource HoverOn}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard Storyboard="{StaticResource HoverOff}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource PressedOn}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard Storyboard="{StaticResource PressedOff}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true"/>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" Value="{DynamicResource ShinyRedDisabledBackgroundBrush}" TargetName="Background"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource ShinyRedDisabledBorderBrush}" TargetName="Background"/>
+                <Setter Property="Foreground" Value="{DynamicResource ShinyRedDisabledForegroundBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="ShinyRedButtonStyle"
+           BasedOn="{x:Null}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ShinyRedNuclearButtonFocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource ShinyRedNormalBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ShinyRedNormalBorderBrush}" />
+        <Setter Property="Template" Value="{DynamicResource ShinyRedButtonTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource ShinyRedTextBrush}" />
+    </Style>
+
+    <Style x:Key="FlatBlackButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundDarkBrushKey}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
+        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrushKey}" />
+        <Setter Property="Padding" Value="8,2" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource AccentBrushKey}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrushKey}" />
+                <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundDarkBrushKey}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
