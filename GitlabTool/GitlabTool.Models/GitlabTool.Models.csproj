@@ -52,6 +52,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Gitlab\Debug\Gitlab.Api.Library.dll</HintPath>
     </Reference>
+    <Reference Include="Gordias.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InfrastructureAssemblies\Gordias.Library\Gordias.Library.dll</HintPath>
+    </Reference>
     <Reference Include="Livet, Version=1.0.6.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Livet\Livet.dll</HintPath>
@@ -88,10 +92,6 @@
     <ProjectReference Include="..\Common.Library\Common.Library.csproj">
       <Project>{aa5a5938-fc7c-4abe-bad1-cbde684614e1}</Project>
       <Name>Common.Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Gordias.Library\Gordias.Library.csproj">
-      <Project>{82c3f0ac-e9cb-4587-85f6-01a5ac93a13f}</Project>
-      <Name>Gordias.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

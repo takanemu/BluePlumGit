@@ -64,6 +64,10 @@
     <Reference Include="Controls.Gravatar">
       <HintPath>..\InfrastructureAssemblies\Controls.Gravatar.dll</HintPath>
     </Reference>
+    <Reference Include="Gordias.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InfrastructureAssemblies\Gordias.Library\Gordias.Library.dll</HintPath>
+    </Reference>
     <Reference Include="Livet, Version=1.0.6.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Livet\Livet.dll</HintPath>
@@ -249,10 +253,6 @@
     <ProjectReference Include="..\GitlabTool.ViewModels\GitlabTool.ViewModels.csproj">
       <Project>{d7bd22d1-2ff7-420e-980d-249d5f28fac7}</Project>
       <Name>GitlabTool.ViewModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Gordias.Library\Gordias.Library.csproj">
-      <Project>{82c3f0ac-e9cb-4587-85f6-01a5ac93a13f}</Project>
-      <Name>Gordias.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
