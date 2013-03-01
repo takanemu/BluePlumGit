@@ -59,6 +59,11 @@ namespace GitlabTool.ViewModels
         private string email;
 
         /// <summary>
+        /// api version
+        /// </summary>
+        private string apiVersion;
+
+        /// <summary>
         /// プロジェクトリストの表示状態を設定または取得します
         /// </summary>
         private bool isEnabledProjectList;
@@ -121,7 +126,14 @@ namespace GitlabTool.ViewModels
                 {
                     this.Propertys.RepositoyName = value.Code;
                 }
-                this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
+                if (this.apiVersion == "v2")
+                {
+                    this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
+                }
+                else
+                {
+                    this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Path_with_namespace);
+                }
             }
         }
 
@@ -148,6 +160,7 @@ namespace GitlabTool.ViewModels
                 this.serverurl = ((object[])this.Parameter)[0].ToString();
                 this.password = ((object[])this.Parameter)[1].ToString();
                 this.email = ((object[])this.Parameter)[2].ToString();
+                this.apiVersion = ((object[])this.Parameter)[3].ToString();
 
                 //プロジェクト取得処理
                 if (!string.IsNullOrEmpty(this.serverurl) && !string.IsNullOrEmpty(this.password) && !string.IsNullOrEmpty(this.email))
@@ -155,6 +168,8 @@ namespace GitlabTool.ViewModels
                     try
                     {
                         this.gitlab = new Gitlab(this.serverurl);
+                        this.gitlab.ApiVersion = this.apiVersion == "v2" ? ApiVersionEnum.VERSION2 : ApiVersionEnum.VERSION3;
+
                         this.ProjectList = new List<Project>();
 
                         this.Propertys.IsCredential = true;

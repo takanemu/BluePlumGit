@@ -277,7 +277,8 @@ namespace GitlabTool.ViewModels
             {
                 this.config.ServerUrl,
                 this.config.Password,
-                this.globalConfig.EMail
+                this.globalConfig.EMail,
+                this.config.ApiVersion == ApiVersionEnum.VERSION2 ? "v2" : "v3",
             };
 
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
