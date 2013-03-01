@@ -203,6 +203,21 @@ namespace GitlabTool.ViewModels
             {
                 this.Propertys.GravatarId = this.globalConfig.EMail;
             }
+
+            this.Propertys.Repositorys = new System.Collections.ObjectModel.ObservableCollection<RepositoryEntity>();
+
+            this.Propertys.Repositorys.Add(new RepositoryEntity
+            {
+                Name = "123",
+            });
+            this.Propertys.Repositorys.Add(new RepositoryEntity
+            {
+                Name = "ABC",
+            });
+            this.Propertys.Repositorys.Add(new RepositoryEntity
+            {
+                Name = "789",
+            });
         }
         #endregion
 
@@ -352,6 +367,16 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region ブランチの削除
+        /// <summary>
+        /// ブランチの削除
+        /// </summary>
+        [Command]
+        private void BranchRemove()
+        {
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -429,6 +454,11 @@ namespace GitlabTool.ViewModels
         /// Gravatarアイコン表示用ID
         /// </summary>
         public virtual string GravatarId { get; set; }
+
+        /// <summary>
+        /// プロジェクトリスト
+        /// </summary>
+        public virtual System.Collections.ObjectModel.ObservableCollection<RepositoryEntity> Repositorys { get; set; }
     }
     #endregion
 
@@ -462,6 +492,11 @@ namespace GitlabTool.ViewModels
         /// 排他ファイルの作成
         /// </summary>
         public TacticsCommand GitIgnore { get; private set; }
+
+        /// <summary>
+        /// ブランチの削除
+        /// </summary>
+        public TacticsCommand BranchRemove { get; private set; }
     }
     #endregion
 }

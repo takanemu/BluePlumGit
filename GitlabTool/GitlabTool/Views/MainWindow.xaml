@@ -13,7 +13,7 @@
         xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="GitlabTool"
-        Width="400"
+        Width="550"
         Height="300"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
         ResizeMode="CanResizeWithGrip"
@@ -124,6 +124,16 @@
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         d:LayoutOverrides="Height">
+                <ListBox Width="150"
+                         Margin="0,0,5,0"
+                         ItemsSource="{Binding Propertys.Repositorys}"
+                         SelectedIndex="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=(Name)}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <StackPanel Width="150"
                             Margin="0,0,5,0"
                             Orientation="Vertical">
@@ -131,7 +141,6 @@
                             Margin="0,0,0,5"
                             Command="{Binding Commands.Config}"
                             Content="設定"
-                            Style="{DynamicResource FlatBlackButtonStyle}"
                             ToolTip="アプリケーションの設定" />
                     <Button Height="30"
                             Margin="0,0,0,5"
@@ -139,6 +148,15 @@
                             Content="リポジトリ複製"
                             Style="{DynamicResource ShinyRedButtonStyle}"
                             ToolTip="リポジトリの複製" />
+                    <Rectangle Height="2" Fill="Gray" Margin="5,0,5,5"/>
+                    <Button Height="30"
+                            Margin="0,0,0,5"
+                            Content="リポジトリ削除"
+                            ToolTip="リポジトリの削除" />
+                </StackPanel>
+                <StackPanel Width="150"
+                            Margin="0,0,5,0"
+                            Orientation="Vertical">
                     <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.EmptyFolderKeep}"
@@ -149,6 +167,11 @@
                             Command="{Binding Commands.GitIgnore}"
                             Content="排他ファイルの作成"
                             ToolTip="排他ファイルを作成する" />
+                    <Button Height="30"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.BranchRemove}"
+                            Content="ブランチの削除"
+                            ToolTip="不要になったブランチを削除する" />
                 </StackPanel>
             </StackPanel>
 
