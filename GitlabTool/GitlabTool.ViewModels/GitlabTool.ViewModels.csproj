@@ -91,6 +91,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchRemoveWindowViewModel.cs" />
     <Compile Include="CloneRepositoryWindowViewModel.cs" />
     <Compile Include="ConfigSettingWindowViewModel.cs" />
     <Compile Include="CreateIgnoreFileWindowViewModel.cs" />

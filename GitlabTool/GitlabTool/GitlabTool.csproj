@@ -175,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\BranchRemoveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CloneRepositoryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -198,6 +202,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\BranchRemoveWindow.xaml.cs">
+      <DependentUpon>BranchRemoveWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CloneRepositoryWindow.xaml.cs">
       <DependentUpon>CloneRepositoryWindow.xaml</DependentUpon>

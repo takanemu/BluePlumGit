@@ -179,6 +179,9 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
+            this.Propertys.RepositoryName = "XXXXX";
+            this.Propertys.RepositoryLocation = @"c:\YYYY\XXXXX";
+            this.Propertys.RepositoryPath = "https://www.gitlab.com/XXXXX.git";
         }
         #endregion
 
@@ -375,6 +378,11 @@ namespace GitlabTool.ViewModels
         [Command]
         private void BranchRemove()
         {
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.REMOVE_BRANCH,
+            });
         }
         #endregion
 
@@ -460,6 +468,21 @@ namespace GitlabTool.ViewModels
         /// プロジェクトリスト
         /// </summary>
         public virtual System.Collections.ObjectModel.ObservableCollection<RepositoryEntity> Repositorys { get; set; }
+
+        /// <summary>
+        /// リポジトリ名
+        /// </summary>
+        public virtual string RepositoryName { get; set; }
+        
+        /// <summary>
+        /// リポジトリのクローンされた場所
+        /// </summary>
+        public virtual string RepositoryLocation { get; set; }
+        
+        /// <summary>
+        /// リモートリポジトリのアドレス
+        /// </summary>
+        public virtual string RepositoryPath { get; set; }
     }
     #endregion
 

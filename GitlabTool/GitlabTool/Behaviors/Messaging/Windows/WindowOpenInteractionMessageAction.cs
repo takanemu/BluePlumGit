@@ -92,9 +92,6 @@ namespace GitlabTool.Behaviors.Messaging.Windows
                 //case WindowTypeEnum.CREATE_BRANCH:
                 //    result = new CreateBranchWindow();
                 //    break;
-                //case WindowTypeEnum.REMOVE_BRANCH:
-                //    result = new RemoveBranchWindow();
-                //    break;
                 //case WindowTypeEnum.KEYDISP:
                 //    result = new KeyDispWindow();
                 //    break;
@@ -112,6 +109,9 @@ namespace GitlabTool.Behaviors.Messaging.Windows
                     break;
                 case WindowTypeEnum.MANAGED_EMPTY_FOLDER:
                     result = new EmptyFolderKeepWindow();
+                    break;
+                case WindowTypeEnum.REMOVE_BRANCH:
+                    result = new BranchRemoveWindow();
                     break;
             }
             return result;

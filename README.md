@@ -1,4 +1,4 @@
-BluePlumGit/GitlabTool
+﻿BluePlumGit/GitlabTool
 ===========
 
 本アプリケーションは、GitlabをWindows環境で使用するためのヘルパーアプリケーションです。
@@ -19,3 +19,7 @@ Gitの接続プロトコルは、httpを使用します。
 Gitlabをオンプレミスで運用していて、非プログラマのメンバーのGit使用に悩んでいる方の解決を目指しています。
 現在は、リポジトリのクローンだけを実装していますが、GitHub for Windowsに無く、あると便利な機能を
 追加していく予定です。
+
+(1).gitkeepファイルによる空フォルダの保持
+
+(2)言語別の代表的な.gitignoreファイルの作成

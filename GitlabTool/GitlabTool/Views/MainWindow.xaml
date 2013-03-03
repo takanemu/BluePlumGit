@@ -15,6 +15,8 @@
         Title="GitlabTool"
         Width="550"
         Height="300"
+        MinWidth="500"
+        MinHeight="300"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
         ResizeMode="CanResizeWithGrip"
         SnapsToDevicePixels="True"
@@ -107,25 +109,57 @@
             </Grid>
         </Border>
         <Grid Grid.Row="1">
-            <Border Width="40"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Margin="5,0,5,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Foreground="White" Text="Name:" Grid.Row="0" HorizontalAlignment="Right"/>
+                    <TextBlock Foreground="White" Text="Location:" Grid.Row="1" HorizontalAlignment="Right"/>
+                    <TextBlock Foreground="White" Text="Path:" Grid.Row="2" HorizontalAlignment="Right"/>
+
+                    <TextBlock Foreground="White" Text="{Binding Propertys.RepositoryName}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <TextBlock Foreground="White" Text="{Binding Propertys.RepositoryLocation}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <TextBlock Foreground="White" Text="{Binding Propertys.RepositoryPath}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                </Grid>
+                
+                <Border Width="40"
                     Height="40"
                     Margin="0,0,5,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    BorderBrush="SkyBlue"
-                    BorderThickness="1">
-                <gravator:Gravatar Width="36"
+                    BorderBrush="{DynamicResource AccentBrushKey}"
+                    BorderThickness="1" Grid.Column="1" VerticalAlignment="Top">
+                    <gravator:Gravatar Width="36"
                                    Height="36"
                                    Email="{Binding Propertys.GravatarId}" />
-            </Border>
+                </Border>
+            </Grid>
 
-            <StackPanel Grid.Column="0"
-                        Margin="10,0,5,5"
-                        HorizontalAlignment="Left"
-                        Orientation="Horizontal"
-                        d:LayoutOverrides="Height">
-                <ListBox Width="150"
-                         Margin="0,0,5,0"
+            <Rectangle VerticalAlignment="Bottom" Height="1" Margin="5,0,5,0" Fill="{DynamicResource AccentBrushKey}" />
+
+            <Grid d:LayoutOverrides="Height" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ListBox Margin="5"
                          ItemsSource="{Binding Propertys.Repositorys}"
                          SelectedIndex="0">
                     <ListBox.ItemTemplate>
@@ -134,46 +168,58 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <StackPanel Width="150"
+                
+                <StackPanel Grid.Column="1"
+                        Margin="0,5,0,5"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        d:LayoutOverrides="Height">
+                    <StackPanel Width="150"
                             Margin="0,0,5,0"
                             Orientation="Vertical">
-                    <Button Height="30"
+                        <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.Config}"
                             Content="設定"
                             ToolTip="アプリケーションの設定" />
-                    <Button Height="30"
+                        <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.RepositoryClone}"
                             Content="リポジトリ複製"
                             Style="{DynamicResource ShinyRedButtonStyle}"
                             ToolTip="リポジトリの複製" />
-                    <Rectangle Height="2" Fill="Gray" Margin="5,0,5,5"/>
-                    <Button Height="30"
+                        <Rectangle Height="2" Fill="{DynamicResource AccentBrushKey}" Margin="5,0,5,5"/>
+                        <Button Height="30"
                             Margin="0,0,0,5"
                             Content="リポジトリ削除"
                             ToolTip="リポジトリの削除" />
-                </StackPanel>
-                <StackPanel Width="150"
+                    </StackPanel>
+                    <StackPanel Width="150"
                             Margin="0,0,5,0"
                             Orientation="Vertical">
-                    <Button Height="30"
+                        <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.EmptyFolderKeep}"
                             Content="空フォルダの保持"
                             ToolTip="空フォルダをGitで管理させる" />
-                    <Button Height="30"
+                        <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.GitIgnore}"
                             Content="排他ファイルの作成"
                             ToolTip="排他ファイルを作成する" />
-                    <Button Height="30"
+                        <Button Height="30"
                             Margin="0,0,0,5"
                             Command="{Binding Commands.BranchRemove}"
                             Content="ブランチの削除"
                             ToolTip="不要になったブランチを削除する" />
+                        <Button Height="30"
+                            Margin="0,0,0,5"
+                            Command="{Binding Commands.BranchRemove}"
+                            Content="リポジトリ最適化"
+                            ToolTip="リポジトリのＤＢを最適化します" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
 
             <xctk:BusyIndicator Grid.RowSpan="2"
                                 BusyContent="{Binding}"
