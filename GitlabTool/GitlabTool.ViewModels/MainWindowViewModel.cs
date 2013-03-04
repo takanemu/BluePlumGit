@@ -386,6 +386,16 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region コミット
+        /// <summary>
+        /// コミット
+        /// </summary>
+        [Command]
+        private void Commit()
+        {
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -521,6 +531,11 @@ namespace GitlabTool.ViewModels
         /// ブランチの削除
         /// </summary>
         public TacticsCommand BranchRemove { get; private set; }
+
+        /// <summary>
+        /// コミット
+        /// </summary>
+        public TacticsCommand Commit { get; private set; }
     }
     #endregion
 }

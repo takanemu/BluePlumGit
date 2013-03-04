@@ -214,6 +214,11 @@
                             ToolTip="不要になったブランチを削除する" />
                         <Button Height="30"
                             Margin="0,0,0,5"
+                            Command="{Binding Commands.Commit}"
+                            Content="コミット"
+                            ToolTip="コミットします" />
+                        <Button Height="30"
+                            Margin="0,0,0,5"
                             Command="{Binding Commands.BranchRemove}"
                             Content="リポジトリ最適化"
                             ToolTip="リポジトリのＤＢを最適化します" />
