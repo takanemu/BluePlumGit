@@ -326,22 +326,6 @@ namespace GitlabTool.Models
             config.Save();
         }
 
-        private void CheckConfig(StoredConfig config)
-        {
-            foreach (string section in config.GetSections())
-            {
-                foreach (string name in config.GetNames(section))
-                {
-                }
-                foreach (string subsection in config.GetSubsections(section))
-                {
-                    foreach (string name in config.GetNames(section, subsection))
-                    {
-                    }
-                }
-            }
-        }
-
         public void Fetch(Git git, BusyIndicatorProgressMonitor monitor)
         {
             FetchCommand command = git.Fetch();

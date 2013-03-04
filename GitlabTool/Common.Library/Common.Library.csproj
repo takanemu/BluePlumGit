@@ -92,6 +92,7 @@
     <Compile Include="Enums\WindowTypeEnum.cs" />
     <Compile Include="Messaging\Windows\WindowOpenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\GitConfigUtility.cs" />
     <Compile Include="Win32\GWL.cs" />
     <Compile Include="Win32\HitTestValues.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
