@@ -1,8 +1,13 @@
 ﻿using Gordias.Library.Headquarters;
 using Livet.Messaging.Windows;
 using log4net;
+using NGit;
+using NGit.Api;
+using NGit.Storage.File;
+using Sharpen;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +32,16 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
+            FilePath path = new FilePath(@"", @".git");
+            FileRepository db = new FileRepository(path);
+            Git git = new Git(db);
+            IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+
+            foreach (Ref branch in list)
+            {
+                string name = branch.GetName();
+                Debug.WriteLine("name = " + name);
+            }
         }
         #endregion
 
