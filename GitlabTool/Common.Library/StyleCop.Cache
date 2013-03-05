@@ -1,69 +1,5 @@
 <stylecopresultscache>
   <version>12</version>
-  <sourcecode name="ConfigDialogEntity.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/01/11 11:37:58.000</styleCop>
-      <settingsFile>2013/02/20 12:45:39.438</settingsFile>
-      <sourceFile>2013/02/26 09:03:08.820</sourceFile>
-      <parser>2013/01/11 11:37:58.000</parser>
-      <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.LayoutRules>2013/01/11 11:37:58.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-    </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="FileHeaderMustShowCopyright" ruleCheckId="SA1634">
-        <context>The file header must contain a copyright tag.</context>
-        <line>2</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.OrderingRules" rule="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives" ruleCheckId="SA1208">
-        <context>System using directives must be placed before all other using directives.</context>
-        <line>22</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
-        <context>The class must have a documentation header.</context>
-        <line>30</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
-        <context>The property must have a documentation header.</context>
-        <line>35</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
-        <context>The property must have a documentation header.</context>
-        <line>44</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
-        <context>The property must have a documentation header.</context>
-        <line>53</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
-        <context>The property must have a documentation header.</context>
-        <line>62</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
-        <context>The method must have a documentation header.</context>
-        <line>68</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="InitializeRepositoryEntity.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/01/11 11:37:58.000</styleCop>
@@ -1227,7 +1163,129 @@
       </violation>
     </violations>
   </sourcecode>
+  <sourcecode name="ConfigDialogEntity.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/01/11 11:37:58.000</styleCop>
+      <settingsFile>2013/02/20 12:45:39.438</settingsFile>
+      <sourceFile>2013/03/05 14:51:55.397</sourceFile>
+      <parser>2013/01/11 11:37:58.000</parser>
+      <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2013/01/11 11:37:58.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="FileHeaderMustShowCopyright" ruleCheckId="SA1634">
+        <context>The file header must contain a copyright tag.</context>
+        <line>2</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives" ruleCheckId="SA1208">
+        <context>System using directives must be placed before all other using directives.</context>
+        <line>23</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
+  <sourcecode name="GitConfigUtility.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/01/11 11:37:58.000</styleCop>
+      <settingsFile>2013/02/20 12:45:39.438</settingsFile>
+      <sourceFile>2013/03/05 08:49:39.025</sourceFile>
+      <parser>2013/01/11 11:37:58.000</parser>
+      <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2013/01/11 11:37:58.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="FileHeaderMustShowCopyright" ruleCheckId="SA1634">
+        <context>The file header must contain a copyright tag.</context>
+        <line>2</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives" ruleCheckId="SA1208">
+        <context>System using directives must be placed before all other using directives.</context>
+        <line>21</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
   <project key="-1773949888">
     <configuration>DEBUG;TRACE</configuration>
   </project>
+  <sourcecode name="PasswordBoxControlEditor.xaml.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/01/11 11:37:58.000</styleCop>
+      <settingsFile>2013/02/20 12:45:39.438</settingsFile>
+      <sourceFile>2013/03/05 14:54:58.333</sourceFile>
+      <parser>2013/01/11 11:37:58.000</parser>
+      <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2013/01/11 11:37:58.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/01/11 11:37:58.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/01/11 11:37:58.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="FileHeaderMustShowCopyright" ruleCheckId="SA1634">
+        <context>The file header must contain a copyright tag.</context>
+        <line>2</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParametersMustBeOnSameLineOrSeparateLines" ruleCheckId="SA1117">
+        <context>All field parameters must be placed on the same line, or each parameter must be placed on a separate line.</context>
+        <line>41</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="SplitParametersMustStartOnLineAfterDeclaration" ruleCheckId="SA1116">
+        <context>If the field parameters are on separate lines, the first parameter must begin on the line beneath the name of the field.</context>
+        <line>41</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParameterMustFollowComma" ruleCheckId="SA1115">
+        <context>The parameter must begin on the line after the previous parameter.</context>
+        <line>41</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
+        <context>Adjacent elements must be separated by a blank line.</context>
+        <line>46</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementDocumentationHeaderMustBePrecededByBlankLine" ruleCheckId="SA1514">
+        <context>A documentation header must be preceded by a blank line or must be the first item in its scope.</context>
+        <line>43</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
 </stylecopresultscache>

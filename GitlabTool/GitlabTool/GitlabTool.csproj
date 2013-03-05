@@ -104,12 +104,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\InfrastructureAssemblies\WPFToolkit\WPFToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\InfrastructureAssemblies\WPFToolkit.Extended.dll</HintPath>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\InfrastructureAssemblies\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

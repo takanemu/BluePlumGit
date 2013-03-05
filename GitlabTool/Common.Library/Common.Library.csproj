@@ -62,21 +62,35 @@
     <Reference Include="Livet.Extensions">
       <HintPath>..\InfrastructureAssemblies\Livet\Livet.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\InfrastructureAssemblies\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="NGit">
       <HintPath>..\InfrastructureAssemblies\NGit.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\InfrastructureAssemblies\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\InfrastructureAssemblies\Xceed.Wpf.Toolkit\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusyIndicatorProgressMonitor.cs" />
+    <Compile Include="Controls\PasswordBoxControlEditor.xaml.cs">
+      <DependentUpon>PasswordBoxControlEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entitys\BranchEntity.cs" />
     <Compile Include="Entitys\CloneEntity.cs" />
     <Compile Include="Entitys\ConfigDialogEntity.cs" />
@@ -100,6 +114,12 @@
     <Compile Include="Win32\WM.cs" />
     <Compile Include="Win32\WS.cs" />
     <Compile Include="Win32\WSEX.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\PasswordBoxControlEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
