@@ -17,7 +17,9 @@
 
 namespace GitlabTool.ViewModels
 {
+    using Commno.Library.Entitys;
     using Gordias.Library.Headquarters;
+    using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
     using log4net;
     using NGit;
@@ -45,16 +47,7 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
-            FilePath path = new FilePath(@"", @".git");
-            FileRepository db = new FileRepository(path);
-            Git git = new Git(db);
-            IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
-
-            foreach (Ref branch in list)
-            {
-                string name = branch.GetName();
-                Debug.WriteLine("name = " + name);
-            }
+            this.Propertys.Branchs = new System.Collections.ObjectModel.ObservableCollection<BranchEntity>();
         }
         #endregion
 
@@ -79,6 +72,35 @@ namespace GitlabTool.ViewModels
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
+
+        /// <summary>
+        /// フォルダーの選択
+        /// </summary>
+        /// <param name="message">フォルダー選択メッセージ</param>
+        public void FolderSelected(FolderSelectionMessage message)
+        {
+            if (message.Response != null)
+            {
+                this.Propertys.Branchs.Clear();
+
+                FilePath path = new FilePath(message.Response, @".git");
+                FileRepository db = new FileRepository(path);
+                Git git = new Git(db);
+                IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+
+                foreach (Ref branch in list)
+                {
+                    //string name = branch.GetName();
+                    //Debug.WriteLine("name = " + name);
+
+                    BranchEntity entity = new BranchEntity
+                    {
+                        Name = branch.GetName(),
+                    };
+                    this.Propertys.Branchs.Add(entity);
+                }
+            }
+        }
     }
     #endregion
 
@@ -88,6 +110,15 @@ namespace GitlabTool.ViewModels
     /// </summary>
     public class BranchRemoveWindowViewModelProperty : TacticsProperty
     {
+        /// <summary>
+        /// FolderPath
+        /// </summary>
+        public virtual string FolderPath { get; set; }
+
+        /// <summary>
+        /// ブランチリスト
+        /// </summary>
+        public virtual System.Collections.ObjectModel.ObservableCollection<BranchEntity> Branchs { get; set; }
     }
     #endregion
 

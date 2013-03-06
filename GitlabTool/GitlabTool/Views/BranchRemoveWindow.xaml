@@ -1,40 +1,41 @@
 ﻿<Window x:Class="GitlabTool.Views.BranchRemoveWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
+        xmlns:behavior="clr-namespace:GitlabTool.Behaviors"
+        xmlns:bh="clr-namespace:GitlabTool.Behaviors"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
-        xmlns:bh="clr-namespace:GitlabTool.Behaviors"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:behavior="clr-namespace:GitlabTool.Behaviors"
-        Title="ブランチ削除" 
-        ResizeMode="CanResizeWithGrip"
+        xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
+        Title="ブランチ削除"
+        Width="300"
+        Height="300"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
+        ResizeMode="CanResizeWithGrip"
         SnapsToDevicePixels="True"
         TextOptions.TextFormattingMode="Display"
         WindowStartupLocation="CenterOwner"
         WindowState="{Binding WindowState}"
-        Height="300" Width="300" 
         mc:Ignorable="d">
-    
+
     <Window.DataContext>
         <vm:BranchRemoveWindowViewModel />
     </Window.DataContext>
 
     <i:Interaction.Triggers>
-        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+        <!--  WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます  -->
         <i:EventTrigger EventName="ContentRendered">
-            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+            <l:LivetCallMethodAction MethodName="Initialize" MethodTarget="{Binding}" />
         </i:EventTrigger>
 
-        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
+        <!--  Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます  -->
         <i:EventTrigger EventName="Closed">
-            <l:DataContextDisposeAction/>
+            <l:DataContextDisposeAction />
         </i:EventTrigger>
 
-        <!-- Dialog表示メッセージ -->
+        <!--  Dialog表示メッセージ  -->
         <l:InteractionMessageTrigger MessageKey="WindowControl" Messenger="{Binding Messenger, Mode=OneWay}">
             <l:WindowInteractionMessageAction />
         </l:InteractionMessageTrigger>
@@ -58,7 +59,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="23" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <Border x:Name="CaptionBar" Grid.Row="0">
@@ -85,9 +86,65 @@
             </Grid>
         </Border>
 
-        <StackPanel Grid.Row="1" Margin="5">
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <Grid Height="40" Margin="0,10,0,0">
+            <Grid Height="30" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Height="20"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource ThemeForegroundBrushKey}"
+                           Text="リポジトリ："
+                           TextAlignment="Right"
+                           TextWrapping="Wrap"
+                           d:LayoutOverrides="HorizontalAlignment" />
+                <TextBox Grid.Column="1"
+                         Height="20"
+                         Margin="0"
+                         VerticalAlignment="Center"
+                         Text="{Binding Propertys.FolderPath,
+                                        Mode=TwoWay}"
+                         TextWrapping="Wrap" />
+                <Button Grid.Column="2"
+                        Width="25"
+                        Height="20"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Content="...">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <l:FolderBrowserDialogInteractionMessageAction>
+                                <l:DirectInteractionMessage CallbackMethodName="FolderSelected" CallbackMethodTarget="{Binding}">
+                                    <l:FolderSelectionMessage Description="フォルダーの選択" />
+                                </l:DirectInteractionMessage>
+                            </l:FolderBrowserDialogInteractionMessageAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </Grid>
+
+            <ListBox Grid.Row="1"
+                     Margin="0,5,0,0"
+                     ItemsSource="{Binding Propertys.Branchs}"
+                     SelectedIndex="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=(Name)}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Grid.Row="2" Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
@@ -112,10 +169,10 @@
                             VerticalAlignment="Center"
                             Command="{Binding Commands.OkButton,
                                               Mode=OneWay}"
-                            Content="実行" />
+                            Content="削除" />
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="2" Background="{DynamicResource AccentBrushKey}">
             <Grid.ColumnDefinitions>
