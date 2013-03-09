@@ -18,26 +18,27 @@
 namespace GitlabTool.ViewModels
 {
     using Commno.Library;
-    using Common.Library.Entitys;
-    using Common.Library.Enums;
-    using Common.Library.Messaging.Windows;
-    using Gitlab;
-    using GitlabTool;
-    using GitlabTool.Models;
-    using Gordias.Library.Headquarters;
-    using log4net;
-    using NGit;
-    using Sharpen;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
+using Common.Library.Entitys;
+using Common.Library.Enums;
+using Common.Library.Messaging.Windows;
+using Gitlab;
+using GitlabTool;
+using GitlabTool.Models;
+using Gordias.Library.Collections;
+using Gordias.Library.Headquarters;
+using log4net;
+using NGit;
+using Sharpen;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 
     #region メインクラス
     /// <summary>
@@ -65,6 +66,11 @@ namespace GitlabTool.ViewModels
         /// アプリケーション設定
         /// </summary>
         private ConfigEntity config;
+
+        /// <summary>
+        /// リポジトリリスト
+        /// </summary>
+        private CleanupObservableCollection<RepositoryEntity> repositories;
 
         /// <summary>
         /// コンストラクタ
@@ -179,9 +185,13 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
-            this.Propertys.RepositoryName = "XXXXX";
-            this.Propertys.RepositoryLocation = @"c:\YYYY\XXXXX";
-            this.Propertys.RepositoryPath = "https://www.gitlab.com/XXXXX.git";
+            this.repositories = new CleanupObservableCollection<RepositoryEntity>();
+            this.Propertys.Repositories = this.repositories.View;
+
+            foreach (var repo in this.config.Repository)
+            {
+                this.repositories.Add(repo);
+            }
         }
         #endregion
 
@@ -206,21 +216,6 @@ namespace GitlabTool.ViewModels
             {
                 this.Propertys.GravatarId = this.globalConfig.EMail;
             }
-
-            this.Propertys.Repositorys = new System.Collections.ObjectModel.ObservableCollection<RepositoryEntity>();
-
-            this.Propertys.Repositorys.Add(new RepositoryEntity
-            {
-                Name = "123",
-            });
-            this.Propertys.Repositorys.Add(new RepositoryEntity
-            {
-                Name = "ABC",
-            });
-            this.Propertys.Repositorys.Add(new RepositoryEntity
-            {
-                Name = "789",
-            });
         }
         #endregion
 
@@ -253,7 +248,11 @@ namespace GitlabTool.ViewModels
                 this.config.ServerUrl = entity.ServerUrl;
                 this.config.Password = entity.Password;
                 this.config.ApiVersion = entity.ApiVersion;
+                
+                // 設定保存
+                this.model.SaveConfig(this.config);
 
+                // 画面テーマ更新
                 if (this.config.Accent != entity.Accent)
                 {
                     this.config.Accent = entity.Accent;
@@ -317,17 +316,17 @@ namespace GitlabTool.ViewModels
 
                             RepositoryEntity repository = new RepositoryEntity
                             {
-                                //ID = this.model.GetRepositoryNewId(),
+                                ID = Guid.NewGuid().ToString("N"),
                                 Name = entity.Name,
-                                Path = gitdir,
+                                Path = entity.Url,
+                                Location = entity.Path,
                             };
 
-                            // dbの登録
-                            //this.model.AddRepository(repository.ID, repository.Name, repository.Path);
-
-                            // リスト追加
-                            //this.repositorysCollection.Add(repository);
-                            //this.RepositoryCollectionView.MoveCurrentTo(repository);
+                            this.repositories.Add(repository);
+                            this.config.Repository.Add(repository);
+                        
+                            // 設定保存
+                            this.model.SaveConfig(this.config);
                         };
 
                         this.model.CloneRepository(entity, monitor);
@@ -352,6 +351,7 @@ namespace GitlabTool.ViewModels
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.MANAGED_EMPTY_FOLDER,
+                Parameter = this.Propertys.Repositories.CurrentItem,
             });
         }
         #endregion
@@ -367,6 +367,7 @@ namespace GitlabTool.ViewModels
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.CREATE_GITIGNORE,
+                Parameter = this.Propertys.Repositories.CurrentItem,
             });
         }
         #endregion
@@ -382,6 +383,7 @@ namespace GitlabTool.ViewModels
             {
                 MessageKey = "OpenWindow",
                 WindowType = WindowTypeEnum.REMOVE_BRANCH,
+                Parameter = this.Propertys.Repositories.CurrentItem,
             });
         }
         #endregion
@@ -396,6 +398,21 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region リポジトリ削除
+        /// <summary>
+        /// リポジトリ削除
+        /// </summary>
+        [Command]
+        private void RepositoryRemove()
+        {
+            // TODO:削除確認
+
+            this.config.Repository.Remove((RepositoryEntity)this.Propertys.Repositories.CurrentItem);
+            this.repositories.Remove((RepositoryEntity)this.Propertys.Repositories.CurrentItem);
+            this.model.SaveConfig(this.config);
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -403,9 +420,6 @@ namespace GitlabTool.ViewModels
         [Command]
         private void WindowCloseCancel()
         {
-            this.model.SaveConfig(this.config);
-
-            // TODO:終了時保存保護処理
             Environment.Exit(0);
         }
         #endregion
@@ -477,7 +491,7 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// プロジェクトリスト
         /// </summary>
-        public virtual System.Collections.ObjectModel.ObservableCollection<RepositoryEntity> Repositorys { get; set; }
+        public virtual ICollectionView Repositories { get; set; }
 
         /// <summary>
         /// リポジトリ名
@@ -536,6 +550,11 @@ namespace GitlabTool.ViewModels
         /// コミット
         /// </summary>
         public TacticsCommand Commit { get; private set; }
+
+        /// <summary>
+        /// リポジトリ削除
+        /// </summary>
+        public TacticsCommand RepositoryRemove { get; private set; }
     }
     #endregion
 }

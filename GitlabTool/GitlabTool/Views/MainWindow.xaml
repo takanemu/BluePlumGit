@@ -135,9 +135,9 @@
                     <TextBlock Foreground="White" Text="Location:" Grid.Row="1" HorizontalAlignment="Right"/>
                     <TextBlock Foreground="White" Text="Path:" Grid.Row="2" HorizontalAlignment="Right"/>
 
-                    <TextBlock Foreground="White" Text="{Binding Propertys.RepositoryName}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                    <TextBlock Foreground="White" Text="{Binding Propertys.RepositoryLocation}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                    <TextBlock Foreground="White" Text="{Binding Propertys.RepositoryPath}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <TextBlock Foreground="White" Text="{Binding Propertys.Repositories.CurrentItem.Name}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <TextBlock Foreground="White" Text="{Binding Propertys.Repositories.CurrentItem.Location}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <TextBlock Foreground="White" Text="{Binding Propertys.Repositories.CurrentItem.Path}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0"/>
                 </Grid>
                 
                 <Border Width="40"
@@ -160,7 +160,7 @@
                 </Grid.ColumnDefinitions>
 
                 <ListBox Margin="5"
-                         ItemsSource="{Binding Propertys.Repositorys}"
+                         ItemsSource="{Binding Propertys.Repositories}"
                          SelectedIndex="0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -191,6 +191,7 @@
                         <Rectangle Height="2" Fill="{DynamicResource AccentBrushKey}" Margin="5,0,5,5"/>
                         <Button Height="30"
                             Margin="0,0,0,5"
+                            Command="{Binding Commands.RepositoryRemove}"
                             Content="リポジトリ削除"
                             ToolTip="リポジトリの削除" />
                     </StackPanel>
@@ -219,7 +220,6 @@
                             ToolTip="コミットします" />
                         <Button Height="30"
                             Margin="0,0,0,5"
-                            Command="{Binding Commands.BranchRemove}"
                             Content="リポジトリ最適化"
                             ToolTip="リポジトリのＤＢを最適化します" />
                     </StackPanel>

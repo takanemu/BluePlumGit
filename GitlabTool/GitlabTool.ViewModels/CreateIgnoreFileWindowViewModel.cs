@@ -19,6 +19,7 @@ namespace GitlabTool.ViewModels
 {
     using Common.Library.Entitys;
     using Gordias.Library.Headquarters;
+    using Gordias.Library.Interface;
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
     using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace GitlabTool.ViewModels
     /// <summary>
     /// 排他ファイル作成ウインドウビューモデル
     /// </summary>
-    public class CreateIgnoreFileWindowViewModel : TacticsViewModel<CreateIgnoreFileWindowViewModelProperty, CreateIgnoreFileWindowViewModelCommand>
+    public class CreateIgnoreFileWindowViewModel : TacticsViewModel<CreateIgnoreFileWindowViewModelProperty, CreateIgnoreFileWindowViewModelCommand>, IWindowParameter
     {
         #region Initializeメソッド
         /// <summary>
@@ -35,6 +36,10 @@ namespace GitlabTool.ViewModels
         /// </summary>
         public void Initialize()
         {
+            RepositoryEntity entity = (RepositoryEntity)this.Parameter;
+
+            this.Propertys.FolderPath = entity.Location;
+
             this.Propertys.ProjectKindList = new List<ProjectKind>();
 
             this.Propertys.ProjectKindList.Add(new ProjectKind
@@ -137,6 +142,11 @@ namespace GitlabTool.ViewModels
         {
             this.Propertys.FolderPath = message.Response;
         }
+
+        /// <summary>
+        /// パラメーター
+        /// </summary>
+        public object Parameter { get; set; }
     }
     #endregion
 

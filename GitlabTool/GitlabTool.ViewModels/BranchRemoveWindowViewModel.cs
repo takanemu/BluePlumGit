@@ -18,22 +18,26 @@
 namespace GitlabTool.ViewModels
 {
     using Commno.Library.Entitys;
-    using Gordias.Library.Headquarters;
-    using Livet.Messaging.IO;
-    using Livet.Messaging.Windows;
-    using log4net;
-    using NGit;
-    using NGit.Api;
-    using NGit.Storage.File;
-    using Sharpen;
-    using System.Collections.Generic;
-    using System.Diagnostics;
+using Common.Library.Entitys;
+using Gordias.Library.Collections;
+using Gordias.Library.Headquarters;
+using Gordias.Library.Interface;
+using Livet.Messaging.IO;
+using Livet.Messaging.Windows;
+using log4net;
+using NGit;
+using NGit.Api;
+using NGit.Storage.File;
+using Sharpen;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 
     #region メインクラス
     /// <summary>
     /// ブランチ削除ウインドウビューモデル
     /// </summary>
-    public class BranchRemoveWindowViewModel : TacticsViewModel<BranchRemoveWindowViewModelProperty, BranchRemoveWindowViewModelCommand>
+    public class BranchRemoveWindowViewModel : TacticsViewModel<BranchRemoveWindowViewModelProperty, BranchRemoveWindowViewModelCommand>, IWindowParameter
     {
         /// <summary>
         /// ログ
@@ -41,13 +45,23 @@ namespace GitlabTool.ViewModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
         private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        /// <summary>
+        /// ブランチリスト
+        /// </summary>
+        private CleanupObservableCollection<BranchEntity> branchs = new CleanupObservableCollection<BranchEntity>();
+
         #region Initializeメソッド
         /// <summary>
         /// Initializeメソッド
         /// </summary>
         public void Initialize()
         {
-            this.Propertys.Branchs = new System.Collections.ObjectModel.ObservableCollection<BranchEntity>();
+            this.Propertys.Branchs = this.branchs.View;
+
+            RepositoryEntity entity = (RepositoryEntity)this.Parameter;
+
+            this.Propertys.FolderPath = entity.Location;
+            this.UpdateBranchList(this.Propertys.FolderPath);
         }
         #endregion
 
@@ -74,6 +88,29 @@ namespace GitlabTool.ViewModels
         #endregion
 
         /// <summary>
+        /// ブランチリストを更新
+        /// </summary>
+        /// <param name="folder">フォルダパス</param>
+        private void UpdateBranchList(string folder)
+        {
+            this.branchs.Clear();
+
+            FilePath path = new FilePath(folder, @".git");
+            FileRepository db = new FileRepository(path);
+            Git git = new Git(db);
+            IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+
+            foreach (Ref branch in list)
+            {
+                BranchEntity entity = new BranchEntity
+                {
+                    Name = branch.GetName(),
+                };
+                this.branchs.Add(entity);
+            }
+        }
+
+        /// <summary>
         /// フォルダーの選択
         /// </summary>
         /// <param name="message">フォルダー選択メッセージ</param>
@@ -81,26 +118,14 @@ namespace GitlabTool.ViewModels
         {
             if (message.Response != null)
             {
-                this.Propertys.Branchs.Clear();
-
-                FilePath path = new FilePath(message.Response, @".git");
-                FileRepository db = new FileRepository(path);
-                Git git = new Git(db);
-                IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
-
-                foreach (Ref branch in list)
-                {
-                    //string name = branch.GetName();
-                    //Debug.WriteLine("name = " + name);
-
-                    BranchEntity entity = new BranchEntity
-                    {
-                        Name = branch.GetName(),
-                    };
-                    this.Propertys.Branchs.Add(entity);
-                }
+                this.UpdateBranchList(message.Response);
             }
         }
+
+        /// <summary>
+        /// パラメーター
+        /// </summary>
+        public object Parameter { get; set; }
     }
     #endregion
 
@@ -118,7 +143,7 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// ブランチリスト
         /// </summary>
-        public virtual System.Collections.ObjectModel.ObservableCollection<BranchEntity> Branchs { get; set; }
+        public virtual ICollectionView Branchs { get; set; }
     }
     #endregion
 

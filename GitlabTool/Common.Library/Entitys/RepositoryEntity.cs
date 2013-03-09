@@ -22,10 +22,24 @@ namespace Common.Library.Entitys
     /// </summary>
     public class RepositoryEntity
     {
-        public long ID { get; set; }
+        /// <summary>
+        /// ユニークキー
+        /// </summary>
+        public string ID { get; set; }
         
+        /// <summary>
+        /// リポジトリ名
+        /// </summary>
         public string Name { get; set; }
         
+        /// <summary>
+        /// リポジトリアドレス
+        /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// ローカルの場所
+        /// </summary>
+        public string Location { get; set; }
     }
 }
