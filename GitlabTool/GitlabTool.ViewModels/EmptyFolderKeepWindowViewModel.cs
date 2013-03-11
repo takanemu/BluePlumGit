@@ -42,7 +42,10 @@ namespace GitlabTool.ViewModels
         {
             RepositoryEntity entity = (RepositoryEntity)this.Parameter;
 
-            this.Propertys.FolderPath = entity.Location;
+            if (entity != null)
+            {
+                this.Propertys.FolderPath = entity.Location;
+            }
         }
         #endregion
 

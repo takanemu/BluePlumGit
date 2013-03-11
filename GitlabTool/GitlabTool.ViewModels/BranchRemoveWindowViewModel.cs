@@ -60,8 +60,11 @@ using System.Diagnostics;
 
             RepositoryEntity entity = (RepositoryEntity)this.Parameter;
 
-            this.Propertys.FolderPath = entity.Location;
-            this.UpdateBranchList(this.Propertys.FolderPath);
+            if (entity != null)
+            {
+                this.Propertys.FolderPath = entity.Location;
+                this.UpdateBranchList(this.Propertys.FolderPath);
+            }
         }
         #endregion
 
@@ -98,9 +101,10 @@ using System.Diagnostics;
             FilePath path = new FilePath(folder, @".git");
             FileRepository db = new FileRepository(path);
             Git git = new Git(db);
-            IList<Ref> list = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+            IList<Ref> remote = git.BranchList().SetListMode(ListBranchCommand.ListMode.REMOTE).Call();
+            IList<Ref> all = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
 
-            foreach (Ref branch in list)
+            foreach (Ref branch in all)
             {
                 BranchEntity entity = new BranchEntity
                 {

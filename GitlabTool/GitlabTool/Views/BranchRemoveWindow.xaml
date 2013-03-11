@@ -11,9 +11,9 @@
         xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
         Title="ブランチ削除"
         Width="600"
+        Height="300"
         MinWidth="300"
         MinHeight="300"
-        Height="300"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
         ResizeMode="CanResizeWithGrip"
         SnapsToDevicePixels="True"
@@ -138,7 +138,8 @@
             <ListBox Grid.Row="1"
                      Margin="0,5,0,0"
                      ItemsSource="{Binding Propertys.Branchs}"
-                     SelectedIndex="0">
+                     SelectedIndex="0"
+                     SelectionMode="Extended">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=(Name)}" />

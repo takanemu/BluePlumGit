@@ -38,8 +38,10 @@ namespace GitlabTool.ViewModels
         {
             RepositoryEntity entity = (RepositoryEntity)this.Parameter;
 
-            this.Propertys.FolderPath = entity.Location;
-
+            if (entity != null)
+            {
+                this.Propertys.FolderPath = entity.Location;
+            }
             this.Propertys.ProjectKindList = new List<ProjectKind>();
 
             this.Propertys.ProjectKindList.Add(new ProjectKind
