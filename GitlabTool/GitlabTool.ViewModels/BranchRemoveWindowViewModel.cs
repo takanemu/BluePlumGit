@@ -18,20 +18,23 @@
 namespace GitlabTool.ViewModels
 {
     using Commno.Library.Entitys;
-using Common.Library.Entitys;
-using Gordias.Library.Collections;
-using Gordias.Library.Headquarters;
-using Gordias.Library.Interface;
-using Livet.Messaging.IO;
-using Livet.Messaging.Windows;
-using log4net;
-using NGit;
-using NGit.Api;
-using NGit.Storage.File;
-using Sharpen;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
+    using Common.Library.Entitys;
+    using Gordias.Library.Collections;
+    using Gordias.Library.Headquarters;
+    using Gordias.Library.Interface;
+    using Livet.Messaging.IO;
+    using Livet.Messaging.Windows;
+    using log4net;
+    using NGit;
+    using NGit.Api;
+    using NGit.Storage.File;
+    using Sharpen;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Data;
 
     #region メインクラス
     /// <summary>
@@ -50,6 +53,11 @@ using System.Diagnostics;
         /// </summary>
         private CleanupObservableCollection<BranchEntity> branchs = new CleanupObservableCollection<BranchEntity>();
 
+        /// <summary>
+        /// Git
+        /// </summary>
+        private Git git;
+
         #region Initializeメソッド
         /// <summary>
         /// Initializeメソッド
@@ -65,8 +73,29 @@ using System.Diagnostics;
                 this.Propertys.FolderPath = entity.Location;
                 this.UpdateBranchList(this.Propertys.FolderPath);
             }
+            this.Propertys.Branchs.Filter = new System.Predicate<object>(FilterCallback);
         }
         #endregion
+
+        /// <summary>
+        /// フィルター関数
+        /// </summary>
+        /// <param name="item">項目</param>
+        /// <returns>true表示</returns>
+        private bool FilterCallback(object item)
+        {
+            if (this.Propertys.IsAllDisp)
+            {
+                return true;
+            }
+            BranchEntity entity = (BranchEntity)item;
+
+            if (entity.Name.LastIndexOf("master") != -1)
+            {
+                return false;
+            }
+            return true;
+        }
 
         #region OKボタン処理
         /// <summary>
@@ -75,7 +104,26 @@ using System.Diagnostics;
         [Command]
         private void OkButton()
         {
-            this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+            ListCollectionView view = (ListCollectionView)this.Propertys.Branchs;
+
+            string[] names = new string[view.Count];
+
+            int i = 0;
+
+            foreach(var item in view)
+            {
+                names[i++] = ((BranchEntity)item).Name;
+            }
+
+            try
+            {
+                this.git.BranchDelete().SetForce(this.Propertys.IsForceDelete).SetBranchNames(names).Call();
+                this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+            }
+            catch (NGit.Api.Errors.NotMergedException exception)
+            {
+                MessageBox.Show("注意：マージされていないブランチを削除することは制限されています。\n強制的に削除したい場合には、強制削除のチェックボックをオンにしてください。");
+            }
         }
         #endregion
 
@@ -100,9 +148,9 @@ using System.Diagnostics;
 
             FilePath path = new FilePath(folder, @".git");
             FileRepository db = new FileRepository(path);
-            Git git = new Git(db);
-            IList<Ref> remote = git.BranchList().SetListMode(ListBranchCommand.ListMode.REMOTE).Call();
-            IList<Ref> all = git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+            this.git = new Git(db);
+            //IList<Ref> remote = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.REMOTE).Call();
+            IList<Ref> all = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
 
             foreach (Ref branch in all)
             {
@@ -112,6 +160,15 @@ using System.Diagnostics;
                 };
                 this.branchs.Add(entity);
             }
+        }
+
+        /// <summary>
+        /// 表示更新
+        /// </summary>
+        [Property]
+        private void IsAllDisp()
+        {
+            this.Propertys.Branchs.Refresh();
         }
 
         /// <summary>
@@ -148,6 +205,16 @@ using System.Diagnostics;
         /// ブランチリスト
         /// </summary>
         public virtual ICollectionView Branchs { get; set; }
+
+        /// <summary>
+        /// 強制削除
+        /// </summary>
+        public virtual bool IsForceDelete { get; set; }
+
+        /// <summary>
+        /// すべて表示
+        /// </summary>
+        public virtual bool IsAllDisp { get; set; }
     }
     #endregion
 
