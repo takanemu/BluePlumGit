@@ -17,12 +17,12 @@
 
 namespace GitlabTool.ViewModels
 {
+    using System.Collections.Generic;
     using Common.Library.Entitys;
     using Gordias.Library.Headquarters;
     using Gordias.Library.Interface;
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
-    using System.Collections.Generic;
 
     #region メインクラス
     /// <summary>

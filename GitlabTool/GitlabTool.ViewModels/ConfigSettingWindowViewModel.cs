@@ -17,6 +17,10 @@
 
 namespace GitlabTool.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using Commno.Library.Entitys;
     using Common.Library.Entitys;
     using Common.Library.Enums;
@@ -24,10 +28,6 @@ namespace GitlabTool.ViewModels
     using Gordias.Library.Headquarters;
     using Gordias.Library.Interface;
     using Livet.Messaging.Windows;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     #region メインクラス
     /// <summary>

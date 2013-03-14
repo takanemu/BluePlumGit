@@ -17,6 +17,8 @@
 
 namespace GitlabTool.Behaviors.Messaging.Windows
 {
+    using System;
+    using System.Windows;
     using Common.Library.Entitys;
     using Common.Library.Enums;
     using Common.Library.Messaging.Windows;
@@ -25,8 +27,6 @@ namespace GitlabTool.Behaviors.Messaging.Windows
     using Gordias.Library.Interface;
     using Livet.Behaviors.Messaging;
     using Livet.Messaging;
-    using System;
-    using System.Windows;
 
     /// <summary>
     /// ウインドウオープンメッセージアクションクラス

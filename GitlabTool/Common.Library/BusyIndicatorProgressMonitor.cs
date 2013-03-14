@@ -21,8 +21,8 @@ namespace Commno.Library
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using NGit;
     using System.Threading;
+    using NGit;
 
     /// <summary>
     /// コマンドモニタークラス

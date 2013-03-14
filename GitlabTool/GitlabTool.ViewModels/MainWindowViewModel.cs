@@ -17,28 +17,28 @@
 
 namespace GitlabTool.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
     using Commno.Library;
-using Common.Library.Entitys;
-using Common.Library.Enums;
-using Common.Library.Messaging.Windows;
-using Gitlab;
-using GitlabTool;
-using GitlabTool.Models;
-using Gordias.Library.Collections;
-using Gordias.Library.Headquarters;
-using log4net;
-using NGit;
-using Sharpen;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+    using Common.Library.Entitys;
+    using Common.Library.Enums;
+    using Common.Library.Messaging.Windows;
+    using Gitlab;
+    using GitlabTool;
+    using GitlabTool.Models;
+    using Gordias.Library.Collections;
+    using Gordias.Library.Headquarters;
+    using log4net;
+    using NGit;
+    using Sharpen;
 
     #region メインクラス
     /// <summary>

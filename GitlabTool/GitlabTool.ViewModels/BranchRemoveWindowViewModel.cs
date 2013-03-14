@@ -17,6 +17,14 @@
 
 namespace GitlabTool.ViewModels
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Data;
     using Commno.Library.Entitys;
     using Common.Library.Entitys;
     using Gordias.Library.Collections;
@@ -29,12 +37,6 @@ namespace GitlabTool.ViewModels
     using NGit.Api;
     using NGit.Storage.File;
     using Sharpen;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Data;
 
     #region メインクラス
     /// <summary>
@@ -45,8 +47,8 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// ログ
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
-        private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// ブランチリスト
@@ -91,6 +93,10 @@ namespace GitlabTool.ViewModels
             BranchEntity entity = (BranchEntity)item;
 
             if (entity.Name.LastIndexOf("master") != -1)
+            {
+                return false;
+            }
+            if (entity.Name.LastIndexOf("HEAD") != -1)
             {
                 return false;
             }
@@ -139,7 +145,7 @@ namespace GitlabTool.ViewModels
         #endregion
 
         /// <summary>
-        /// ブランチリストを更新
+        /// リポジトリフォルダーを更新
         /// </summary>
         /// <param name="folder">フォルダパス</param>
         private void UpdateFolder(string folder)
@@ -151,6 +157,9 @@ namespace GitlabTool.ViewModels
             this.UpdateBranchList();
         }
 
+        /// <summary>
+        /// ブランチリストを更新
+        /// </summary>
         private void UpdateBranchList()
         {
             this.branchs.Clear();

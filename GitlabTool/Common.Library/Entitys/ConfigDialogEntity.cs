@@ -17,15 +17,15 @@
 
 namespace Common.Library.Entitys
 {
-    using Common.Library.Controls;
-    using Common.Library.Enums;
-    using Gitlab;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Common.Library.Controls;
+    using Common.Library.Enums;
+    using Gitlab;
 
     /// <summary>
     /// アプリケーション設定

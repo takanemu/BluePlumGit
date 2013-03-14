@@ -145,7 +145,7 @@
                 </Grid.ColumnDefinitions>
                 <CheckBox Grid.Column="0"
                           Margin="0,0,5,0"
-                          Content="masterも表示"
+                          Content="全てのブランチを表示"
                           IsChecked="{Binding Propertys.IsAllDisp}" />
                 <CheckBox Grid.Column="1"
                           Margin="0,0,5,0"

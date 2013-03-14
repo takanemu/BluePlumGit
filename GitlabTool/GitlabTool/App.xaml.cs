@@ -17,12 +17,6 @@
 
 namespace GitlabTool
 {
-    using Common.Library.Enums;
-    using Gordias.Library.Headquarters;
-    using log4net;
-    using log4net.Appender;
-    using log4net.Config;
-    using log4net.Repository;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -31,6 +25,12 @@ namespace GitlabTool
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
+    using Common.Library.Enums;
+    using Gordias.Library.Headquarters;
+    using log4net;
+    using log4net.Appender;
+    using log4net.Config;
+    using log4net.Repository;
 
     /// <summary>
     /// App.xaml の相互作用ロジック

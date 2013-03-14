@@ -29,11 +29,14 @@
       </violation>
     </violations>
   </sourcecode>
+  <project key="102217155">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="MainWindowModel.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/01/11 11:37:58.000</styleCop>
       <settingsFile>2013/02/20 12:45:39.438</settingsFile>
-      <sourceFile>2013/03/05 08:49:39.030</sourceFile>
+      <sourceFile>2013/03/14 09:55:59.461</sourceFile>
       <parser>2013/01/11 11:37:58.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -54,11 +57,6 @@
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="FileHeaderMustShowCopyright" ruleCheckId="SA1634">
         <context>The file header must contain a copyright tag.</context>
         <line>2</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.OrderingRules" rule="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives" ruleCheckId="SA1208">
-        <context>System using directives must be placed before all other using directives.</context>
-        <line>33</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
@@ -128,7 +126,4 @@
       </violation>
     </violations>
   </sourcecode>
-  <project key="102217155">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
 </stylecopresultscache>
