@@ -71,7 +71,7 @@ namespace GitlabTool.ViewModels
             if (entity != null)
             {
                 this.Propertys.FolderPath = entity.Location;
-                this.UpdateBranchList(this.Propertys.FolderPath);
+                this.UpdateFolder(this.Propertys.FolderPath);
             }
             this.Propertys.Branchs.Filter = new System.Predicate<object>(FilterCallback);
         }
@@ -142,17 +142,30 @@ namespace GitlabTool.ViewModels
         /// ブランチリストを更新
         /// </summary>
         /// <param name="folder">フォルダパス</param>
-        private void UpdateBranchList(string folder)
+        private void UpdateFolder(string folder)
         {
-            this.branchs.Clear();
-
             FilePath path = new FilePath(folder, @".git");
             FileRepository db = new FileRepository(path);
             this.git = new Git(db);
-            //IList<Ref> remote = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.REMOTE).Call();
-            IList<Ref> all = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
 
-            foreach (Ref branch in all)
+            this.UpdateBranchList();
+        }
+
+        private void UpdateBranchList()
+        {
+            this.branchs.Clear();
+
+            IList<Ref> branchs;
+
+            if (this.Propertys.IsRemote)
+            {
+                branchs = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.REMOTE).Call();
+            }
+            else
+            {
+                branchs = this.git.BranchList().SetListMode(ListBranchCommand.ListMode.ALL).Call();
+            }
+            foreach (Ref branch in branchs)
             {
                 BranchEntity entity = new BranchEntity
                 {
@@ -172,6 +185,15 @@ namespace GitlabTool.ViewModels
         }
 
         /// <summary>
+        /// リモート
+        /// </summary>
+        [Property]
+        private void IsRemote()
+        {
+            this.UpdateBranchList();
+        }
+
+        /// <summary>
         /// フォルダーの選択
         /// </summary>
         /// <param name="message">フォルダー選択メッセージ</param>
@@ -179,7 +201,7 @@ namespace GitlabTool.ViewModels
         {
             if (message.Response != null)
             {
-                this.UpdateBranchList(message.Response);
+                this.UpdateFolder(message.Response);
             }
         }
 
@@ -215,6 +237,11 @@ namespace GitlabTool.ViewModels
         /// すべて表示
         /// </summary>
         public virtual bool IsAllDisp { get; set; }
+
+        /// <summary>
+        /// リモート
+        /// </summary>
+        public virtual bool IsRemote { get; set; }
     }
     #endregion
 
