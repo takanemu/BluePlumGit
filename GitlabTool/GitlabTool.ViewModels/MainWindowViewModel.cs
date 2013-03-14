@@ -249,15 +249,15 @@ namespace GitlabTool.ViewModels
                 this.config.Password = entity.Password;
                 this.config.ApiVersion = entity.ApiVersion;
                 
-                // 設定保存
-                this.model.SaveConfig(this.config);
-
                 // 画面テーマ更新
                 if (this.config.Accent != entity.Accent)
                 {
                     this.config.Accent = entity.Accent;
                     DataLogistics.Instance.SetValue(ApplicationEnum.Theme, this.config.Accent);
                 }
+
+                // 設定保存
+                this.model.SaveConfig(this.config);
             }
         }
         #endregion

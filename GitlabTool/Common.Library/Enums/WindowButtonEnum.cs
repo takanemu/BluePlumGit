@@ -22,10 +22,24 @@ namespace Common.Library.Enums
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// Windowボタン種別
+    /// </summary>
     public enum WindowButtonEnum
     {
+        /// <summary>
+        /// OK
+        /// </summary>
         OK,
+
+        /// <summary>
+        /// CANCEL
+        /// </summary>
         CANCEL,
+
+        /// <summary>
+        /// DELETE
+        /// </summary>
         DELETE,
     }
 }

@@ -23,14 +23,23 @@ namespace Common.Library.Entitys
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// グローバルコンフィグ
+    /// </summary>
     public class GrobalConfigEntity 
     {
+        /// <summary>
+        /// 電子メールアドレス
+        /// </summary>
         public string EMail
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// 名称
+        /// </summary>
         public string Name
         {
             get;

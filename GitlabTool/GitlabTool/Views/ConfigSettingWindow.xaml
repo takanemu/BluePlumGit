@@ -13,12 +13,12 @@
         xmlns:bh="clr-namespace:GitlabTool.Behaviors"
 		xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
         Title="設定" 
-        Height="350" Width="400"
+        Height="350" Width="400" MinWidth="400" MinHeight="350"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
 		WindowState="{Binding WindowState}"
 		SnapsToDevicePixels="True"
-		ResizeMode="NoResize"
+        ResizeMode="CanResizeWithGrip"
 		TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
     
@@ -62,11 +62,12 @@
 					  GlassFrameThickness="0,0,0,1" />
     </WindowChrome.WindowChrome>
 
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <Border x:Name="CaptionBar"
@@ -77,17 +78,6 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <!--<Border Grid.Column="0"
-						Background="Transparent"
-						Margin="10,8"
-						WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource GitIcon1788CBrush}" />
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <bh:DirectWindowAction WindowAction="OpenSystemMenu" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Border>-->
                 <TextBlock Grid.Column="1"
 						   Text="設定"
 						   Foreground="{DynamicResource ThemeForegroundDarkBrushKey}"
@@ -105,13 +95,12 @@
             </Grid>
         </Border>
 
-        <xctk:PropertyGrid Grid.Row="1" Margin="5" SelectedObject="{Binding Path=Propertys.Config, Mode=TwoWay}"/>
+        <xctk:PropertyGrid Grid.Row="1" Margin="3,5,3,5" SelectedObject="{Binding Path=Propertys.Config, Mode=TwoWay}"/>
 
-        <StackPanel Height="30"
-            		VerticalAlignment="Top"
+        <StackPanel VerticalAlignment="Top"
             		FlowDirection="RightToLeft"
             		Orientation="Horizontal"
-            		d:LayoutOverrides="Width" Grid.Row="2" Margin="0,0,5,0">
+            		d:LayoutOverrides="Width" Grid.Row="2" Margin="0,0,5,5">
             <Button Width="80"
             			Height="26"
             			Margin="0,0,10,0"
@@ -127,5 +116,22 @@
             			Command="{Binding Commands.OkButton, Mode=OneWay}"
             			Content="設定" />
         </StackPanel>
+
+        <Grid Grid.Row="3" Background="{DynamicResource AccentBrushKey}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1"
+                    Width="16"
+                    Height="16"
+                    VerticalAlignment="Bottom"
+                    Background="Transparent"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
+                <i:Interaction.Behaviors>
+                    <bh:ResizeGripBehavior />
+                </i:Interaction.Behaviors>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

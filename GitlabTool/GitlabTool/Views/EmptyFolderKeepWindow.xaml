@@ -63,7 +63,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="23" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <Border x:Name="CaptionBar" Grid.Row="0">
@@ -90,7 +90,12 @@
             </Grid>
         </Border>
 
-        <StackPanel Grid.Row="1" Margin="5">
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
             <Grid Height="30" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
@@ -132,7 +137,7 @@
                 </Button>
             </Grid>
 
-            <Grid Height="40" Margin="0,10,0,0">
+            <Grid Height="40" Margin="0,10,0,0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
@@ -160,7 +165,7 @@
                             Content="実行" />
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="2" Background="{DynamicResource AccentBrushKey}">
             <Grid.ColumnDefinitions>

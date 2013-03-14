@@ -28,6 +28,54 @@ namespace Common.Library.Enums
     /// </summary>
     public enum AccentEnum
     {
-        Purple, Blue, Orange,
+        /// <summary>
+        /// 紫
+        /// </summary>
+        Purple,
+        
+        /// <summary>
+        /// 青
+        /// </summary>
+        Blue,
+        
+        /// <summary>
+        /// 橙
+        /// </summary>
+        Orange,
+
+        /// <summary>
+        /// 緑
+        /// </summary>
+        Green,
+
+        /// <summary>
+        /// 黄
+        /// </summary>
+        Yellow,
+
+        /// <summary>
+        /// 白
+        /// </summary>
+        White,
+
+        /// <summary>
+        /// 水
+        /// </summary>
+        SkyBlue,
+
+        /// <summary>
+        /// 赤
+        /// </summary>
+        Red,
+
+        /// <summary>
+        /// 桃
+        /// </summary>
+        Pink,
+
+        /// <summary>
+        /// グレー
+        /// </summary>
+        Gray,
     }
 }

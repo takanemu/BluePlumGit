@@ -25,18 +25,39 @@ namespace Common.Library.Entitys
     using Common.Library.Enums;
     using Gitlab;
     
+    /// <summary>
+    /// コンフィグ
+    /// </summary>
     public class ConfigEntity
     {
+        /// <summary>
+        /// サーバーURL
+        /// </summary>
         public string ServerUrl { get; set; }
         
+        /// <summary>
+        /// パスワード
+        /// </summary>
         public string Password { get; set; }
         
+        /// <summary>
+        /// リポジトリリスト
+        /// </summary>
         public List<RepositoryEntity> Repository { get; set; }
         
+        /// <summary>
+        /// アクセント種別
+        /// </summary>
         public AccentEnum Accent { get; set; }
         
+        /// <summary>
+        /// APIバージョン
+        /// </summary>
         public ApiVersionEnum ApiVersion { get; set; }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public ConfigEntity()
         {
             this.ServerUrl = string.Empty;

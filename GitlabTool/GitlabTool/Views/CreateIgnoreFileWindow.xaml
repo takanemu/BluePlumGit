@@ -63,7 +63,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="23" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <Border x:Name="CaptionBar" Grid.Row="0">

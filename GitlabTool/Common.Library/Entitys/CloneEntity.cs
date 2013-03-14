@@ -27,16 +27,34 @@ namespace Common.Library.Entitys
     /// </summary>
     public class CloneEntity
     {
+        /// <summary>
+        /// プロジェクト名
+        /// </summary>
         public string Name { get; set; }
         
+        /// <summary>
+        /// アドレス
+        /// </summary>
         public string Url { get; set; }
         
+        /// <summary>
+        /// パス
+        /// </summary>
         public string Path { get; set; }
         
+        /// <summary>
+        /// 認証フラグ
+        /// </summary>
         public bool IsCredential { get; set; }
         
+        /// <summary>
+        /// ユーザー名
+        /// </summary>
         public string UserName { get; set; }
         
+        /// <summary>
+        /// パスワード
+        /// </summary>
         public string PassWord { get; set; }
     }
 }

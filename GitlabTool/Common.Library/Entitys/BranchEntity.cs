@@ -22,10 +22,19 @@ namespace Commno.Library.Entitys
     /// </summary>
     public class BranchEntity
     {
+        /// <summary>
+        /// ID
+        /// </summary>
         public long ID { get; set; }
 
+        /// <summary>
+        /// ブランチ名
+        /// </summary>
         public string Name { get; set; }
         
+        /// <summary>
+        /// パス
+        /// </summary>
         public string Path { get; set; }
     }
 }

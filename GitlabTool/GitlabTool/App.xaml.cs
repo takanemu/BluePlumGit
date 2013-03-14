@@ -57,13 +57,34 @@ namespace GitlabTool
                 switch (accent)
                 {
                     case AccentEnum.Purple:
-                        brush = new SolidColorBrush(Color.FromRgb(104, 33, 122));
+                        brush = new SolidColorBrush(Colors.Purple);
                         break;
                     case AccentEnum.Blue:
-                        brush = new SolidColorBrush(Color.FromRgb(0, 122, 204));
+                        brush = new SolidColorBrush(Colors.Blue);
                         break;
                     case AccentEnum.Orange:
-                        brush = new SolidColorBrush(Color.FromRgb(202, 81, 0));
+                        brush = new SolidColorBrush(Colors.Orange);
+                        break;
+                    case AccentEnum.Yellow:
+                        brush = new SolidColorBrush(Colors.Yellow);
+                        break;
+                    case AccentEnum.Green:
+                        brush = new SolidColorBrush(Colors.Lime);
+                        break;
+                    case AccentEnum.White:
+                        brush = new SolidColorBrush(Colors.White);
+                        break;
+                    case AccentEnum.SkyBlue:
+                        brush = new SolidColorBrush(Colors.DeepSkyBlue);
+                        break;
+                    case AccentEnum.Red:
+                        brush = new SolidColorBrush(Colors.Crimson);
+                        break;
+                    case AccentEnum.Pink:
+                        brush = new SolidColorBrush(Colors.DeepPink);
+                        break;
+                    case AccentEnum.Gray:
+                        brush = new SolidColorBrush(Colors.Silver);
                         break;
                 }
                 this.Resources["AccentBrushKey"] = brush;

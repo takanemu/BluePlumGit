@@ -27,15 +27,49 @@ namespace Common.Library.Enums
     /// </summary>
     public enum WindowTypeEnum
     {
+        /// <summary>
+        /// リポジトリ登録
+        /// </summary>
         ENTORY_REPOSITORY,
+
+        /// <summary>
+        /// リポジトリ削除
+        /// </summary>
         REMOVE_REPOSITORY,
+
+        /// <summary>
+        /// リポジトリ複製
+        /// </summary>
         CLONE_REPOSITORY,
+
+        /// <summary>
+        /// ブランチ作成
+        /// </summary>
         CREATE_BRANCH,
+
+        /// <summary>
+        /// ブランチ削除
+        /// </summary>
         REMOVE_BRANCH,
+
+        /// <summary>
+        /// コミット
+        /// </summary>
         COMMIT,
+
+        /// <summary>
+        /// 設定
+        /// </summary>
         CONFIG,
-        KEYDISP,
+
+        /// <summary>
+        /// 排他ファイル作成
+        /// </summary>
         CREATE_GITIGNORE,
+
+        /// <summary>
+        /// 空フォルダ管理
+        /// </summary>
         MANAGED_EMPTY_FOLDER,
     }
 }
