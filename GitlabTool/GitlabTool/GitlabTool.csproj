@@ -115,9 +115,12 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\DirectWindowAction.cs" />
     <Compile Include="Behaviors\IconSetBehavior.cs" />
+    <Compile Include="Behaviors\IListItemConverter.cs" />
     <Compile Include="Behaviors\Messaging\Windows\WindowOpenInteractionMessageAction.cs" />
     <Compile Include="Behaviors\MetroChromeBehavior.cs" />
+    <Compile Include="Behaviors\MultiSelectorBehaviours.cs" />
     <Compile Include="Behaviors\ResizeGripBehavior.cs" />
+    <Compile Include="Behaviors\TwoListSynchronizer.cs" />
     <Compile Include="Behaviors\WindowAction.cs" />
     <Compile Include="Behaviors\WindowStyleFlagBehavior.cs" />
     <Compile Include="MetroChrome\CaptionButton.cs" />

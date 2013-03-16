@@ -76,6 +76,7 @@ namespace GitlabTool.ViewModels
                 this.UpdateFolder(this.Propertys.FolderPath);
             }
             this.Propertys.Branchs.Filter = new System.Predicate<object>(FilterCallback);
+            this.Propertys.SelectedBranchs = new ObservableCollection<BranchEntity>();
         }
         #endregion
 
@@ -110,17 +111,13 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
-            ListCollectionView view = (ListCollectionView)this.Propertys.Branchs;
-
-            string[] names = new string[view.Count];
-
+            string[] names = new string[this.Propertys.SelectedBranchs.Count];
             int i = 0;
 
-            foreach(var item in view)
+            foreach (var item in this.Propertys.SelectedBranchs)
             {
                 names[i++] = ((BranchEntity)item).Name;
             }
-
             try
             {
                 this.git.BranchDelete().SetForce(this.Propertys.IsForceDelete).SetBranchNames(names).Call();
@@ -236,6 +233,11 @@ namespace GitlabTool.ViewModels
         /// ブランチリスト
         /// </summary>
         public virtual ICollectionView Branchs { get; set; }
+
+        /// <summary>
+        /// 選択ブランチリスト
+        /// </summary>
+        public virtual ObservableCollection<BranchEntity> SelectedBranchs { get; set; }
 
         /// <summary>
         /// 強制削除
