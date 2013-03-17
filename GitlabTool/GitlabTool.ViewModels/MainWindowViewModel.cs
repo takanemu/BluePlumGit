@@ -405,11 +405,15 @@ namespace GitlabTool.ViewModels
         [Command]
         private void RepositoryRemove()
         {
-            // TODO:削除確認
+            // 削除確認
+            MessageBoxResult result = MessageBox.Show("削除実行してもよろしいですか？", "リポジトリ削除", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
 
-            this.config.Repository.Remove((RepositoryEntity)this.Propertys.Repositories.CurrentItem);
-            this.repositories.Remove((RepositoryEntity)this.Propertys.Repositories.CurrentItem);
-            this.model.SaveConfig(this.config);
+            if (result == MessageBoxResult.OK)
+            {
+                this.config.Repository.Remove((RepositoryEntity)this.Propertys.Repositories.CurrentItem);
+                this.repositories.Remove((RepositoryEntity)this.Propertys.Repositories.CurrentItem);
+                this.model.SaveConfig(this.config);
+            }
         }
         #endregion
 
