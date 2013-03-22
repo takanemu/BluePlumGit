@@ -1,4 +1,5 @@
-﻿#region Apache License
+﻿#region License
+// <copyright>
 // Licensed to the Apache Software Foundation (ASF) under one or more 
 // contributor license agreements. See the NOTICE file distributed with
 // this work for additional information regarding copyright ownership. 
@@ -13,6 +14,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// </copyright>
 #endregion
 
 namespace GitlabTool
@@ -21,10 +23,14 @@ namespace GitlabTool
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
+    using System.Windows.Threading;
     using Common.Library.Enums;
     using Gordias.Library.Headquarters;
     using log4net;
@@ -40,8 +46,8 @@ namespace GitlabTool
         /// <summary>
         /// ログ
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
-        private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// コンストラクタ
@@ -97,13 +103,13 @@ namespace GitlabTool
         /// </summary>
         /// <param name="sender">イベント元</param>
         /// <param name="e">パラメーター</param>
-        private void Application_Startup(object sender, System.Windows.StartupEventArgs e)
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
             // ロギングクラスの初期化
             this.Log4netSetting();
 
             // 未補足の例外を補足する
-            System.AppDomain.CurrentDomain.UnhandledException += new System.UnhandledExceptionEventHandler(this.CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(this.CurrentDomain_UnhandledException);
         }
 
         /// <summary>
@@ -111,11 +117,11 @@ namespace GitlabTool
         /// </summary>
         /// <param name="sender">イベント元</param>
         /// <param name="e">パラメーター</param>
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             logger.Fatal("DispatcherUnhandledExceptionを補足しました。アプリケーションを強制終了します。");
 
-            System.Exception ex = (System.Exception)e.Exception;
+            Exception ex = (Exception)e.Exception;
 
             logger.Fatal("例外種別:" + ex.GetType().ToString());
             logger.Fatal("メッセージ:" + ex.Message);
@@ -125,7 +131,7 @@ namespace GitlabTool
 
             // 例外を補足済みにし、アプリケーションを終了させる
             e.Handled = true;
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         /// <summary>
@@ -133,11 +139,11 @@ namespace GitlabTool
         /// </summary>
         /// <param name="sender">イベント元</param>
         /// <param name="e">パラメーター</param>
-        private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             logger.Fatal("UnhandledExceptionを補足しました。アプリケーションを強制終了します。");
 
-            System.Exception ex = (System.Exception)e.ExceptionObject;
+            Exception ex = (Exception)e.ExceptionObject;
             
             logger.Fatal("例外種別:" + ex.GetType().ToString());
             logger.Fatal("メッセージ:" + ex.Message);
@@ -146,7 +152,7 @@ namespace GitlabTool
             MessageBox.Show("アプリケーションを強制終了します。");
 
             // アプリケーションを終了させる
-            System.Environment.Exit(1);
+            Environment.Exit(1);
         }
 
         /// <summary>
@@ -154,13 +160,15 @@ namespace GitlabTool
         /// </summary>
         private void Log4netSetting()
         {
-            XmlConfigurator.Configure(new System.IO.FileInfo("log4net.setting.xml"));
+            string baseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            string roaming = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+            XmlConfigurator.Configure(new FileInfo(baseDir + @"\log4net.setting.xml"));
+
+            string roaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string appname = "GitlabTool";
 
             // ログ出力先の変更
-            System.Reflection.Assembly entryAsm = System.Reflection.Assembly.GetEntryAssembly();
+            Assembly entryAsm = Assembly.GetEntryAssembly();
 
             if (entryAsm != null)
             {
@@ -177,9 +185,9 @@ namespace GitlabTool
                                 string file = fileAppender.File;
                                 if (!string.IsNullOrEmpty(file))
                                 {
-                                    string dir = roaming + @"\2FC\" + appname + @"\logs";
+                                    string dir = roaming + @"\2ndfactory\" + appname + @"\logs";
 
-                                    System.IO.Directory.CreateDirectory(dir);
+                                    Directory.CreateDirectory(dir);
 
                                     // ファイル名の変更
                                     fileAppender.File = dir + @"\gitlabtool.log";

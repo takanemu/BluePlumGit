@@ -1,5 +1,7 @@
 #region License
+// <copyright>
 // http://blog.functionalfun.net/2009/02/how-to-databind-to-selecteditems.html
+// </copyright>
 #endregion
 
 namespace GitlabTool.Behaviors
