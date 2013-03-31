@@ -20,21 +20,16 @@
 namespace GitlabTool.ViewModels
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
-    using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Reflection;
     using System.Windows;
     using Commno.Library;
     using Common.Library.Entitys;
     using Common.Library.Enums;
     using Common.Library.Messaging.Windows;
     using Gitlab;
-    using GitlabTool;
     using GitlabTool.Models;
     using Gordias.Library.Collections;
     using Gordias.Library.Headquarters;
@@ -51,8 +46,8 @@ namespace GitlabTool.ViewModels
         /// <summary>
         /// ログ
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
-        private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// モデル
@@ -221,13 +216,15 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
-        #region 設定変更コマンド
+        #region 設定変更
         /// <summary>
-        /// 設定変更コマンド
+        /// 設定変更
         /// </summary>
         [Command]
         private void Config()
         {
+            logger.Info("操作：設定変更");
+
             ConfigDialogEntity param = new ConfigDialogEntity
             {
                 ServerUrl = this.config.ServerUrl,
@@ -264,13 +261,15 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
-        #region 複製コマンド
+        #region 複製
         /// <summary>
-        /// 複製コマンド
+        /// 複製
         /// </summary>
         [Command]
         private void RepositoryClone()
         {
+            logger.Info("操作：複製");
+
             if (this.globalConfig == null)
             {
                 // .gitglobalが存在しない
@@ -349,6 +348,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void EmptyFolderKeep()
         {
+            logger.Info("操作：空フォルダの登録");
+
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
@@ -365,6 +366,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void GitIgnore()
         {
+            logger.Info("操作：排他ファイルの作成");
+
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
@@ -381,6 +384,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void BranchRemove()
         {
+            logger.Info("操作：ブランチの削除");
+
             WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
             {
                 MessageKey = "OpenWindow",
@@ -397,6 +402,46 @@ namespace GitlabTool.ViewModels
         [Command]
         private void Commit()
         {
+            logger.Info("操作：コミット");
+        }
+        #endregion
+
+        #region リポジトリ登録
+        /// <summary>
+        /// リポジトリ登録
+        /// </summary>
+        [Command]
+        private void RepositoryEntory()
+        {
+            logger.Info("操作：リポジトリ登録");
+
+            WindowOpenMessage message = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.ENTORY_REPOSITORY,
+                Parameter = this.Propertys.Repositories.CurrentItem,
+            });
+
+            if (message.Response != null)
+            {
+                if ((WindowButtonEnum)message.Response.Button == WindowButtonEnum.OK)
+                {
+                    RepositoryEntity entity = (RepositoryEntity)message.Response.Result;
+                    RepositoryEntity repository = new RepositoryEntity
+                    {
+                        ID = Guid.NewGuid().ToString("N"),
+                        Name = entity.Name,
+                        Path = entity.Path,
+                        Location = entity.Location,
+                    };
+
+                    this.repositories.Add(repository);
+                    this.config.Repository.Add(repository);
+
+                    // 設定保存
+                    this.model.SaveConfig(this.config);
+                }
+            }
         }
         #endregion
 
@@ -407,6 +452,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void RepositoryRemove()
         {
+            logger.Info("操作：リポジトリ削除");
+
             // 削除確認
             MessageBoxResult result = MessageBox.Show("削除実行してもよろしいですか？", "リポジトリ削除", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
 
@@ -419,6 +466,17 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region 最適化
+        /// <summary>
+        /// 最適化
+        /// </summary>
+        [Command]
+        private void Optimization()
+        {
+            logger.Info("操作：最適化");
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -426,6 +484,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void WindowCloseCancel()
         {
+            logger.Info("操作：ウインドウクローズ");
+
             Environment.Exit(0);
         }
         #endregion
@@ -558,9 +618,19 @@ namespace GitlabTool.ViewModels
         public TacticsCommand Commit { get; private set; }
 
         /// <summary>
+        /// リポジトリ登録
+        /// </summary>
+        public TacticsCommand RepositoryEntory { get; private set; }
+
+        /// <summary>
         /// リポジトリ削除
         /// </summary>
         public TacticsCommand RepositoryRemove { get; private set; }
+
+        /// <summary>
+        /// 最適化
+        /// </summary>
+        public TacticsCommand Optimization { get; private set; }
     }
     #endregion
 }

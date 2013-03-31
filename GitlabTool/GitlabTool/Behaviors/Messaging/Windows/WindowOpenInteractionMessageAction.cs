@@ -85,9 +85,6 @@ namespace GitlabTool.Behaviors.Messaging.Windows
             
             switch (type)
             {
-                //case WindowTypeEnum.ENTORY_REPOSITORY:
-                //    result = new InitializeRepositoryWindow();
-                //    break;
                 //case WindowTypeEnum.REMOVE_REPOSITORY:
                 //    result = new RemoveRepositoryWindow();
                 //    break;
@@ -100,6 +97,9 @@ namespace GitlabTool.Behaviors.Messaging.Windows
                 //case WindowTypeEnum.COMMIT:
                 //    result = new CommitWindow();
                 //    break;
+                case WindowTypeEnum.ENTORY_REPOSITORY:
+                    result = new EntoryRepositoryWindow();
+                    break;
                 case WindowTypeEnum.CLONE_REPOSITORY:
                     result = new CloneRepositoryWindow();
                     break;

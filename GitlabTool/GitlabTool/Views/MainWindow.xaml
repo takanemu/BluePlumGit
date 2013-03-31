@@ -191,6 +191,11 @@
                         <Rectangle Height="2" Fill="{DynamicResource AccentBrushKey}" Margin="5,0,5,5"/>
                         <Button Height="30"
                             Margin="0,0,0,5"
+                            Command="{Binding Commands.RepositoryEntory}"
+                            Content="リポジトリ登録"
+                            ToolTip="リポジトリの登録" />
+                        <Button Height="30"
+                            Margin="0,0,0,5"
                             Command="{Binding Commands.RepositoryRemove}"
                             Content="リポジトリ削除"
                             ToolTip="リポジトリの削除" />
@@ -220,6 +225,7 @@
                             ToolTip="コミットします" />
                         <Button Height="30"
                             Margin="0,0,0,5"
+                            Command="{Binding Commands.Optimization}"
                             Content="リポジトリ最適化"
                             ToolTip="リポジトリのＤＢを最適化します" />
                     </StackPanel>
