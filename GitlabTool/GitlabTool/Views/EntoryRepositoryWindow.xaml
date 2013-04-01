@@ -226,7 +226,7 @@
                             VerticalAlignment="Center"
                             Command="{Binding Commands.OkButton,
                                               Mode=OneWay}"
-                            Content="実行" />
+                            Content="登録" />
                 </StackPanel>
             </Grid>
         </Grid>
