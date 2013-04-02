@@ -21,7 +21,9 @@ namespace GitlabTool.ViewModels
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Windows;
     using Common.Library.Entitys;
@@ -32,6 +34,7 @@ namespace GitlabTool.ViewModels
     using Gordias.Library.Interface;
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
+    using log4net;
 
     #region メインクラス
     /// <summary>
@@ -40,6 +43,12 @@ namespace GitlabTool.ViewModels
     public class CloneRepositoryWindowViewModel : TacticsViewModel<CloneRepositoryWindowViewModelProperty, CloneRepositoryWindowViewModelCommand>, IWindowParameter, IWindowResult
     {
         #region Menber Variables
+        /// <summary>
+        /// ログ
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// 通信ライブラリ
         /// </summary>
@@ -221,6 +230,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            logger.Info("操作：OKボタン");
+
             CloneEntity entity = new CloneEntity
             {
                 Name = this.Propertys.RepositoyName,
@@ -247,6 +258,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void CancelButton()
         {
+            logger.Info("操作：Cancelボタン");
+
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
             this.Responce = null;
         }

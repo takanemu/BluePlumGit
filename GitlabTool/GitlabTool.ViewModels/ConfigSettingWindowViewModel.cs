@@ -21,7 +21,9 @@ namespace GitlabTool.ViewModels
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using Commno.Library.Entitys;
     using Common.Library.Entitys;
@@ -30,6 +32,7 @@ namespace GitlabTool.ViewModels
     using Gordias.Library.Headquarters;
     using Gordias.Library.Interface;
     using Livet.Messaging.Windows;
+    using log4net;
 
     #region メインクラス
     /// <summary>
@@ -37,6 +40,12 @@ namespace GitlabTool.ViewModels
     /// </summary>
     public class ConfigSettingWindowViewModel : TacticsViewModel<ConfigSettingViewModelProperty, ConfigSettingViewModelCommand>, IWindowParameter, IWindowResult
     {
+        /// <summary>
+        /// ログ
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Initializeメソッド
         /// <summary>
         /// Initializeメソッド
@@ -76,6 +85,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            logger.Info("操作：OKボタン");
+
             this.Responce = new WindowResultEntity
             {
                 Button = WindowButtonEnum.OK,
@@ -92,6 +103,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void CancelButton()
         {
+            logger.Info("操作：Cancelボタン");
+
             this.Responce = null;
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }

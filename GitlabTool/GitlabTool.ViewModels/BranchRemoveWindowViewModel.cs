@@ -39,6 +39,7 @@ namespace GitlabTool.ViewModels
     using NGit.Api;
     using NGit.Storage.File;
     using Sharpen;
+    using System;
 
     #region メインクラス
     /// <summary>
@@ -113,6 +114,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            logger.Info("操作：OKボタン");
+
             string[] names = new string[this.Propertys.SelectedBranchs.Count];
             int i = 0;
 
@@ -125,7 +128,11 @@ namespace GitlabTool.ViewModels
                 this.git.BranchDelete().SetForce(this.Propertys.IsForceDelete).SetBranchNames(names).Call();
                 this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
             }
-            catch (NGit.Api.Errors.NotMergedException exception)
+            catch (NGit.Api.Errors.CannotDeleteCurrentBranchException)
+            {
+                MessageBox.Show("注意：カレントブランチは削除することはできません。");
+            }
+            catch (NGit.Api.Errors.NotMergedException)
             {
                 MessageBox.Show("注意：マージされていないブランチを削除することは制限されています。\n強制的に削除したい場合には、強制削除のチェックボックをオンにしてください。");
             }
@@ -139,6 +146,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void CancelButton()
         {
+            logger.Info("操作：Cancelボタン");
+
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion

@@ -69,6 +69,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void OkButton()
         {
+            logger.Info("操作：OKボタン");
+
             RepositoryEntity entity = new RepositoryEntity
             {
                 Name = this.Propertys.RepositoryName,
@@ -92,6 +94,8 @@ namespace GitlabTool.ViewModels
         [Command]
         private void CancelButton()
         {
+            logger.Info("操作：Cancelボタン");
+
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
         }
         #endregion
