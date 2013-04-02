@@ -40,6 +40,7 @@ namespace GitlabTool.ViewModels
     using NGit.Storage.File;
     using Sharpen;
     using System;
+    using NGit.Transport;
 
     #region メインクラス
     /// <summary>
@@ -149,6 +150,28 @@ namespace GitlabTool.ViewModels
             logger.Info("操作：Cancelボタン");
 
             this.Messenger.Raise(new WindowActionMessage("WindowControl", WindowAction.Close));
+        }
+        #endregion
+
+        #region 追跡ブランチ削除ボタン処理
+        /// <summary>
+        /// 追跡ブランチ削除ボタン処理
+        /// </summary>
+        [Command]
+        private void TrackingBranchButton()
+        {
+            logger.Info("操作：追跡ブランチ削除ボタン");
+
+            RefSpec spec = new RefSpec("refs/heads/master:refs/heads/FETCH_HEAD");
+
+            try
+            {
+                this.git.Fetch().SetRefSpecs(spec).SetRemoveDeletedRefs(true).Call();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Fetch error.");
+            }
         }
         #endregion
 
@@ -282,6 +305,11 @@ namespace GitlabTool.ViewModels
         /// CancelButtonコマンド
         /// </summary>
         public TacticsCommand CancelButton { get; private set; }
+
+        /// <summary>
+        /// TrackingBranchButtonコマンド
+        /// </summary>
+        public TacticsCommand TrackingBranchButton { get; private set; }
     }
     #endregion
 
