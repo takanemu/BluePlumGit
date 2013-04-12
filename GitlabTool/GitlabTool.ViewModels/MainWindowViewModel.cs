@@ -36,6 +36,7 @@ namespace GitlabTool.ViewModels
     using log4net;
     using NGit;
     using Sharpen;
+    using NGit.Storage.File;
 
     #region メインクラス
     /// <summary>
@@ -474,6 +475,27 @@ namespace GitlabTool.ViewModels
         private void Optimization()
         {
             logger.Info("操作：最適化");
+
+            if (this.Propertys.Repositories.CurrentItem != null)
+            {
+                RepositoryEntity entity = (RepositoryEntity)this.Propertys.Repositories.CurrentItem;
+
+                FilePath path = new FilePath(entity.Location, @".git");
+                FileRepository db = new FileRepository(path);
+
+                NGit.Storage.File.GC gc = new NGit.Storage.File.GC(db);
+                NGit.Storage.File.GC.RepoStatistics statistics = gc.GetStatistics();
+
+                logger.Debug("numberOfLooseObjects = " + statistics.numberOfLooseObjects);
+                logger.Debug("numberOfLooseRefs = " + statistics.numberOfLooseRefs);
+                logger.Debug("numberOfPackedObjects = " + statistics.numberOfPackedObjects);
+                logger.Debug("numberOfPackedRefs = " + statistics.numberOfPackedRefs);
+                logger.Debug("numberOfPackFiles = " + statistics.numberOfPackFiles);
+                logger.Debug("sizeOfLooseObjects = " + statistics.sizeOfLooseObjects);
+                logger.Debug("sizeOfPackedObjects = " + statistics.sizeOfPackedObjects);
+
+                gc.Repack();
+            }
         }
         #endregion
 
