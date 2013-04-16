@@ -168,6 +168,10 @@ namespace GitlabTool.ViewModels
             {
                 this.git.Fetch().SetRefSpecs(spec).SetRemoveDeletedRefs(true).Call();
             }
+            catch (NGit.Errors.TransportException)
+            {
+                MessageBox.Show("Fetch TransportException.");
+            }
             catch (Exception)
             {
                 MessageBox.Show("Fetch error.");

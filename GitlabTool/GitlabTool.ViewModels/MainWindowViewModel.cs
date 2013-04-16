@@ -37,6 +37,7 @@ namespace GitlabTool.ViewModels
     using NGit;
     using Sharpen;
     using NGit.Storage.File;
+    using NGit.Api.Errors;
 
     #region メインクラス
     /// <summary>
@@ -486,15 +487,73 @@ namespace GitlabTool.ViewModels
                 NGit.Storage.File.GC gc = new NGit.Storage.File.GC(db);
                 NGit.Storage.File.GC.RepoStatistics statistics = gc.GetStatistics();
 
+                // ばらばらなオブジェクトの数
                 logger.Debug("numberOfLooseObjects = " + statistics.numberOfLooseObjects);
+                // ？
                 logger.Debug("numberOfLooseRefs = " + statistics.numberOfLooseRefs);
+                // パックされたオブジェクトの数
                 logger.Debug("numberOfPackedObjects = " + statistics.numberOfPackedObjects);
+                // ゴミファイル
                 logger.Debug("numberOfPackedRefs = " + statistics.numberOfPackedRefs);
+                // パックの数
                 logger.Debug("numberOfPackFiles = " + statistics.numberOfPackFiles);
+                // ばらばらなオブジェクトの使用するディスク容量
                 logger.Debug("sizeOfLooseObjects = " + statistics.sizeOfLooseObjects);
+                // パックされたオブジェクトの使用するディスク容量
                 logger.Debug("sizeOfPackedObjects = " + statistics.sizeOfPackedObjects);
 
-                gc.Repack();
+                string message;
+
+                message = "リポジトリの最適化を行いますか？";
+
+                message += "\n\nばらばらなオブジェクトの数 = " + statistics.numberOfLooseObjects;
+                message += "\nパックされたオブジェクトの数 = " + statistics.numberOfPackedObjects;
+                message += "\nゴミファイル = " + statistics.numberOfPackedRefs;
+                message += "\nパックの数 = " + statistics.numberOfPackFiles;
+                message += "\nばらばらなオブジェクトの使用するディスク容量 = " + statistics.sizeOfLooseObjects;
+                message += "\nパックされたオブジェクトの使用するディスク容量 = " + statistics.sizeOfPackedObjects;
+
+                MessageBoxResult result = MessageBox.Show(message, string.Empty, MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.No);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
+
+                    monitor.StartAction = () =>
+                    {
+                        this.OpenBusyIndicator("リポジトリ圧縮中");
+                    };
+                    monitor.UpdateAction = (string taskName, int cmp, int totalWork, int pcnt) =>
+                    {
+                        this.UpdateBusyIndicator(taskName, cmp, totalWork, pcnt);
+                    };
+                    monitor.CompleteAction = () =>
+                    {
+                        this.CloseBusyIndicator();
+                    };
+                    gc.SetProgressMonitor(monitor);
+
+                    BackgroundWorker bw = new BackgroundWorker();
+
+                    bw.DoWork += (s, evt) =>
+                    {
+                        monitor.StartAction();
+
+                        try
+                        {
+                            gc.Repack();
+                        }
+                        catch (JGitInternalException)
+                        {
+                            // TODO:
+                        }
+                    };
+                    bw.RunWorkerCompleted += (s, evt) =>
+                    {
+                        monitor.CompleteAction();
+                    };
+                    bw.RunWorkerAsync();
+                }
             }
         }
         #endregion
