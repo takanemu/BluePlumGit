@@ -40,14 +40,38 @@ namespace GitlabTool.Models
     using NGit.Transport;
     using NGit.Util;
     using Sharpen;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// SSH接続用クラス(未使用)
     /// </summary>
-    internal class DefaultSshSessionFactory : JschConfigSessionFactory
+    internal class CustomConfigSessionFactory : JschConfigSessionFactory
     {
+        /// <summary>
+        /// 秘密鍵
+        /// </summary>
+        public string PrivateKey { get; set; }
+
+        /// <summary>
+        /// 公開鍵
+        /// </summary>
+        public string PublicKey { get; set; }
+
+        /// <summary>
+        /// 設定
+        /// </summary>
+        /// <param name="hc">ホスト</param>
+        /// <param name="session">セッション</param>
         protected override void Configure(NGit.Transport.OpenSshConfig.Host hc, NSch.Session session)
         {
+            var config = new Properties();
+
+            config["StrictHostKeyChecking"] = "no";
+            config["PreferredAuthentications"] = "publickey";
+            session.SetConfig(config);
+
+            var jsch = this.GetJSch(hc, FS.DETECTED);
+            jsch.AddIdentity("KeyPair", Encoding.UTF8.GetBytes(PrivateKey), Encoding.UTF8.GetBytes(PublicKey), null);
         }
     }
 
@@ -267,45 +291,46 @@ namespace GitlabTool.Models
         /// リモートリポジトリをローカルへ複製する
         /// </summary>
         /// <param name="entity">エンティティ</param>
+        /// <param name="privateKeyData">秘密鍵</param>
+        /// <param name="publicKeyData">公開鍵</param>
         /// <param name="monitor">モニター</param>
-        public void CloneRepository(CloneEntity entity, BusyIndicatorProgressMonitor monitor)
+        public void CloneRepository(CloneEntity entity, string privateKeyData, string publicKeyData, BusyIndicatorProgressMonitor monitor)
         {
+            var customConfigSessionFactory = new CustomConfigSessionFactory();
+
+            customConfigSessionFactory.PrivateKey = privateKeyData;
+            customConfigSessionFactory.PublicKey = publicKeyData;
+
+            NGit.Transport.JschConfigSessionFactory.SetInstance(customConfigSessionFactory);
+
+            UsernamePasswordCredentialsProvider creds = new UsernamePasswordCredentialsProvider(entity.UserName, entity.PassWord);
+
             FilePath directory = entity.Path;
-
-            CloneCommand clone = new CloneCommand();
-
-            //clone.SetCloneAllBranches(true);
-            clone.SetDirectory(directory);
-            clone.SetURI(entity.Url);
-
-            clone.SetProgressMonitor(monitor);
-
-            if (entity.IsCredential)
-            {
-                UsernamePasswordCredentialsProvider user = new UsernamePasswordCredentialsProvider(entity.UserName, entity.PassWord);
-
-                clone.SetCredentialsProvider(user);
-            }
             BackgroundWorker bw = new BackgroundWorker();
 
             bw.DoWork += (s, evt) =>
-                {
-                    monitor.StartAction();
+            {
+                monitor.StartAction();
 
-                    try
-                    {
-                        clone.Call();
-                    }
-                    catch (JGitInternalException)
-                    {
-                        // TODO:
-                    }
-                };
-            bw.RunWorkerCompleted += (s, evt) =>
+                try
                 {
-                    monitor.CompleteAction();
-                    this.SettingHttpBufferSize(entity.Path);
-                };
+                    var git = Git.CloneRepository()
+                                  .SetDirectory(directory)
+                                  .SetURI(entity.Url)
+                                  .SetBranchesToClone(new Collection<string>() { "master" })
+                                  .SetCredentialsProvider(creds)
+                                  .Call();
+                }
+                catch (JGitInternalException)
+                {
+                    // TODO:
+                }
+            };
+            bw.RunWorkerCompleted += (s, evt) =>
+            {
+                monitor.CompleteAction();
+                //this.SettingHttpBufferSize(entity.Path);
+            };
             bw.RunWorkerAsync();
         }
 
@@ -328,14 +353,32 @@ namespace GitlabTool.Models
             config.Save();
         }
 
-        public void Fetch(Git git, BusyIndicatorProgressMonitor monitor)
+        /// <summary>
+        /// フェッチ
+        /// </summary>
+        /// <param name="git"></param>
+        /// <param name="privateKeyData"></param>
+        /// <param name="publicKeyData"></param>
+        /// <param name="monitor"></param>
+        public void Fetch(Git git, CloneEntity entity, string privateKeyData, string publicKeyData, BusyIndicatorProgressMonitor monitor)
         {
+            var customConfigSessionFactory = new CustomConfigSessionFactory();
+
+            customConfigSessionFactory.PrivateKey = privateKeyData;
+            customConfigSessionFactory.PublicKey = publicKeyData;
+
+            NGit.Transport.JschConfigSessionFactory.SetInstance(customConfigSessionFactory);
+
+            UsernamePasswordCredentialsProvider creds = new UsernamePasswordCredentialsProvider(entity.UserName, entity.PassWord);
+
             FetchCommand command = git.Fetch();
 
             RefSpec spec = new RefSpec("refs/heads/master:refs/heads/FETCH_HEAD");
 
+            command.SetRemoveDeletedRefs(true);
             command.SetRefSpecs(spec);
             command.SetProgressMonitor(monitor);
+            command.SetCredentialsProvider(creds);
 
             BackgroundWorker bw = new BackgroundWorker();
 

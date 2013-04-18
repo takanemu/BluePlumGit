@@ -71,6 +71,10 @@ namespace GitlabTool.ViewModels
         /// </summary>
         private CleanupObservableCollection<RepositoryEntity> repositories;
 
+        private string privateKeyText;
+
+        private string publicKeyText;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -191,8 +195,34 @@ namespace GitlabTool.ViewModels
             {
                 this.repositories.Add(repo);
             }
+
+            string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string privateKey = Path.Combine(userFolder, ".ssh", "id_rsa");
+            string publicKey = Path.Combine(userFolder, ".ssh", "id_rsa.pub");
+
+            this.privateKeyText = this.ReadTextFile(privateKey);
+            this.publicKeyText = this.ReadTextFile(publicKey);
         }
         #endregion
+
+        /// <summary>
+        /// テキストファイルの読み込み
+        /// </summary>
+        /// <param name="filename">ファイル名</param>
+        /// <returns>テキスト</returns>
+        private string ReadTextFile(string filename)
+        {
+            string text = string.Empty;
+
+            if (File.Exists(filename))
+            {
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    text = sr.ReadToEnd();
+                }
+            }
+            return text;
+        }
 
         #region Loadedメソッド
         /// <summary>
@@ -332,7 +362,7 @@ namespace GitlabTool.ViewModels
                             this.model.SaveConfig(this.config);
                         };
 
-                        this.model.CloneRepository(entity, monitor);
+                        this.model.CloneRepository(entity, this.privateKeyText, this.publicKeyText, monitor);
                     }
                     else
                     {
