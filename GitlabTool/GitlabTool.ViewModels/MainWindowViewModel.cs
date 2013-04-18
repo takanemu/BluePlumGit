@@ -38,6 +38,7 @@ namespace GitlabTool.ViewModels
     using Sharpen;
     using NGit.Storage.File;
     using NGit.Api.Errors;
+    using NGit.Api;
 
     #region メインクラス
     /// <summary>
@@ -597,6 +598,58 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region 同期
+        /// <summary>
+        /// 最適化
+        /// </summary>
+        [Command]
+        private void Fetch()
+        {
+            logger.Info("操作：同期");
+
+            // キーファイルのチェック
+            if (!this.CheckKeyFile())
+            {
+                return;
+            }
+            if (this.globalConfig == null)
+            {
+                // .gitglobalが存在しない
+                MessageBox.Show(".gitglobalファイルが存在しません。GitHub for Windowsをインストールしてください。");
+                return;
+            }
+
+            BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
+
+            monitor.StartAction = () =>
+            {
+                this.OpenBusyIndicator("リポジトリの同期中です。");
+            };
+            monitor.UpdateAction = (string taskName, int cmp, int totalWork, int pcnt) =>
+            {
+                this.UpdateBusyIndicator(taskName, cmp, totalWork, pcnt);
+            };
+            monitor.CompleteAction = () =>
+            {
+                this.CloseBusyIndicator();
+
+            };
+
+            RepositoryEntity repository = (RepositoryEntity)this.Propertys.Repositories.CurrentItem;
+
+            FilePath path = new FilePath(repository.Location, @".git");
+            FileRepository db = new FileRepository(path);
+            Git git = new Git(db);
+
+            CloneEntity entity = new CloneEntity
+            {
+                UserName = this.globalConfig.EMail,
+                PassWord = this.config.Password,
+            };
+            this.model.Fetch(git, entity, this.privateKeyText, this.publicKeyText, monitor);
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -771,6 +824,11 @@ namespace GitlabTool.ViewModels
         /// 最適化
         /// </summary>
         public TacticsCommand Optimization { get; private set; }
+
+        /// <summary>
+        /// 同期
+        /// </summary>
+        public TacticsCommand Fetch { get; private set; }
     }
     #endregion
 }

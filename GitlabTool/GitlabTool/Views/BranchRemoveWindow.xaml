@@ -196,14 +196,6 @@
                             Command="{Binding Commands.OkButton,
                                               Mode=OneWay}"
                             Content="削除" />
-                    <Button Width="100"
-                            Height="26"
-                            Margin="0,0,10,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Command="{Binding Commands.TrackingBranchButton,
-                                              Mode=OneWay}"
-                            Content="追跡ブランチ削除" />
                 </StackPanel>
             </Grid>
         </Grid>
