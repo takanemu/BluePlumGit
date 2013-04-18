@@ -51,6 +51,10 @@ namespace GitlabTool.ViewModels
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
         private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        private static readonly string PRIVATE_FILE = "github_rsa";
+
+        private static readonly string PUBLIC_FILE = "github_rsa.pub";
+
         /// <summary>
         /// モデル
         /// </summary>
@@ -197,8 +201,8 @@ namespace GitlabTool.ViewModels
             }
 
             string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string privateKey = Path.Combine(userFolder, ".ssh", "id_rsa");
-            string publicKey = Path.Combine(userFolder, ".ssh", "id_rsa.pub");
+            string privateKey = Path.Combine(userFolder, ".ssh", PRIVATE_FILE);
+            string publicKey = Path.Combine(userFolder, ".ssh", PUBLIC_FILE);
 
             this.privateKeyText = this.ReadTextFile(privateKey);
             this.publicKeyText = this.ReadTextFile(publicKey);
@@ -302,6 +306,11 @@ namespace GitlabTool.ViewModels
         {
             logger.Info("操作：複製");
 
+            // キーファイルのチェック
+            if (!this.CheckKeyFile())
+            {
+                return;
+            }
             if (this.globalConfig == null)
             {
                 // .gitglobalが存在しない
@@ -630,6 +639,26 @@ namespace GitlabTool.ViewModels
         private void CloseBusyIndicator()
         {
             this.Propertys.IsBusyDialog = false;
+        }
+
+        /// <summary>
+        /// キーファイルのチェック
+        /// </summary>
+        private bool CheckKeyFile()
+        {
+            string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string privateKey = Path.Combine(userFolder, ".ssh", PRIVATE_FILE);
+            string publicKey = Path.Combine(userFolder, ".ssh", PUBLIC_FILE);
+
+            if (!File.Exists(privateKey))
+            {
+                return false;
+            }
+            if (!File.Exists(publicKey))
+            {
+                return false;
+            }
+            return true;
         }
     }
     #endregion

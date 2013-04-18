@@ -35,6 +35,7 @@ namespace GitlabTool.ViewModels
     using Livet.Messaging.IO;
     using Livet.Messaging.Windows;
     using log4net;
+    using System.IO;
 
     #region メインクラス
     /// <summary>
@@ -133,17 +134,19 @@ namespace GitlabTool.ViewModels
 
             set
             {
-                if (this.selectedProject != value)
-                {
-                    this.Propertys.RepositoyName = value.Code;
-                }
+                this.Propertys.RepositoyName = value.Name;
+
+                Uri uri = new Uri(this.serverurl);
+
                 if (this.apiVersion == "v2")
                 {
-                    this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
+                    //this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
+                    this.Propertys.RemoteRepositoyUrl = string.Format(@"git@{0}:{1}.git", this.serverurl, value.Code);
                 }
                 else
                 {
-                    this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Path_with_namespace);
+                    //this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Path_with_namespace);
+                    this.Propertys.RemoteRepositoyUrl = string.Format(@"git@{0}:{1}.git", uri.Authority, value.Path_with_namespace);
                 }
             }
         }
@@ -235,7 +238,7 @@ namespace GitlabTool.ViewModels
             CloneEntity entity = new CloneEntity
             {
                 Name = this.Propertys.RepositoyName,
-                Path = this.Propertys.FolderPath,
+                Path = Path.Combine(this.Propertys.FolderPath, this.Propertys.RepositoyName),
                 Url = this.Propertys.RemoteRepositoyUrl,
                 IsCredential = this.Propertys.IsCredential,
                 UserName = this.Propertys.UserName,
