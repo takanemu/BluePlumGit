@@ -12,10 +12,10 @@
 		xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
         Title="リポジトリの複製"
         Width="450"
-        Height="350"
+        Height="280"
         MinWidth="450"
-        MinHeight="340"
-        MaxHeight="340"
+        MinHeight="280"
+        MaxHeight="280"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrushKey}"
@@ -77,17 +77,6 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <!--<Border Grid.Column="0"
-						Background="Transparent"
-						Margin="10,8"
-						WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource GitIcon1788CBrush}" />
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <bh:DirectWindowAction WindowAction="OpenSystemMenu" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Border>-->
                 <TextBlock Grid.Column="1"
 						   Text="リポジトリの複製"
 						   Foreground="{DynamicResource ThemeForegroundDarkBrushKey}"
@@ -105,18 +94,17 @@
             </Grid>
         </Border>
 
-        <StackPanel Grid.Row="1" Margin="5">
-            <Border BorderThickness="1">
-                <TextBlock Margin="5" Foreground="{StaticResource ThemeForegroundBrushKey}">
-                    リモートリポジトリをローカルストレージへ複製します。
-					<LineBreak />
-					Gitlabから複製するときには、認証情報が必要です。
-                    <LineBreak /> 
-                    複製には少し時間がかかります。
-                </TextBlock>
-            </Border>
-            
-            <Grid Height="30" VerticalAlignment="Top">
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Height="30" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
@@ -132,10 +120,9 @@
                 </TextBlock>
 
                 <ComboBox Grid.Column="1" ItemsSource="{Binding ProjectList}" IsEditable="True" Height="20" SelectedItem="{Binding SelectedProject}" DisplayMemberPath="Name" IsEnabled="{Binding IsEnabledProjectList}"/>
-                                    
             </Grid>
-            
-            <Grid Height="30" VerticalAlignment="Top">
+
+            <Grid Grid.Row="1" Height="30" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
@@ -157,7 +144,8 @@
                                         Mode=TwoWay}"
                          TextWrapping="Wrap" />
             </Grid>
-            <Grid Height="30" VerticalAlignment="Top">
+
+            <Grid Grid.Row="2" Height="30" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
@@ -179,24 +167,26 @@
                                         Mode=TwoWay}"
                          TextWrapping="Wrap" />
             </Grid>
-            <Grid>
-            	<Grid.RowDefinitions>
-            		<RowDefinition/>
-            		<RowDefinition/>
-            	</Grid.RowDefinitions>
-            	<Grid.ColumnDefinitions>
-            		<ColumnDefinition Width="100"/>
-            		<ColumnDefinition/>
-            	</Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <CheckBox x:Name="checkBox" Foreground="{StaticResource ThemeForegroundBrushKey}" Content="認証情報：" d:LayoutOverrides="Height" VerticalAlignment="Center" HorizontalAlignment="Right" IsChecked="{Binding Propertys.IsCredential, Mode=TwoWay}"/>
-            	<TextBox TextWrapping="Wrap" Text="{Binding Propertys.UserName, Mode=TwoWay}" d:LayoutOverrides="Height" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=checkBox}" Margin="0,5"/>
-            	<PasswordBox d:LayoutOverrides="Height" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" MaxLength="128" PasswordChar="*" IsEnabled="{Binding IsChecked, ElementName=checkBox}" Margin="0,5">
-            		<i:Interaction.Behaviors>
-            			<l:PasswordBoxBindingSupportBehavior Password="{Binding Propertys.PassWord, Mode=TwoWay}"/>
-            		</i:Interaction.Behaviors>
-            	</PasswordBox>
+                <TextBox TextWrapping="Wrap" Text="{Binding Propertys.UserName, Mode=TwoWay}" d:LayoutOverrides="Height" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=checkBox}" Margin="0,5"/>
+                <PasswordBox d:LayoutOverrides="Height" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" MaxLength="128" PasswordChar="*" IsEnabled="{Binding IsChecked, ElementName=checkBox}" Margin="0,5">
+                    <i:Interaction.Behaviors>
+                        <l:PasswordBoxBindingSupportBehavior Password="{Binding Propertys.PassWord, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
+                </PasswordBox>
             </Grid>
-            <Grid Height="30" VerticalAlignment="Top">
+
+            <Grid Grid.Row="4" Height="30" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
@@ -236,7 +226,8 @@
                     </i:Interaction.Triggers>
                 </Button>
             </Grid>
-            <Grid Height="30" Margin="0,10,0,0">
+
+            <Grid Grid.Row="5" Height="30" Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
@@ -262,7 +253,7 @@
             			Content="実行" />
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="2" Background="{DynamicResource AccentBrushKey}">
             <Grid.ColumnDefinitions>
