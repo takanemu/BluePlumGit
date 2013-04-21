@@ -310,6 +310,7 @@ namespace GitlabTool.ViewModels
             // キーファイルのチェック
             if (!this.CheckKeyFile())
             {
+                MessageBox.Show("鍵ファイルが見つかりません。GitHub for Windowsをインストールしてください。");
                 return;
             }
             if (this.globalConfig == null)
@@ -600,7 +601,7 @@ namespace GitlabTool.ViewModels
 
         #region 同期
         /// <summary>
-        /// 最適化
+        /// 同期
         /// </summary>
         [Command]
         private void Fetch()
@@ -610,12 +611,17 @@ namespace GitlabTool.ViewModels
             // キーファイルのチェック
             if (!this.CheckKeyFile())
             {
+                MessageBox.Show("鍵ファイルが見つかりません。GitHub for Windowsをインストールしてください。");
                 return;
             }
             if (this.globalConfig == null)
             {
                 // .gitglobalが存在しない
                 MessageBox.Show(".gitglobalファイルが存在しません。GitHub for Windowsをインストールしてください。");
+                return;
+            }
+            if (this.Propertys.Repositories.CurrentItem == null)
+            {
                 return;
             }
 
@@ -634,7 +640,6 @@ namespace GitlabTool.ViewModels
                 this.CloseBusyIndicator();
 
             };
-
             RepositoryEntity repository = (RepositoryEntity)this.Propertys.Repositories.CurrentItem;
 
             FilePath path = new FilePath(repository.Location, @".git");
@@ -647,6 +652,33 @@ namespace GitlabTool.ViewModels
                 PassWord = this.config.Password,
             };
             this.model.Fetch(git, entity, this.privateKeyText, this.publicKeyText, monitor);
+        }
+        #endregion
+
+        #region 公開鍵
+        /// <summary>
+        /// 公開鍵
+        /// </summary>
+        [Command]
+        private void PublicKey()
+        {
+            logger.Info("操作：公開鍵");
+
+            // キーファイルのチェック
+            if (!this.CheckKeyFile())
+            {
+                MessageBox.Show("鍵ファイルが見つかりません。GitHub for Windowsをインストールしてください。");
+                return;
+            }
+            if (this.globalConfig == null)
+            {
+                // .gitglobalが存在しない
+                MessageBox.Show(".gitglobalファイルが存在しません。GitHub for Windowsをインストールしてください。");
+                return;
+            }
+            MessageBox.Show("公開鍵をクリップボードに格納します。サーバーへ登録してください。");
+
+            Clipboard.SetText(this.publicKeyText);
         }
         #endregion
 
@@ -829,6 +861,11 @@ namespace GitlabTool.ViewModels
         /// 同期
         /// </summary>
         public TacticsCommand Fetch { get; private set; }
+
+        /// <summary>
+        /// 公開鍵をクリップボードにコピー
+        /// </summary>
+        public TacticsCommand PublicKey { get; private set; }
     }
     #endregion
 }

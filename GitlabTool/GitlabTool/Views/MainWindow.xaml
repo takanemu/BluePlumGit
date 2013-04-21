@@ -184,6 +184,11 @@
                             ToolTip="アプリケーションの設定" />
                         <Button Height="24"
                             Margin="0,0,0,3"
+                            Command="{Binding Commands.PublicKey}"
+                            Content="公開鍵"
+                            ToolTip="公開鍵をクリップボードにコピー" />
+                        <Button Height="24"
+                            Margin="0,0,0,3"
                             Command="{Binding Commands.RepositoryClone}"
                             Content="リポジトリ複製"
                             Style="{DynamicResource ShinyRedButtonStyle}"
