@@ -140,12 +140,10 @@ namespace GitlabTool.ViewModels
 
                 if (this.apiVersion == "v2")
                 {
-                    //this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Code);
-                    this.Propertys.RemoteRepositoyUrl = string.Format(@"git@{0}:{1}.git", this.serverurl, value.Code);
+                    this.Propertys.RemoteRepositoyUrl = string.Format(@"git@{0}:{1}.git", uri.Authority, value.Code);
                 }
                 else
                 {
-                    //this.Propertys.RemoteRepositoyUrl = string.Format(@"{0}{1}.git", this.serverurl, value.Path_with_namespace);
                     this.Propertys.RemoteRepositoyUrl = string.Format(@"git@{0}:{1}.git", uri.Authority, value.Path_with_namespace);
                 }
             }
