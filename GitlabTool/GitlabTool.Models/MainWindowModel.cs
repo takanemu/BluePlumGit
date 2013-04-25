@@ -315,6 +315,7 @@ namespace GitlabTool.Models
                 try
                 {
                     var git = Git.CloneRepository()
+                                  .SetProgressMonitor(monitor)
                                   .SetDirectory(directory)
                                   .SetURI(entity.Url)
                                   .SetBranchesToClone(new Collection<string>() { "master" })
@@ -332,6 +333,7 @@ namespace GitlabTool.Models
                 //this.SettingHttpBufferSize(entity.Path);
             };
             bw.RunWorkerAsync();
+            
         }
 
         /// <summary>
