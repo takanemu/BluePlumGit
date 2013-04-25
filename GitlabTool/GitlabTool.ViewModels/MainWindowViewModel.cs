@@ -39,6 +39,10 @@ namespace GitlabTool.ViewModels
     using NGit.Storage.File;
     using NGit.Api.Errors;
     using NGit.Api;
+    using NGit.Treewalk;
+    using NGit.Revwalk;
+    using System.Collections.Generic;
+    using NGit.Diff;
 
     #region メインクラス
     /// <summary>
@@ -624,6 +628,17 @@ namespace GitlabTool.ViewModels
             {
                 return;
             }
+            RepositoryEntity repository = (RepositoryEntity)this.Propertys.Repositories.CurrentItem;
+
+            FilePath path = new FilePath(repository.Location, @".git");
+            FileRepository db = new FileRepository(path);
+            Git git = new Git(db);
+
+            CloneEntity entity = new CloneEntity
+            {
+                UserName = this.globalConfig.EMail,
+                PassWord = this.config.Password,
+            };
 
             BusyIndicatorProgressMonitor monitor = new BusyIndicatorProgressMonitor();
 
@@ -637,21 +652,53 @@ namespace GitlabTool.ViewModels
             };
             monitor.CompleteAction = () =>
             {
+                DiffCommand diff = git.Diff();
+
+                diff.SetOldTree(GetTreeIterator(git, "HEAD"));
+                diff.SetNewTree(GetTreeIterator(git, "FETCH_HEAD"));
+
+                IList<DiffEntry> list = diff.Call();
+
+                if (list.Count > 0)
+                {
+                    MessageBox.Show("リモートリポジトリとローカルリポジトリに違いがあります。");
+                }
+                else
+                {
+                    MessageBox.Show("ローカルリポジトリは、最新の状態です。");
+                }
                 this.CloseBusyIndicator();
 
             };
-            RepositoryEntity repository = (RepositoryEntity)this.Propertys.Repositories.CurrentItem;
-
-            FilePath path = new FilePath(repository.Location, @".git");
-            FileRepository db = new FileRepository(path);
-            Git git = new Git(db);
-
-            CloneEntity entity = new CloneEntity
-            {
-                UserName = this.globalConfig.EMail,
-                PassWord = this.config.Password,
-            };
             this.model.Fetch(git, entity, this.privateKeyText, this.publicKeyText, monitor);
+        }
+
+        /// <summary>
+        /// 特定ブランチのツリーを取得する
+        /// </summary>
+        /// <param name="git">Git</param>
+        /// <param name="name">ブランチ名</param>
+        /// <returns></returns>
+        private AbstractTreeIterator GetTreeIterator(Git git, string name)
+        {
+            Repository db = git.GetRepository();
+            ObjectId id = db.Resolve(name);
+
+            if (id == null)
+            {
+                throw new ArgumentException(name);
+            }
+            CanonicalTreeParser p = new CanonicalTreeParser();
+            ObjectReader or = db.NewObjectReader();
+            try
+            {
+                p.Reset(or, new RevWalk(db).ParseTree(id));
+                return p;
+            }
+            finally
+            {
+                or.Release();
+            }
         }
         #endregion
 
