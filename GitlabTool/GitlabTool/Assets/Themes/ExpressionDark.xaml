@@ -725,6 +725,7 @@
     </Style>
 
     <Style d:IsControlPart="True" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
