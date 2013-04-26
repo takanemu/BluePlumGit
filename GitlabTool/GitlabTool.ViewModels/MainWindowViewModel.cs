@@ -729,6 +729,17 @@ namespace GitlabTool.ViewModels
         }
         #endregion
 
+        #region ブランチ切り替え
+        /// <summary>
+        /// ブランチ切り替え
+        /// </summary>
+        [Command]
+        private void BranchSelect()
+        {
+            logger.Info("操作：ブランチ切り替え");
+        }
+        #endregion
+
         #region ウインドウクローズキャンセル処理
         /// <summary>
         /// ウインドウクローズキャンセル処理
@@ -883,6 +894,11 @@ namespace GitlabTool.ViewModels
         /// ブランチの削除
         /// </summary>
         public TacticsCommand BranchRemove { get; private set; }
+
+        /// <summary>
+        /// ブランチの切り替え
+        /// </summary>
+        public TacticsCommand BranchSelect { get; private set; }
 
         /// <summary>
         /// コミット

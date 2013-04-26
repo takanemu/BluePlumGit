@@ -225,6 +225,11 @@
                             ToolTip="リモートリポジトリの情報を取得する" />
                         <Button Height="24"
                             Margin="0,0,0,3"
+                            Command="{Binding Commands.BranchSelect}"
+                            Content="ブランチの切り替え"
+                            ToolTip="ブランチを切り替える" />
+                        <Button Height="24"
+                            Margin="0,0,0,3"
                             Command="{Binding Commands.BranchRemove}"
                             Content="ブランチの削除"
                             ToolTip="不要になったブランチを削除する" />
