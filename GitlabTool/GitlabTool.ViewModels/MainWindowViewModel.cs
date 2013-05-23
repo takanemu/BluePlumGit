@@ -450,6 +450,13 @@ namespace GitlabTool.ViewModels
         private void Commit()
         {
             logger.Info("操作：コミット");
+
+            WindowOpenMessage massage = this.Messenger.GetResponse<WindowOpenMessage>(new WindowOpenMessage
+            {
+                MessageKey = "OpenWindow",
+                WindowType = WindowTypeEnum.COMMIT,
+                Parameter = this.Propertys.Repositories.CurrentItem,
+            });
         }
         #endregion
 
