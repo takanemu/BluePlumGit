@@ -183,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\CommitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConfigSettingWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -213,6 +217,9 @@
     <Compile Include="Views\CloneRepositoryWindow.xaml.cs">
       <DependentUpon>CloneRepositoryWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\CommitWindow.xaml.cs">
+      <DependentUpon>CommitWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfigSettingWindow.xaml.cs">
       <DependentUpon>ConfigSettingWindow.xaml</DependentUpon>
