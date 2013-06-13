@@ -27,11 +27,11 @@ using System.Windows;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("GitlabTool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Github for windows support tool")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("2ndFactory, Inc.")]
 [assembly: AssemblyProduct("GitlabTool")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
