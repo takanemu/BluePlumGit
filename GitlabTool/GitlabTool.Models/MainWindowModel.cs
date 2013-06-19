@@ -41,6 +41,9 @@ namespace GitlabTool.Models
     using NGit.Util;
     using Sharpen;
     using System.Collections.ObjectModel;
+    using System.Reflection;
+    using log4net;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// SSH接続用クラス(未使用)
@@ -80,6 +83,11 @@ namespace GitlabTool.Models
     /// </summary>
     public class MainWindowModel : NotificationObject
     {
+        /// <summary>
+        /// ログ
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1311:StaticReadonlyFieldsMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         /*
          * NotificationObjectはプロパティ変更通知の仕組みを実装したオブジェクトです。
          */
@@ -242,6 +250,7 @@ namespace GitlabTool.Models
 
             if (!gitconfig.Exists())
             {
+                logger.Error("ファイル読み込みエラー[" + gitconfig + "]");
                 return null;
             }
             FileBasedConfig config = new FileBasedConfig(gitconfig, FS.Detect());
@@ -280,8 +289,14 @@ namespace GitlabTool.Models
             result.EMail = config.GetString("user", null, "email");
             result.Name = config.GetString("user", null, "name");
 
-            if (result.EMail == null || result.Name == null)
+            if (result.Name == null)
             {
+                logger.Error(".gitconfig ファイルに、ユーザー名が記載されていません。");
+                return null;
+            }
+            if (result.EMail == null)
+            {
+                logger.Error(".gitconfig ファイルに、電子メールが記載されていません。");
                 return null;
             }
             return result;

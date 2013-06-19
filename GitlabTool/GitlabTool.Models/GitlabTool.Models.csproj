@@ -63,6 +63,9 @@
     <Reference Include="Livet.Extensions">
       <HintPath>..\InfrastructureAssemblies\Livet\Livet.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\InfrastructureAssemblies\log4net\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\InfrastructureAssemblies\Json\Newtonsoft.Json.dll</HintPath>
     </Reference>
