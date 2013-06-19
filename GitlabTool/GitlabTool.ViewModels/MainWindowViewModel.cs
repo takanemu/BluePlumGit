@@ -727,7 +727,9 @@ namespace GitlabTool.ViewModels
             if (this.globalConfig == null)
             {
                 // .gitglobalが存在しない
-                MessageBox.Show(".gitglobalファイルが存在しません。GitHub for Windowsをインストールしてください。");
+                FilePath gitconfig = new FilePath(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".gitconfig");
+
+                MessageBox.Show(".gitconfigファイルが存在しないか、情報が不足しています。\nGitHub for Windowsのoptions画面で、configure gitが設定されていることを確認してください。\n必要な設定は、Gitlabのアカウント情報です。\n[" + gitconfig + "]");
                 return;
             }
             MessageBox.Show("公開鍵をクリップボードに格納します。サーバーへ登録してください。");

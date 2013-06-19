@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GitlabTool"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.0.0.1"
 #define MyAppPublisher "2ndFactory"
 #define MyAppURL "http://www.2ndfactory.com/"
 #define MyAppExeName "GitlabTool.exe"
