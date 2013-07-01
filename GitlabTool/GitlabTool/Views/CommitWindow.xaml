@@ -1,14 +1,14 @@
-﻿<Window  x:Class="GitlabTool.Views.CommitWindow"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:bh="clr-namespace:GitlabTool.Behaviors"
-      xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
-      xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
-      mc:Ignorable="d" 
+﻿<Window x:Class="GitlabTool.Views.CommitWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bh="clr-namespace:GitlabTool.Behaviors"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:metro="clr-namespace:GitlabTool.MetroChrome"
+        xmlns:vm="clr-namespace:GitlabTool.ViewModels;assembly=GitlabTool.ViewModels"
+        Title="コミット"
         Width="600"
         Height="300"
         MinWidth="300"
@@ -19,10 +19,10 @@
         TextOptions.TextFormattingMode="Display"
         WindowStartupLocation="CenterOwner"
         WindowState="{Binding WindowState}"
-	  Title="コミット">
+        mc:Ignorable="d">
 
     <Window.DataContext>
-        <vm:CommitWindowViewModel/>
+        <vm:CommitWindowViewModel />
     </Window.DataContext>
 
     <i:Interaction.Triggers>
@@ -65,7 +65,7 @@
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <!--ヘッダー-->
+        <!--  ヘッダー  -->
         <Border x:Name="CaptionBar" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -90,32 +90,53 @@
             </Grid>
         </Border>
 
-        <!--コンテンツ-->
+        <!--  コンテンツ  -->
         <Grid Grid.Row="1">
-            <DataGrid Margin="5" ItemsSource="{Binding Propertys.Diffs, Mode=TwoWay}" AutoGenerateColumns="False"  SelectionMode="Extended"  VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Gray" RowHeaderWidth="0" CanUserAddRows="False"
-                      >
+            <DataGrid Margin="5"
+                      VerticalAlignment="Stretch"
+                      AlternatingRowBackground="{DynamicResource ThemeBackgroundBrushKey}"
+                      AutoGenerateColumns="False"
+                      Background="{DynamicResource ThemeBackgroundBrushKey}"
+                      BorderBrush="Gray"
+                      CanUserAddRows="False"
+                      ItemsSource="{Binding Propertys.Diffs,
+                                            Mode=TwoWay}"
+                      RowBackground="{DynamicResource ThemeBackgroundBrushKey}"
+                      RowHeaderWidth="0"
+                      SelectionMode="Extended">
 
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrushKey}" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
 
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
-                        <Setter Property="Height" Value="auto"/>
-                        <Setter Property="Background" Value="#FF333333"/>
-                        <Setter Property="BorderBrush" Value="#FF333333"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Height" Value="auto" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderBrush" Value="#FF333333" />
+                        <Setter Property="Foreground" Value="White" />
                     </Style>
                 </DataGrid.CellStyle>
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn IsReadOnly="False" Header="" Binding="{Binding Check}" Width="30"/>
-                    <DataGridTextColumn IsReadOnly="True" Header="ファイル名称" Binding="{Binding Filename}" Width="200" />
-                    <DataGridTextColumn IsReadOnly="True" Header="変更前名称" Binding="{Binding Oldname}" Width="200" />
-                    <DataGridTextColumn IsReadOnly="True" Header="変更内容" Binding="{Binding ChangeTypeName}" Width="130" />
+                    <DataGridCheckBoxColumn Binding="{Binding Check}"
+                                            Header=""
+                                            IsReadOnly="False" />
+                    <DataGridTextColumn Binding="{Binding ChangeTypeName}"
+                                        Header="変更内容"
+                                        IsReadOnly="True" />
+                    <DataGridTextColumn MinWidth="200"
+                                        Binding="{Binding Filename}"
+                                        Header="ファイル名称"
+                                        IsReadOnly="True" />
+                    <DataGridTextColumn MinWidth="200"
+                                        Binding="{Binding Oldname}"
+                                        Header="変更前名称"
+                                        IsReadOnly="True" />
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -126,27 +147,46 @@
             <StackPanel>
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="コメント：" Foreground="White" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox Grid.Column="1" Text="{Binding Path=Propertys.CommitMessage, Mode=TwoWay}"/>
+                    <TextBlock Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               Text="コメント：" />
+                    <TextBox Grid.Column="1" Text="{Binding Path=Propertys.CommitMessage, Mode=TwoWay}" />
                 </Grid>
                 <Grid Margin="5">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                        <Button Width="80" Height="26" Command="{Binding Commands.AllSelectButton, Mode=OneWay}" Content="全選択"/>
-                        <Button Width="80" Height="26" Command="{Binding Commands.AllReleaseButton, Mode=OneWay}" Content="全解除" Margin="10,0,0,0"/>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Button Width="80"
+                                Height="26"
+                                Command="{Binding Commands.AllSelectButton,
+                                                  Mode=OneWay}"
+                                Content="全選択" />
+                        <Button Width="80"
+                                Height="26"
+                                Margin="10,0,0,0"
+                                Command="{Binding Commands.AllReleaseButton,
+                                                  Mode=OneWay}"
+                                Content="全解除" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Width="80" Height="26" Command="{Binding Commands.CommitButton}" Content="コミット"/>
-                        <Button Width="80" Height="26" Command="{Binding Commands.CancelButton}" Content="キャンセル" Margin="10,0,0,0"/>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Width="80"
+                                Height="26"
+                                Command="{Binding Commands.CommitButton}"
+                                Content="コミット" />
+                        <Button Width="80"
+                                Height="26"
+                                Margin="10,0,0,0"
+                                Command="{Binding Commands.CancelButton}"
+                                Content="キャンセル" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
         </Grid>
 
-        <!--フッター-->
+        <!--  フッター  -->
         <Grid Grid.Row="3" Background="{DynamicResource AccentBrushKey}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -166,4 +206,4 @@
 
     </Grid>
 
-</Window >
+</Window>
