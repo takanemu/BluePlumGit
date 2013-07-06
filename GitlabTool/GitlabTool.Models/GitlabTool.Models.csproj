@@ -48,10 +48,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gitlab.Api.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\InfrastructureAssemblies\Gitlab\Debug\Gitlab.Api.Library.dll</HintPath>
-    </Reference>
     <Reference Include="Gordias.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Gordias.Library\Gordias.Library.dll</HintPath>
@@ -95,6 +91,10 @@
     <ProjectReference Include="..\Common.Library\Common.Library.csproj">
       <Project>{aa5a5938-fc7c-4abe-bad1-cbde684614e1}</Project>
       <Name>Common.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gitlab.Api.Library\Gitlab.Api.Library.csproj">
+      <Project>{116e04c8-63bd-4b24-8b94-edf6400dd033}</Project>
+      <Name>Gitlab.Api.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

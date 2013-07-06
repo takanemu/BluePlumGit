@@ -48,9 +48,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gitlab.Api.Library">
-      <HintPath>..\InfrastructureAssemblies\Gitlab\Debug\Gitlab.Api.Library.dll</HintPath>
-    </Reference>
     <Reference Include="Gordias.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InfrastructureAssemblies\Gordias.Library\Gordias.Library.dll</HintPath>
@@ -120,6 +117,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gitlab.Api.Library\Gitlab.Api.Library.csproj">
+      <Project>{116e04c8-63bd-4b24-8b94-edf6400dd033}</Project>
+      <Name>Gitlab.Api.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
